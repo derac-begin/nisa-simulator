@@ -5,120 +5,45 @@
   },
   "cells": [
     {
-      "id": "MJUe",
-      "code_hash": "3c309412b0c4c619fe3c57d57d617289",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"nisa\">\ud83d\udcc8 \u7a4d\u7acbNISA \u30b9\u30de\u30fc\u30c8\u30b7\u30df\u30e5\u30ec\u30fc\u30bf\u30fc</h1>\n<span class=\"paragraph\">\u5c06\u6765\u306e\u8cc7\u7523\u63a8\u79fb\u3092<strong>\u7cbe\u5bc6\u306a\u8ca1\u52d9\u8a08\u7b97</strong>\u3067\u30b7\u30df\u30e5\u30ec\u30fc\u30b7\u30e7\u30f3\u3057\u307e\u3059\u3002</span>\n<span class=\"paragraph\">\u203b \u30b0\u30e9\u30d5\u53f3\u4e0a\u306e\u300c...\u300d\u304b\u3089\u753b\u50cf\u3092\u4fdd\u5b58\u3067\u304d\u307e\u3059\uff08\u30e1\u30cb\u30e5\u30fc\u306f\u82f1\u8a9e\u8868\u8a18\u3067\u3059\uff09</span></span>"
-          }
-        }
-      ],
+      "id": "Hbol",
+      "code_hash": "4d66a61679b61791e43fd21e13cdbbd5",
+      "outputs": [],
       "console": []
     },
     {
-      "id": "Hbol",
-      "code_hash": "162072e71840ff2b0171966689a8ff13",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
+      "id": "MJUe",
+      "code_hash": "78b0a924fc7c7d57b839059bb6b57167",
+      "outputs": [],
       "console": []
     },
     {
       "id": "vblA",
-      "code_hash": "9550020de9da21829ec584fbc9b3b87e",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
+      "code_hash": "82239d3827e6de3dde7f5709d8999dd9",
+      "outputs": [],
       "console": []
     },
     {
       "id": "bkHC",
-      "code_hash": "5d14846860ae250be1ceb8d847c01e62",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
+      "code_hash": "239a149844d5ddfebb593fe09f665a0d",
+      "outputs": [],
       "console": []
     },
     {
       "id": "lEQa",
-      "code_hash": "aa931fd1e1e9b723e1341eb466375c2a",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
+      "code_hash": "ebd0e40b7aa17e6e128ffcb09828eb78",
+      "outputs": [],
       "console": []
     },
     {
       "id": "PKri",
-      "code_hash": "9bcb394457be5107512530e9c6d12d73",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
+      "code_hash": "d7c210b0721844e4ad6a03268066aeb4",
+      "outputs": [],
       "console": []
     },
     {
       "id": "Xref",
-      "code_hash": "c43176162663cc019c53a4a57efdd983",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "SFPL",
-      "code_hash": "457f0c4baf68e86e1c131abc28960ccc",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "BYtC",
-      "code_hash": "cc9d1a9c716acc8f95842f88702f541d",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/html": "<div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem'><img src='./@file/570410-12324-hWq81HsK.png' alt='\u5c06\u6765\u306e\u8cc7\u7523\u5f62\u6210\u30a4\u30e1\u30fc\u30b8\u30b0\u30e9\u30d5' style='width: 100%;border-radius: 4px;max-height: 300px;object-fit: cover' /><span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"_1\">\u30d1\u30e9\u30e1\u30fc\u30bf\u30fc</h2></span><div style='display: flex;flex: 1;flex-direction: row;justify-content: space-between;align-items: normal;flex-wrap: nowrap;gap: 2rem'><marimo-ui-element object-id='lEQa-0' random-id='5cf1ecf2-c91e-f4c4-07b8-2360782e6c0b'><marimo-slider data-initial-value='30000' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;\u6bce\u6708\u306e\u7a4d\u7acb\u984d (\u5186)&lt;/span&gt;&lt;/span&gt;&quot;' data-start='1000' data-stop='300000' data-step='1000' data-steps='[]' data-debounce='false' data-disabled='false' data-orientation='&quot;horizontal&quot;' data-show-value='false' data-include-input='false' data-full-width='true'></marimo-slider></marimo-ui-element><marimo-ui-element object-id='lEQa-1' random-id='a35dd373-394f-6f61-30f6-d2ee1020a41a'><marimo-slider data-initial-value='20' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;\u7a4d\u7acb\u671f\u9593 (\u5e74)&lt;/span&gt;&lt;/span&gt;&quot;' data-start='1' data-stop='40' data-step='1' data-steps='[]' data-debounce='false' data-disabled='false' data-orientation='&quot;horizontal&quot;' data-show-value='false' data-include-input='false' data-full-width='true'></marimo-slider></marimo-ui-element><marimo-ui-element object-id='lEQa-2' random-id='47722174-e603-111e-4715-968b6cad106b'><marimo-slider data-initial-value='5.0' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;\u60f3\u5b9a\u5229\u56de\u308a (\u5e74\u7387 %)&lt;/span&gt;&lt;/span&gt;&quot;' data-start='0.1' data-stop='15.0' data-step='0.1' data-steps='[]' data-debounce='false' data-disabled='false' data-orientation='&quot;horizontal&quot;' data-show-value='false' data-include-input='false' data-full-width='true'></marimo-slider></marimo-ui-element></div><span class=\"markdown prose dark:prose-invert contents\"></span><span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"_1\">\u30b7\u30df\u30e5\u30ec\u30fc\u30b7\u30e7\u30f3\u7d50\u679c</h2></span><div style='display: flex;flex: 1;flex-direction: row;justify-content: space-between;align-items: normal;flex-wrap: nowrap;gap: 2rem'><marimo-stat data-value='&quot;\u00a512,382,389&quot;' data-label='&quot;\u7dcf\u8cc7\u7523&quot;' data-bordered='true' data-target_direction='&quot;increase&quot;'></marimo-stat><marimo-stat data-value='&quot;\u00a57,200,000&quot;' data-label='&quot;\u7dcf\u5143\u91d1&quot;' data-bordered='true' data-target_direction='&quot;increase&quot;'></marimo-stat><marimo-stat data-value='&quot;+\u00a55,182,389&quot;' data-label='&quot;\u7dcf\u904b\u7528\u76ca&quot;' data-bordered='true' data-target_direction='&quot;increase&quot;'></marimo-stat></div><marimo-mime-renderer data-mime='&quot;application/vnd.vegalite.v5+json&quot;' data-data='&quot;{&#92;n  &#92;&quot;&#36;schema&#92;&quot;: &#92;&quot;https://vega.github.io/schema/vega-lite/v5.20.1.json&#92;&quot;,&#92;n  &#92;&quot;config&#92;&quot;: {&#92;n    &#92;&quot;view&#92;&quot;: {&#92;n      &#92;&quot;continuousHeight&#92;&quot;: 300,&#92;n      &#92;&quot;continuousWidth&#92;&quot;: 300&#92;n    }&#92;n  },&#92;n  &#92;&quot;data&#92;&quot;: {&#92;n    &#92;&quot;name&#92;&quot;: &#92;&quot;data-db76ce237e6e0f010a0dc29207b9a5cf&#92;&quot;&#92;n  },&#92;n  &#92;&quot;datasets&#92;&quot;: {&#92;n    &#92;&quot;data-db76ce237e6e0f010a0dc29207b9a5cf&#92;&quot;: [&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 0,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 0&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 1,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 360000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 2,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 720000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 3,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 1080000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 4,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 1440000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 5,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 1800000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 6,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 2160000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 7,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 2520000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 8,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 2880000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 9,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 3240000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 10,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 3600000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 11,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 3960000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 12,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 4320000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 13,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 4680000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 14,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 5040000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 15,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 5400000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 16,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 5760000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 17,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 6120000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 18,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 6480000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 19,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 6840000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 20,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 7200000&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 0,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 0&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 1,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 9901&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 2,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 38726&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 3,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 87444&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 4,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 157073&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 5,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 248683&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 6,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 363398&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 7,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 502401&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 8,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 666933&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 9,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 858301&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 10,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 1077879&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 11,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 1327108&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 12,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 1607507&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 13,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 1920670&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 14,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 2268274&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 15,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 2652079&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 16,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 3073940&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 17,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 3535801&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 18,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 4039711&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 19,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 4587820&#92;n      },&#92;n      {&#92;n        &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;: &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;,&#92;n        &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;: 20,&#92;n        &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;: 5182389&#92;n      }&#92;n    ]&#92;n  },&#92;n  &#92;&quot;encoding&#92;&quot;: {&#92;n    &#92;&quot;color&#92;&quot;: {&#92;n      &#92;&quot;field&#92;&quot;: &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;,&#92;n      &#92;&quot;scale&#92;&quot;: {&#92;n        &#92;&quot;domain&#92;&quot;: [&#92;n          &#92;&quot;&#92;&#92;u5143&#92;&#92;u672c&#92;&quot;,&#92;n          &#92;&quot;&#92;&#92;u904b&#92;&#92;u7528&#92;&#92;u76ca&#92;&quot;&#92;n        ],&#92;n        &#92;&quot;range&#92;&quot;: [&#92;n          &#92;&quot;#0056b3&#92;&quot;,&#92;n          &#92;&quot;#28a745&#92;&quot;&#92;n        ]&#92;n      },&#92;n      &#92;&quot;type&#92;&quot;: &#92;&quot;nominal&#92;&quot;&#92;n    },&#92;n    &#92;&quot;tooltip&#92;&quot;: [&#92;n      {&#92;n        &#92;&quot;field&#92;&quot;: &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;,&#92;n        &#92;&quot;type&#92;&quot;: &#92;&quot;quantitative&#92;&quot;&#92;n      },&#92;n      {&#92;n        &#92;&quot;field&#92;&quot;: &#92;&quot;&#92;&#92;u5185&#92;&#92;u8a33&#92;&quot;,&#92;n        &#92;&quot;type&#92;&quot;: &#92;&quot;nominal&#92;&quot;&#92;n      },&#92;n      {&#92;n        &#92;&quot;field&#92;&quot;: &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;,&#92;n        &#92;&quot;format&#92;&quot;: &#92;&quot;,.0f&#92;&quot;,&#92;n        &#92;&quot;type&#92;&quot;: &#92;&quot;quantitative&#92;&quot;&#92;n      }&#92;n    ],&#92;n    &#92;&quot;x&#92;&quot;: {&#92;n      &#92;&quot;axis&#92;&quot;: {&#92;n        &#92;&quot;title&#92;&quot;: &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570 (&#92;&#92;u5e74)&#92;&quot;&#92;n      },&#92;n      &#92;&quot;field&#92;&quot;: &#92;&quot;&#92;&#92;u7d4c&#92;&#92;u904e&#92;&#92;u5e74&#92;&#92;u6570&#92;&quot;,&#92;n      &#92;&quot;type&#92;&quot;: &#92;&quot;quantitative&#92;&quot;&#92;n    },&#92;n    &#92;&quot;y&#92;&quot;: {&#92;n      &#92;&quot;axis&#92;&quot;: {&#92;n        &#92;&quot;format&#92;&quot;: &#92;&quot;~s&#92;&quot;,&#92;n        &#92;&quot;title&#92;&quot;: &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d (&#92;&#92;u5186)&#92;&quot;&#92;n      },&#92;n      &#92;&quot;field&#92;&quot;: &#92;&quot;&#92;&#92;u91d1&#92;&#92;u984d&#92;&quot;,&#92;n      &#92;&quot;type&#92;&quot;: &#92;&quot;quantitative&#92;&quot;&#92;n    }&#92;n  },&#92;n  &#92;&quot;height&#92;&quot;: 400,&#92;n  &#92;&quot;mark&#92;&quot;: {&#92;n    &#92;&quot;opacity&#92;&quot;: 0.8,&#92;n    &#92;&quot;type&#92;&quot;: &#92;&quot;area&#92;&quot;&#92;n  },&#92;n  &#92;&quot;params&#92;&quot;: [&#92;n    {&#92;n      &#92;&quot;bind&#92;&quot;: &#92;&quot;scales&#92;&quot;,&#92;n      &#92;&quot;name&#92;&quot;: &#92;&quot;param_6&#92;&quot;,&#92;n      &#92;&quot;select&#92;&quot;: {&#92;n        &#92;&quot;encodings&#92;&quot;: [&#92;n          &#92;&quot;x&#92;&quot;,&#92;n          &#92;&quot;y&#92;&quot;&#92;n        ],&#92;n        &#92;&quot;type&#92;&quot;: &#92;&quot;interval&#92;&quot;&#92;n      }&#92;n    }&#92;n  ],&#92;n  &#92;&quot;usermeta&#92;&quot;: {&#92;n    &#92;&quot;embedOptions&#92;&quot;: {&#92;n      &#92;&quot;actions&#92;&quot;: false&#92;n    }&#92;n  },&#92;n  &#92;&quot;width&#92;&quot;: &#92;&quot;container&#92;&quot;&#92;n}&quot;'></marimo-mime-renderer></div>"
-          }
-        }
-      ],
+      "code_hash": "4d1e9c05fae4a76192def6ed645392dd",
+      "outputs": [],
       "console": []
     }
   ]
