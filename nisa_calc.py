@@ -304,11 +304,28 @@ def _(
             total_profit = last_row['Interest']
             total_asset = last_row['Total']
             
-            summary_stats = mo.hstack([
-                mo.stat(value=f"¥{total_asset:,.0f}", label="総資産", bordered=True),
-                mo.stat(value=f"¥{total_principal:,.0f}", label="総元金", bordered=True),
-                mo.stat(value=f"+¥{total_profit:,.0f}", label="総運用益", bordered=True),
-            ], gap=2)
+            # スマホ対応（レスポンシブ）のためのHTML/CSSデザイン
+            # flex-wrap: wrap により、画面が狭いと自動で改行されます
+            summary_stats = mo.md(
+                f"""
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; width: 100%;">
+                    <div style="flex: 1 1 300px; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; background-color: #f8f9fa;">
+                        <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">総資産</div>
+                        <div style="font-size: 1.8em; font-weight: bold; color: {THEME_COLOR_PRIMARY};">¥{total_asset:,.0f}</div>
+                    </div>
+                    
+                    <div style="flex: 1 1 140px; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px;">
+                        <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">総元金</div>
+                        <div style="font-size: 1.2em; font-weight: bold;">¥{total_principal:,.0f}</div>
+                    </div>
+                    
+                    <div style="flex: 1 1 140px; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px;">
+                        <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">総運用益</div>
+                        <div style="font-size: 1.2em; font-weight: bold; color: {THEME_COLOR_GROWTH};">+¥{total_profit:,.0f}</div>
+                    </div>
+                </div>
+                """
+            )
             
         except Exception as e:
             chart_viz = mo.callout(f"Visualization Error: {e}", kind="danger")
