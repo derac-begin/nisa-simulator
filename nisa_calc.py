@@ -313,7 +313,7 @@ def _(
             # スマホ対応（レスポンシブ）のためのHTML/CSSデザイン
             # flex-wrap: wrap により、画面が狭いと自動で改行されます
             summary_stats = mo.md(
-                """
+                f"""
                 <div style="display: flex; flex-wrap: wrap; gap: 10px; width: 100%;">
                     <div style="flex: 1 1 300px; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; background-color: #f8f9fa;">
                         <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">総資産</div>
