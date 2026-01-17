@@ -243,6 +243,13 @@ def _(
         ).properties(
             width="container",
             height=300 # スマホで見やすいよう高さを少し抑えめに
+        ).configure_view(
+            # 枠線を消してスッキリさせる（スマホで見やすく）
+            stroke=None
+        ).configure_axis(
+            # 軸のフォントサイズを少し小さくして見切れを防ぐ
+            labelFontSize=10,
+            titleFontSize=11
         )
 
     return chart, df_melt, label_map, stats_section
@@ -277,6 +284,48 @@ def _(
     app_layout
     return app_layout,
 
+@app.cell
+def _(mo):
+    # CSS注入:スマホ表示の不具合を強制的に直すパッチ
+    # marimoのデフォルトパディングを打ち消し、画像やグラフの最大幅を制限します
+    mo.md(
+        """
+        <style>
+        /* 1. アプリ全体の余白をスマホ用に詰める */
+        #App {
+            padding: 10px !important;
+        }
+        .marimo-app {
+            max-width: 100vw !important;
+            overflow-x: hidden !important;
+        }
+
+        /* 2. テキストの強制折り返し */
+        div, p, span, h1, h2, h3 {
+            overflow-wrap: break-word !important;
+            word-break: break-word !important;
+            white-space: normal !important;
+            max-width: 100% !important;
+        }
+
+        /* 3. グラフ(Canvas/SVG)と画像の強制リサイズ */
+        /* これがないとAltairが計算した幅が画面を超えた時に突き抜けます */
+        canvas, svg, img {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+        
+        /* 4. Altairのコンテナ自体の幅も制限 */
+        .vega-embed {
+            width: 100% !important;
+            max-width: 100% !important;
+            display: flex !important;
+            justify-content: center !important;
+        }
+        </style>
+        """
+    )
+    return
 
 if __name__ == "__main__":
     app.run()
