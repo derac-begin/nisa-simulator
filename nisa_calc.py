@@ -171,13 +171,10 @@ def _(
     # --- ビジュアライゼーション ---
 
     # 1. 統計カード (Flexboxでレスポンシブ化)
-    # mo.hstackはやめ、HTMLのflex-wrapで制御します。
-    # これにより、画面が狭いときは自動で縦に並びます。
-    
-    # スタイルの定義
+    # ※前回のコードそのまま維持
     card_style = (
-        "flex: 1 1 150px; "  # ベース150px、縮小・拡大あり
-        "padding: 15px; "
+        "flex: 1 1 140px; " # 幅を少し欲張らず140pxに
+        "padding: 10px; "
         "border: 1px solid #e0e0e0; "
         "border-radius: 8px; "
         "background: #fff; "
@@ -185,74 +182,78 @@ def _(
         "box-shadow: 0 2px 4px rgba(0,0,0,0.05);"
     )
     
-    label_style = "font-size: 0.85rem; color: #666; margin-bottom: 4px;"
-    value_style = "font-size: 1.25rem; font-weight: bold; color: #333;"
-    sub_style = "font-size: 0.75rem; color: #888; margin-top: 4px;"
+    label_style = "font-size: 0.8rem; color: #666; margin-bottom: 4px;"
+    value_style = "font-size: 1.1rem; font-weight: bold; color: #333;"
+    sub_style = "font-size: 0.7rem; color: #888; margin-top: 4px;"
 
     stats_html = f"""
-    <div style="display: flex; flex-wrap: wrap; gap: 10px; width: 100%;">
-        <div style="{card_style} border-left: 5px solid {COLOR_PRINCIPAL};">
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; width: 100%;">
+        <div style="{card_style} border-left: 4px solid {COLOR_PRINCIPAL};">
             <div style="{label_style}">総資産</div>
             <div style="{value_style}">¥{final_total:,.0f}</div>
-            <div style="{sub_style}">積立結果の総額</div>
+            <div style="{sub_style}">積立総額</div>
         </div>
-
         <div style="{card_style}">
-            <div style="{label_style}">元本総額</div>
+            <div style="{label_style}">元本</div>
             <div style="{value_style}">¥{final_principal:,.0f}</div>
-            <div style="{sub_style}">積み立てた金額</div>
         </div>
-
         <div style="{card_style}">
-            <div style="{label_style}">運用収益</div>
+            <div style="{label_style}">収益</div>
             <div style="{value_style} color: {COLOR_PROFIT};">+¥{final_profit:,.0f}</div>
-            <div style="{sub_style}">増えた金額</div>
         </div>
     </div>
     """
-    
     stats_section = mo.md(stats_html)
 
     # 2. グラフ描画
     if df_result.empty:
-        chart = mo.md("データがありません")
+        chart_component = mo.md("データがありません")
     else:
         df_melt = df_result.melt(
-            id_vars=["Year"], 
-            value_vars=["Principal", "Profit"],
-            var_name="Type", 
-            value_name="Amount"
+            id_vars=["Year"], value_vars=["Principal", "Profit"],
+            var_name="Type", value_name="Amount"
         )
-        
         label_map = {"Principal": "元本", "Profit": "運用益"}
         df_melt["Label"] = df_melt["Type"].map(label_map)
 
-        chart = alt.Chart(df_melt).mark_area(opacity=0.85).encode(
-            x=alt.X("Year", axis=alt.Axis(title="経過年数 (年)")),
-            y=alt.Y("Amount", axis=alt.Axis(format="~s", title="金額 (円)"), stack=True),
-            color=alt.Color(
-                "Type",
-                scale=alt.Scale(domain=["Principal", "Profit"], range=[COLOR_PRINCIPAL, COLOR_PROFIT]),
-                legend=alt.Legend(title=None, labelExpr=f"datum.value == 'Principal' ? '元本' : '運用益'", orient="bottom"),
-            ),
-            tooltip=[
-                alt.Tooltip("Year", title="年数"),
-                alt.Tooltip("Label", title="内訳"),
-                alt.Tooltip("Amount", format=",.0f", title="金額(円)")
-            ]
+        # グラフ生成
+        base_chart = alt.Chart(df_melt).mark_area(opacity=0.85).encode(
+            x=alt.X("Year", axis=alt.Axis(title="経過年数")),
+            y=alt.Y("Amount", axis=alt.Axis(format="~s", title="円"), stack=True),
+            color=alt.Color("Type", scale=alt.Scale(domain=["Principal", "Profit"], range=[COLOR_PRINCIPAL, COLOR_PROFIT]), legend=None),
+            tooltip=["Year", "Label", alt.Tooltip("Amount", format=",")]
         ).properties(
-            width="container",
-            height=300 # スマホで見やすいよう高さを少し抑えめに
-        ).configure_view(
-            # 枠線を消してスッキリさせる（スマホで見やすく）
-            stroke=None
-        ).configure_axis(
-            # 軸のフォントサイズを少し小さくして見切れを防ぐ
-            labelFontSize=10,
-            titleFontSize=11
+            width=350,  # ★あえて固定幅にする（スマホの最小幅より少し狭いくらい）
+            height=300
         )
 
-    return chart, df_melt, label_map, stats_section
+        # ★★★ ここがキモです ★★★
+        # グラフを直接表示せず、「横スクロール可能なdiv」で包んでからHTMLとして表示します
+        # これにより、グラフが画面からはみ出しても、グラフだけがスクロールし、
+        # 画面全体のレイアウト（文字など）は崩れません。
+        import json
+        chart_json = base_chart.to_json()
+        
+        # marimoのmo.ui.altair_chartを使わず、安全なiframe的アプローチをとる手もありますが
+        # ここでは一番シンプルな「はみ出し許可」レイアウトにします。
+        
+        # 今回はシンプルに、mo.ui.altair_chart を使いますが、
+        # CSSで「親要素からはみ出したらスクロール」させます。
+        chart_obj = mo.ui.altair_chart(base_chart)
+        
+        # グラフを包むコンテナ
+        chart_component = mo.vstack([
+            mo.md("※ グラフは横にスクロールできます"),
+            mo.md(
+                """
+                <div style="width: 100%; overflow-x: auto; padding-bottom: 10px; -webkit-overflow-scrolling: touch;">
+                """
+            ),
+            chart_obj,
+            mo.md("</div>")
+        ], gap=0)
+
+    return chart_component, df_melt, label_map, stats_section
 
 
 @app.cell
@@ -286,41 +287,42 @@ def _(
 
 @app.cell
 def _(mo):
-    # CSS注入:スマホ表示の不具合を強制的に直すパッチ
-    # marimoのデフォルトパディングを打ち消し、画像やグラフの最大幅を制限します
+    # 【CSS注入】スマホ完全対応版：横スクロール許可と強制リセット
     mo.md(
         """
         <style>
-        /* 1. アプリ全体の余白をスマホ用に詰める */
-        #App {
-            padding: 10px !important;
-        }
-        .marimo-app {
+        /* 1. アプリ全体の横幅を画面幅に強制固定し、全体スクロールを防ぐ */
+        html, body, #root, .marimo {
             max-width: 100vw !important;
             overflow-x: hidden !important;
+            margin: 0 !important;
+            padding: 5px !important; /* 余白も最小限に */
         }
 
-        /* 2. テキストの強制折り返し */
-        div, p, span, h1, h2, h3 {
+        /* 2. Flexboxの「縮まない」問題を解決する魔法の呪文 */
+        /* これがないと、グラフがある限り親要素が広がり続けます */
+        * {
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        /* 3. テキストは意地でも折り返す */
+        p, h1, h2, h3, div, span, label {
             overflow-wrap: break-word !important;
-            word-break: break-word !important;
+            word-wrap: break-word !important;
             white-space: normal !important;
             max-width: 100% !important;
         }
 
-        /* 3. グラフ(Canvas/SVG)と画像の強制リサイズ */
-        /* これがないとAltairが計算した幅が画面を超えた時に突き抜けます */
-        canvas, svg, img {
+        /* 4. Altair(Vega)のグラフキャンバス自体の制限 */
+        canvas {
             max-width: 100% !important;
             height: auto !important;
         }
         
-        /* 4. Altairのコンテナ自体の幅も制限 */
-        .vega-embed {
-            width: 100% !important;
+        /* 5. marimoのUIスライダーなどがはみ出さないように */
+        .marimo-ui-element {
             max-width: 100% !important;
-            display: flex !important;
-            justify-content: center !important;
         }
         </style>
         """
