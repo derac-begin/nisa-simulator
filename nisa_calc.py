@@ -379,6 +379,27 @@ def _(app_layout):
     app_layout
     return
 
+@app.cell
+def _(mo):
+    # 【最終手段】 CSSでグラフを強制的に画面内に収めるパッチ
+    # これにより、グラフの内部設定に関わらず、表示サイズがスマホ幅に合わせて縮小されます
+    mo.md(
+        """
+        <style>
+        /* グラフ（Canvas/SVG）を画面幅に合わせて強制リサイズ */
+        canvas, svg {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+        
+        /* 横スクロール発生時の保険 */
+        .marimo-output-content {
+            overflow-x: hidden !important;
+        }
+        </style>
+        """
+    )
+    return
 
 if __name__ == "__main__":
     app.run()
