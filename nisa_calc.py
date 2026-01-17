@@ -89,11 +89,28 @@ def _(APP_TITLE, HEADER_IMAGE, mo):
     except:
         header_visual = mo.md("")
 
+    # テキスト周りのスタイル定義
+    # overflow-wrap: break-word -> 長い単語や文章を強制的に折り返す
+    # line-height: 1.6 -> スマホで読みやすい行間
+    text_style = "width: 100%; overflow-wrap: break-word; line-height: 1.6; color: #444;"
+
+    # タイトルと説明文をHTMLで構築
+    description = mo.md(
+        f"""
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <h2 style="margin: 0; font-size: 1.6rem; line-height: 1.3;">📈 {APP_TITLE}</h2>
+            <div style="{text_style}">
+                毎月の積立額と期間、利回りを入力すると、将来の資産推移をシミュレーションします。
+            </div>
+        </div>
+        """
+    )
+
     header_section = mo.vstack([
         header_visual,
-        mo.md(f"""<h2 style="font-size: 1.5rem; margin: 0;">📈 {APP_TITLE}</h2>"""),
-        mo.md("毎月の積立額と期間、利回りを入力すると、将来の資産推移をシミュレーションします。")
+        description
     ], gap=1)
+    
     return header_section, header_visual
 
 
