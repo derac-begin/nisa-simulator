@@ -15,12 +15,13 @@ def _():
     APP_TITLE = "積立NISAシミュレーター"
     HEADER_IMAGE = "assets/header.png"
     
-    # Altair設定: メニューを隠し、コンテナ幅に合わせる
+    # Altair設定
     alt.renderers.enable('default', embed_options={'actions': False})
     
     # カラーパレット
-    COLOR_PRINCIPAL = "#0056b3"  # 元本（青）
-    COLOR_PROFIT = "#28a745"     # 利益（緑）
+    COLOR_PRINCIPAL = "#0056b3"
+    COLOR_PROFIT = "#28a745"
+    
     return (
         APP_TITLE,
         COLOR_PRINCIPAL,
@@ -41,7 +42,7 @@ def _(Decimal, ROUND_HALF_UP, pd):
         if years <= 0:
             return pd.DataFrame()
 
-        # 高精度計算のためのDecimal変換
+        # 高精度計算
         d_monthly = Decimal(str(monthly_yen))
         d_rate_annual = Decimal(str(rate_pct)) / Decimal("100")
         d_rate_monthly = d_rate_annual / Decimal("12")
@@ -52,7 +53,7 @@ def _(Decimal, ROUND_HALF_UP, pd):
         current_principal = Decimal("0")
         current_total = Decimal("0")
 
-        # 0年目の初期状態
+        # 0年目
         data.append({"Year": 0, "Principal": 0, "Profit": 0, "Total": 0})
 
         for m in range(1, months + 1):
@@ -89,12 +90,9 @@ def _(APP_TITLE, HEADER_IMAGE, mo):
     except:
         header_visual = mo.md("")
 
-    # テキスト周りのスタイル定義
-    # overflow-wrap: break-word -> 長い単語や文章を強制的に折り返す
-    # line-height: 1.6 -> スマホで読みやすい行間
+    # テキスト周りのスタイル定義（改行強制）
     text_style = "width: 100%; overflow-wrap: break-word; line-height: 1.6; color: #444;"
 
-    # タイトルと説明文をHTMLで構築
     description = mo.md(
         f"""
         <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -110,14 +108,12 @@ def _(APP_TITLE, HEADER_IMAGE, mo):
         header_visual,
         description
     ], gap=1)
-    
     return header_section, header_visual
 
 
 @app.cell
 def _(mo):
     # --- UI: 入力フォーム ---
-    # スマホ対応のためvstackを使用
     input_monthly = mo.ui.slider(
         start=1000, stop=300000, step=1000, value=30000, 
         label="毎月の積立額 (円)", 
@@ -170,10 +166,9 @@ def _(
 ):
     # --- ビジュアライゼーション ---
 
-    # 1. 統計カード (Flexboxでレスポンシブ化)
-    # ※前回のコードそのまま維持
+    # 1. 統計カード (Flexboxレスポンシブ)
     card_style = (
-        "flex: 1 1 140px; " # 幅を少し欲張らず140pxに
+        "flex: 1 1 140px; "
         "padding: 10px; "
         "border: 1px solid #e0e0e0; "
         "border-radius: 8px; "
@@ -205,9 +200,9 @@ def _(
     """
     stats_section = mo.md(stats_html)
 
-    # 2. グラフ描画
+    # 2. グラフ描画（横スクロール対応）
     if df_result.empty:
-        chart_component = mo.md("データがありません")
+        chart = mo.md("データがありません")
     else:
         df_melt = df_result.melt(
             id_vars=["Year"], value_vars=["Principal", "Profit"],
@@ -216,33 +211,22 @@ def _(
         label_map = {"Principal": "元本", "Profit": "運用益"}
         df_melt["Label"] = df_melt["Type"].map(label_map)
 
-        # グラフ生成
+        # ベースとなるグラフ
         base_chart = alt.Chart(df_melt).mark_area(opacity=0.85).encode(
             x=alt.X("Year", axis=alt.Axis(title="経過年数")),
             y=alt.Y("Amount", axis=alt.Axis(format="~s", title="円"), stack=True),
             color=alt.Color("Type", scale=alt.Scale(domain=["Principal", "Profit"], range=[COLOR_PRINCIPAL, COLOR_PROFIT]), legend=None),
             tooltip=["Year", "Label", alt.Tooltip("Amount", format=",")]
         ).properties(
-            width=350,  # ★あえて固定幅にする（スマホの最小幅より少し狭いくらい）
+            width=350,  # 固定幅
             height=300
         )
 
-        # ★★★ ここがキモです ★★★
-        # グラフを直接表示せず、「横スクロール可能なdiv」で包んでからHTMLとして表示します
-        # これにより、グラフが画面からはみ出しても、グラフだけがスクロールし、
-        # 画面全体のレイアウト（文字など）は崩れません。
-        import json
-        chart_json = base_chart.to_json()
-        
-        # marimoのmo.ui.altair_chartを使わず、安全なiframe的アプローチをとる手もありますが
-        # ここでは一番シンプルな「はみ出し許可」レイアウトにします。
-        
-        # 今回はシンプルに、mo.ui.altair_chart を使いますが、
-        # CSSで「親要素からはみ出したらスクロール」させます。
+        # コンポーネント化（スクロールラッパー）
         chart_obj = mo.ui.altair_chart(base_chart)
         
-        # グラフを包むコンテナ
-        chart_component = mo.vstack([
+        # 【重要】変数名を chart に統一して返す
+        chart = mo.vstack([
             mo.md("※ グラフは横にスクロールできます"),
             mo.md(
                 """
@@ -253,7 +237,7 @@ def _(
             mo.md("</div>")
         ], gap=0)
 
-    return chart_component, df_melt, label_map, stats_section
+    return chart, df_melt, label_map, stats_section
 
 
 @app.cell
@@ -285,9 +269,10 @@ def _(
     app_layout
     return app_layout,
 
+
 @app.cell
 def _(mo):
-    # 【CSS注入】スマホ完全対応版：横スクロール許可と強制リセット
+    # 【CSS注入】スマホ完全対応版
     mo.md(
         """
         <style>
@@ -296,17 +281,16 @@ def _(mo):
             max-width: 100vw !important;
             overflow-x: hidden !important;
             margin: 0 !important;
-            padding: 5px !important; /* 余白も最小限に */
+            padding: 5px !important;
         }
 
-        /* 2. Flexboxの「縮まない」問題を解決する魔法の呪文 */
-        /* これがないと、グラフがある限り親要素が広がり続けます */
+        /* 2. Flexboxの「縮まない」問題を解決するリセット */
         * {
             min-width: 0 !important;
             box-sizing: border-box !important;
         }
 
-        /* 3. テキストは意地でも折り返す */
+        /* 3. テキストの強制折り返し */
         p, h1, h2, h3, div, span, label {
             overflow-wrap: break-word !important;
             word-wrap: break-word !important;
@@ -314,13 +298,13 @@ def _(mo):
             max-width: 100% !important;
         }
 
-        /* 4. Altair(Vega)のグラフキャンバス自体の制限 */
-        canvas {
+        /* 4. Canvas/画像のリサイズ */
+        canvas, img, svg {
             max-width: 100% !important;
             height: auto !important;
         }
         
-        /* 5. marimoのUIスライダーなどがはみ出さないように */
+        /* 5. marimoのUI要素 */
         .marimo-ui-element {
             max-width: 100% !important;
         }
@@ -328,6 +312,7 @@ def _(mo):
         """
     )
     return
+
 
 if __name__ == "__main__":
     app.run()
