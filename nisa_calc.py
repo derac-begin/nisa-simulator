@@ -91,7 +91,7 @@ def _(APP_TITLE, HEADER_IMAGE, mo):
 
     header_section = mo.vstack([
         header_visual,
-        mo.md(f"# 📈 {APP_TITLE}"),
+        mo.md(f"""<h2 style="font-size: 1.5rem; margin: 0;">📈 {APP_TITLE}</h2>"""),
         mo.md("毎月の積立額と期間、利回りを入力すると、将来の資産推移をシミュレーションします。")
     ], gap=1)
     return header_section, header_visual
@@ -153,25 +153,48 @@ def _(
 ):
     # --- ビジュアライゼーション ---
 
-    # 1. 統計カード
-    # 【修正点】kind引数を削除しました。これでエラーは解消されます。
-    stats_section = mo.hstack([
-        mo.stat(
-            label="総資産",
-            value=f"{final_total:,.0f}円",
-            caption="積み立てた結果の総額",
-        ),
-        mo.stat(
-            label="元本総額",
-            value=f"{final_principal:,.0f}円",
-            caption="積み立てた金額"
-        ),
-        mo.stat(
-            label="運用収益",
-            value=f"+{final_profit:,.0f}円",
-            caption="増えた金額",
-        )
-    ], gap=1, widths="equal")
+    # 1. 統計カード (Flexboxでレスポンシブ化)
+    # mo.hstackはやめ、HTMLのflex-wrapで制御します。
+    # これにより、画面が狭いときは自動で縦に並びます。
+    
+    # スタイルの定義
+    card_style = (
+        "flex: 1 1 150px; "  # ベース150px、縮小・拡大あり
+        "padding: 15px; "
+        "border: 1px solid #e0e0e0; "
+        "border-radius: 8px; "
+        "background: #fff; "
+        "text-align: center; "
+        "box-shadow: 0 2px 4px rgba(0,0,0,0.05);"
+    )
+    
+    label_style = "font-size: 0.85rem; color: #666; margin-bottom: 4px;"
+    value_style = "font-size: 1.25rem; font-weight: bold; color: #333;"
+    sub_style = "font-size: 0.75rem; color: #888; margin-top: 4px;"
+
+    stats_html = f"""
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; width: 100%;">
+        <div style="{card_style} border-left: 5px solid {COLOR_PRINCIPAL};">
+            <div style="{label_style}">総資産</div>
+            <div style="{value_style}">¥{final_total:,.0f}</div>
+            <div style="{sub_style}">積立結果の総額</div>
+        </div>
+
+        <div style="{card_style}">
+            <div style="{label_style}">元本総額</div>
+            <div style="{value_style}">¥{final_principal:,.0f}</div>
+            <div style="{sub_style}">積み立てた金額</div>
+        </div>
+
+        <div style="{card_style}">
+            <div style="{label_style}">運用収益</div>
+            <div style="{value_style} color: {COLOR_PROFIT};">+¥{final_profit:,.0f}</div>
+            <div style="{sub_style}">増えた金額</div>
+        </div>
+    </div>
+    """
+    
+    stats_section = mo.md(stats_html)
 
     # 2. グラフ描画
     if df_result.empty:
@@ -193,7 +216,7 @@ def _(
             color=alt.Color(
                 "Type",
                 scale=alt.Scale(domain=["Principal", "Profit"], range=[COLOR_PRINCIPAL, COLOR_PROFIT]),
-                legend=alt.Legend(title=None, labelExpr=f"datum.value == 'Principal' ? '元本' : '運用益'"),
+                legend=alt.Legend(title=None, labelExpr=f"datum.value == 'Principal' ? '元本' : '運用益'", orient="bottom"),
             ),
             tooltip=[
                 alt.Tooltip("Year", title="年数"),
@@ -201,9 +224,8 @@ def _(
                 alt.Tooltip("Amount", format=",.0f", title="金額(円)")
             ]
         ).properties(
-            # width='container' はAltairの標準機能なので安全です
             width="container",
-            height=350
+            height=300 # スマホで見やすいよう高さを少し抑えめに
         )
 
     return chart, df_melt, label_map, stats_section
