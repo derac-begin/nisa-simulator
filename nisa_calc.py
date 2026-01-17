@@ -282,7 +282,7 @@ def _(
                 value_name='金額'
             )
             
-            # 3. グラフ定義 (日本語カラムを使用)
+            # 3. グラフ定義 (スマホ対応: 幅を自動調整 & 凡例を下に)
             base = alt.Chart(df_melted).encode(
                 x=alt.X('経過年数', axis=alt.Axis(title='経過年数 (年)')),
                 y=alt.Y('金額', axis=alt.Axis(format='~s', title='金額 (円)')),
@@ -291,10 +291,15 @@ def _(
                     scale=alt.Scale(
                         domain=['元本', '運用益'], 
                         range=[THEME_COLOR_PRIMARY, THEME_COLOR_GROWTH]
-                    )
+                    ),
+                    # 凡例を「下」に「横並び」で配置して、横幅を節約する
+                    legend=alt.Legend(orient='bottom', direction='horizontal', title=None)
                 ),
                 tooltip=['経過年数', '内訳', alt.Tooltip('金額', format=',.0f')]
-            ).properties(height=400)
+            ).properties(
+                width='container',  # <--- これが重要！親要素に合わせて幅が伸縮します
+                height=400
+            )
             
             chart_viz = base.mark_area(opacity=0.8).interactive()
             
