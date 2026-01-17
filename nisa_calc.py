@@ -214,7 +214,7 @@ def _(
         # ベースとなるグラフ
         base_chart = alt.Chart(df_melt).mark_area(opacity=0.85).encode(
             x=alt.X("Year", axis=alt.Axis(title="経過年数")),
-            y=alt.Y("Amount", axis=alt.Axis(format="~s", title="円"), stack=True),
+            y=alt.Y("Amount", axis=alt.Axis(format="~s", title="金額"), stack=True),
             color=alt.Color("Type", scale=alt.Scale(domain=["Principal", "Profit"], range=[COLOR_PRINCIPAL, COLOR_PROFIT]), legend=None),
             tooltip=["Year", "Label", alt.Tooltip("Amount", format=",")]
         ).properties(
@@ -227,7 +227,7 @@ def _(
         
         # 【重要】変数名を chart に統一して返す
         chart = mo.vstack([
-            mo.md("※ グラフは横にスクロールできます"),
+            mo.md("※ グラフは横にスクロールできます（スマホ使用の場合）"),
             mo.md(
                 """
                 <div style="width: 100%; overflow-x: auto; padding-bottom: 10px; -webkit-overflow-scrolling: touch;">
