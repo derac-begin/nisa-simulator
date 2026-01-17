@@ -9,397 +9,268 @@ def _():
     import marimo as mo
     import altair as alt
     import pandas as pd
-    from typing import Dict, List, Union, Tuple, Optional
-    import math
-    from decimal import Decimal, ROUND_HALF_UP, Context
+    from decimal import Decimal, ROUND_HALF_UP
 
-    # Altairのグラフメニュー（右上の...）を非表示にする設定
+    # --- 設定・定数 ---
+    APP_TITLE = "積立NISAシミュレーター"
+    HEADER_IMAGE = "assets/header.png"
+    
+    # Altair設定: メニューを隠し、コンテナ幅に合わせる
     alt.renderers.enable('default', embed_options={'actions': False})
     
-    # --- 設定・定数 ---
-    APP_TITLE = "積立NISAシミュレーター | 堅牢・精密版"
-    THEME_COLOR_PRIMARY = "#0056b3"  # 信頼の青
-    THEME_COLOR_GROWTH = "#28a745"   # 成長の緑
-    HEADER_IMAGE_PATH = "assets/header.png"
-    
-    # 財務的な制限値
-    MAX_INVESTMENT = 1_000_000_000  # 上限10億円
-    MAX_YEARS = 100
-    MAX_RATE = 100.0  # 最大利回り100%
-
+    # カラーパレット
+    COLOR_PRINCIPAL = "#0056b3"  # 元本（青）
+    COLOR_PROFIT = "#28a745"     # 利益（緑）
     return (
         APP_TITLE,
-        Context,
+        COLOR_PRINCIPAL,
+        COLOR_PROFIT,
         Decimal,
-        Dict,
-        HEADER_IMAGE_PATH,
-        List,
-        MAX_INVESTMENT,
-        MAX_RATE,
-        MAX_YEARS,
-        Optional,
+        HEADER_IMAGE,
         ROUND_HALF_UP,
-        THEME_COLOR_GROWTH,
-        THEME_COLOR_PRIMARY,
-        Tuple,
-        Union,
         alt,
-        math,
         mo,
         pd,
     )
 
 
 @app.cell
-def _(mo):
-    mo.md(
+def _(Decimal, ROUND_HALF_UP, pd):
+    # --- 計算ロジック (純粋な関数として定義) ---
+    
+    def calculate_asset_growth(monthly_yen: int, years: int, rate_pct: float) -> pd.DataFrame:
         """
-        # 📈 積立NISA スマートシミュレーター
-        
-        将来の資産推移を**精密な財務計算**でシミュレーションします。
-
-        ※ グラフ右上の「...」から画像を保存できます（メニューは英語表記です）
+        積立シミュレーションを行い、年ごとの推移をDataFrameで返す
         """
-    )
-    return
-
-
-@app.cell
-def _(HEADER_IMAGE_PATH, mo):
-    # ヘッダー画像
-    # styleで高さを制限し、object-fitでトリミング調整
-    header_img = mo.image(
-        src=HEADER_IMAGE_PATH, 
-        rounded=True, 
-        alt="将来の資産形成イメージグラフ",
-        width="100%",
-        style={"max-height": "300px", "object-fit": "cover"} 
-    )
-    return header_img,
-
-
-@app.cell
-def _(
-    Decimal,
-    Dict,
-    List,
-    MAX_INVESTMENT,
-    MAX_RATE,
-    MAX_YEARS,
-    ROUND_HALF_UP,
-    Tuple,
-    Union,
-    math,
-    pd,
-):
-    def validate_input(
-        monthly_amount: Union[int, float], years: int, rate_percent: Union[int, float]
-    ) -> Tuple[bool, str]:
-        """
-        Strictly validates user inputs.
-        Checks for types, ranges, and special floating point values (NaN, Inf).
-        """
-        try:
-            # Check 1: Type Safety & NaN/Inf Check
-            if not isinstance(monthly_amount, (int, float)):
-                return False, "Investment amount must be a number."
-            if math.isnan(monthly_amount) or math.isinf(monthly_amount):
-                return False, "Invalid investment amount value."
-            
-            if not isinstance(years, (int, float)): # Slider might return float
-                 return False, "Years must be a number."
-            if math.isnan(years) or math.isinf(years):
-                 return False, "Invalid years value."
-            
-            if not isinstance(rate_percent, (int, float)):
-                return False, "Rate must be a number."
-            if math.isnan(rate_percent) or math.isinf(rate_percent):
-                return False, "Invalid rate value."
-
-            # Check 2: Range Logic
-            if monthly_amount < 0:
-                return False, "Investment amount cannot be negative."
-            if monthly_amount > MAX_INVESTMENT:
-                return False, f"Investment amount exceeds limit (¥{MAX_INVESTMENT:,})."
-
-            if years < 0 or years > MAX_YEARS:
-                return False, f"Years must be between 0 and {MAX_YEARS}."
-
-            if rate_percent < 0 or rate_percent > MAX_RATE:
-                return False, "Rate is invalid (0-100%)."
-
-            return True, ""
-
-        except Exception as e:
-            # Fail safe for any unexpected validation errors
-            return False, f"Validation error: {str(e)}"
-
-    def calculate_compound_interest(
-        monthly_amount: float, years: int, rate_percent: float
-    ) -> pd.DataFrame:
-        """
-        Calculates yearly asset progression using Decimal for financial precision.
-        """
-        # 1. Validation
-        is_valid, err = validate_input(monthly_amount, years, rate_percent)
-        if not is_valid:
-            # Return empty DF. The UI handles the error message display.
-            return pd.DataFrame({"Year": [], "Principal": [], "Interest": [], "Total": []})
-
-        try:
-            # 2. Convert to Decimal for precise calculation
-            # Use string conversion to avoid float artifacting before Decimal conversion
-            d_monthly = Decimal(str(monthly_amount))
-            d_rate_annual = Decimal(str(rate_percent)) / Decimal("100")
-            d_rate_monthly = d_rate_annual / Decimal("12")
-            
-            months = int(years * 12)
-            
-            data: List[Dict[str, Union[int, float]]] = []
-            
-            current_principal = Decimal("0")
-            current_total = Decimal("0")
-
-            # 3. Calculation Loop
-            for m in range(1, months + 1):
-                current_principal += d_monthly
-                # Monthly compounding formula: (Previous + MonthlyInput) * (1 + MonthlyRate)
-                # Assumes investment at start of month or simply adds to pot before interest
-                # Simple model: Add money, then apply interest
-                current_total = (current_total + d_monthly) * (Decimal("1") + d_rate_monthly)
-
-                # Record at year end
-                if m % 12 == 0:
-                    year = m // 12
-                    interest = current_total - current_principal
-                    
-                    # Rounding down/half-up to integer for display (Yen has no cents)
-                    # Quantize ensures consistent rounding strategy
-                    data.append({
-                        "Year": int(year),
-                        "Principal": int(current_principal.quantize(Decimal("1."), rounding=ROUND_HALF_UP)),
-                        "Interest": int(interest.quantize(Decimal("1."), rounding=ROUND_HALF_UP)),
-                        "Total": int(current_total.quantize(Decimal("1."), rounding=ROUND_HALF_UP))
-                    })
-
-            # Handle Year 0
-            if years == 0:
-                data.append({"Year": 0, "Principal": 0, "Interest": 0, "Total": 0})
-            elif data and data[0]["Year"] != 0:
-                data.insert(0, {"Year": 0, "Principal": 0, "Interest": 0, "Total": 0})
-
-            return pd.DataFrame(data)
-
-        except Exception as e:
-            # Catch-all for calculation errors (e.g. Overflow) to prevent crash
-            print(f"Calculation Error: {e}")
+        if years <= 0:
             return pd.DataFrame()
 
-    return calculate_compound_interest, validate_input
+        # 高精度計算のためのDecimal変換
+        d_monthly = Decimal(str(monthly_yen))
+        d_rate_annual = Decimal(str(rate_pct)) / Decimal("100")
+        d_rate_monthly = d_rate_annual / Decimal("12")
+        
+        months = int(years * 12)
+        data = []
+        
+        current_principal = Decimal("0")
+        current_total = Decimal("0")
+
+        # 0年目の初期状態
+        data.append({"Year": 0, "Principal": 0, "Profit": 0, "Total": 0})
+
+        for m in range(1, months + 1):
+            # 月初に積立 → 月末に利息がつくと仮定
+            current_principal += d_monthly
+            current_total = (current_total + d_monthly) * (Decimal("1") + d_rate_monthly)
+
+            # 1年ごとに記録
+            if m % 12 == 0:
+                year = m // 12
+                # 表示用に整数丸め
+                principal_int = int(current_principal.quantize(Decimal("1."), rounding=ROUND_HALF_UP))
+                total_int = int(current_total.quantize(Decimal("1."), rounding=ROUND_HALF_UP))
+                profit_int = total_int - principal_int
+                
+                data.append({
+                    "Year": year,
+                    "Principal": principal_int,
+                    "Profit": profit_int,
+                    "Total": total_int
+                })
+                
+        return pd.DataFrame(data)
+    return calculate_asset_growth,
+
+
+@app.cell
+def _(APP_TITLE, HEADER_IMAGE, mo):
+    # --- UI: ヘッダーエリア ---
+    
+    # 画像があれば表示、なければタイトルのみ
+    # width="100%" と object-fit でレスポンシブ対応を確実に
+    try:
+        header_visual = mo.image(
+            src=HEADER_IMAGE,
+            alt="Header",
+            width="100%",
+            style={"max-height": "250px", "object-fit": "cover", "border-radius": "8px"}
+        )
+    except:
+        header_visual = mo.md("")
+
+    header_section = mo.vstack([
+        header_visual,
+        mo.md(f"# 📈 {APP_TITLE}"),
+        mo.md("毎月の積立額と期間、利回りを入力すると、将来の資産推移をシミュレーションします。")
+    ], gap=1)
+    return header_section, header_visual
 
 
 @app.cell
 def _(mo):
-    # UIコンポーネント
-    investment_input = mo.ui.slider(
-        start=1000, stop=300000, step=1000, value=30000, 
-        label="毎月の積立額 (円)", full_width=True
-    )
-
-    years_input = mo.ui.slider(
-        start=1, stop=40, step=1, value=20, 
-        label="積立期間 (年)", full_width=True
-    )
-
-    rate_input = mo.ui.slider(
-        start=0.1, stop=15.0, step=0.1, value=5.0, 
-        label="想定利回り (年率 %)", full_width=True
-    )
-    return investment_input, rate_input, years_input
-
-
-@app.cell
-def _(
-    calculate_compound_interest,
-    investment_input,
-    mo,
-    rate_input,
-    validate_input,
-    years_input,
-):
-    # Logic Controller
-    inv_amount = investment_input.value
-    inv_years = years_input.value
-    inv_rate = rate_input.value
-
-    # Validate specifically for UI Feedback
-    _is_valid, _err_msg = validate_input(inv_amount, inv_years, inv_rate)
-
-    if not _is_valid:
-        # Display specific error message securely
-        error_callout = mo.callout(_err_msg, kind="danger")
-        results_df = None
-    else:
-        error_callout = None
-        results_df = calculate_compound_interest(inv_amount, inv_years, inv_rate)
+    # --- UI: 入力フォーム ---
+    # スマホ対応: hstackではなく、PCでもスマホでも使いやすいvstackベースにするか
+    # 幅に余裕がある場合のみ横並びになるような設計が望ましいが、
+    # スライダーは横幅を食うため、ここでは安全に「縦積み」を採用する。
     
-    return error_callout, inv_amount, inv_rate, inv_years, results_df
-
-
-@app.cell
-def _(
-    THEME_COLOR_GROWTH,
-    THEME_COLOR_PRIMARY,
-    alt,
-    mo,
-    results_df,
-):
-    # Visualization Logic
-    if results_df is None or results_df.empty:
-        chart_viz = mo.md(
-            """
-            <div style="padding: 20px; text-align: center; color: gray;">
-             数値を入力してシミュレーションを開始してください...
-            </div>
-            """
-        )
-        summary_stats = mo.md("")
-    else:
-        # 1. 日本語用にカラム名を変更（リネーム）
-        df_jp = results_df.rename(columns={
-            'Year': '経過年数',
-            'Principal': '元本',
-            'Interest': '運用益',
-            'Total': '総資産'
-        })
-
-        # 2. グラフ用にデータを整形 (Melt)
-        try:
-            df_melted = df_jp.melt(
-                id_vars=['経過年数'], 
-                value_vars=['元本', '運用益'], 
-                var_name='内訳', 
-                value_name='金額'
-            )
-            
-            # 3. グラフ定義 (スマホ完全対応版)
-            base = alt.Chart(df_melted).encode(
-                x=alt.X('経過年数', axis=alt.Axis(title='経過年数 (年)')),
-                y=alt.Y('金額', axis=alt.Axis(format='~s', title='金額 (円)')),
-                color=alt.Color(
-                    '内訳', 
-                    scale=alt.Scale(
-                        domain=['元本', '運用益'], 
-                        range=[THEME_COLOR_PRIMARY, THEME_COLOR_GROWTH]
-                    ),
-                    legend=alt.Legend(orient='bottom', direction='horizontal', title=None)
-                ),
-                tooltip=['経過年数', '内訳', alt.Tooltip('金額', format=',.0f')]
-            ).properties(
-                width='container',
-                height=400,
-                # ▼▼▼【ここを追加！】これがないとスマホではみ出します ▼▼▼
-                autosize=alt.AutoSizeParams(type='fit', contains='padding')
-            )
-            
-            chart_viz = base.mark_area(opacity=0.8).interactive()
-            
-            # Summary Metrics (ここはそのままでOKです)
-            last_row = results_df.iloc[-1]
-            total_principal = last_row['Principal']
-            total_profit = last_row['Interest']
-            total_asset = last_row['Total']
-            
-            # スマホ対応（レスポンシブ）のためのHTML/CSSデザイン
-            # flex-wrap: wrap により、画面が狭いと自動で改行されます
-            summary_stats = mo.md(
-                f"""
-                <div style="display: flex; flex-wrap: wrap; gap: 10px; width: 100%;">
-                    <div style="flex: 1 1 300px; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; background-color: #f8f9fa;">
-                        <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">総資産</div>
-                        <div style="font-size: 1.8em; font-weight: bold; color: {THEME_COLOR_PRIMARY};">¥{total_asset:,.0f}</div>
-                    </div>
-                    
-                    <div style="flex: 1 1 140px; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px;">
-                        <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">総元金</div>
-                        <div style="font-size: 1.2em; font-weight: bold;">¥{total_principal:,.0f}</div>
-                    </div>
-                    
-                    <div style="flex: 1 1 140px; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px;">
-                        <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">総運用益</div>
-                        <div style="font-size: 1.2em; font-weight: bold; color: {THEME_COLOR_GROWTH};">+¥{total_profit:,.0f}</div>
-                    </div>
-                </div>
-                """
-            )
-            
-        except Exception as e:
-            chart_viz = mo.callout(f"Visualization Error: {e}", kind="danger")
-            summary_stats = mo.md("")
-
-    return (
-        base,
-        chart_viz,
-        df_melted,
-        last_row,
-        summary_stats,
-        total_asset,
-        total_principal,
-        total_profit,
+    input_monthly = mo.ui.slider(
+        start=1000, stop=300000, step=1000, value=30000, 
+        label="毎月の積立額 (円)", 
+        full_width=True
+    )
+    input_years = mo.ui.slider(
+        start=1, stop=50, step=1, value=20, 
+        label="積立期間 (年)", 
+        full_width=True
+    )
+    input_rate = mo.ui.slider(
+        start=0.1, stop=15.0, step=0.1, value=5.0, 
+        label="想定利回り (%)", 
+        full_width=True
     )
 
+    # 入力エリアのレイアウト
+    input_section = mo.md(
+        """
+        ### 🛠 パラメーター設定
+        """
+    )
+    return input_monthly, input_rate, input_section, input_years
+
+
+@app.cell
+def _(calculate_asset_growth, input_monthly, input_rate, input_years):
+    # --- データ処理 ---
+    # UIの値をリアルタイムに取得して計算
+    df_result = calculate_asset_growth(
+        input_monthly.value,
+        input_years.value,
+        input_rate.value
+    )
+    
+    # 最終結果の抽出（統計表示用）
+    if not df_result.empty:
+        last_rec = df_result.iloc[-1]
+        final_total = last_rec["Total"]
+        final_principal = last_rec["Principal"]
+        final_profit = last_rec["Profit"]
+    else:
+        final_total = final_principal = final_profit = 0
+    return df_result, final_principal, final_profit, final_total, last_rec
+
 
 @app.cell
 def _(
-    app_layout,
-    chart_viz,
-    error_callout,
-    header_img,
-    investment_input,
+    COLOR_PRINCIPAL,
+    COLOR_PROFIT,
+    alt,
+    df_result,
+    final_principal,
+    final_profit,
+    final_total,
     mo,
-    rate_input,
-    summary_stats,
-    years_input,
 ):
-    # App Layout
+    # --- ビジュアライゼーション ---
+
+    # 1. 統計カード (marimo.stat を使用してクリーンに)
+    stats_section = mo.hstack([
+        mo.stat(
+            label="総資産",
+            value=f"{final_total:,.0f}円",
+            caption="積み立てた結果の総額",
+            kind="neutral" # 色付けなし
+        ),
+        mo.stat(
+            label="元本総額",
+            value=f"{final_principal:,.0f}円",
+            caption="あなたが積み立てた金額"
+        ),
+        mo.stat(
+            label="運用収益",
+            value=f"+{final_profit:,.0f}円",
+            caption="増えた金額",
+            kind="success" # 緑色
+        )
+    ], gap=1, widths="equal") # widths="equal" でスマホでも綺麗に折り返されることが多い
+
+    # 2. グラフ描画
+    if df_result.empty:
+        chart = mo.md("データがありません")
+    else:
+        # Altair用にデータを変形 (Wide -> Long)
+        df_melt = df_result.melt(
+            id_vars=["Year"], 
+            value_vars=["Principal", "Profit"],
+            var_name="Type", 
+            value_name="Amount"
+        )
+        
+        # 日本語ラベルへの置換マップ
+        label_map = {"Principal": "元本", "Profit": "運用益"}
+        color_map = {"Principal": COLOR_PRINCIPAL, "Profit": COLOR_PROFIT}
+        
+        df_melt["Label"] = df_melt["Type"].map(label_map)
+
+        # チャート定義
+        chart = alt.Chart(df_melt).mark_area(opacity=0.85).encode(
+            x=alt.X("Year", axis=alt.Axis(title="経過年数 (年)")),
+            y=alt.Y("Amount", axis=alt.Axis(format="~s", title="金額 (円)"), stack=True),
+            color=alt.Color(
+                "Type",
+                scale=alt.Scale(domain=["Principal", "Profit"], range=[COLOR_PRINCIPAL, COLOR_PROFIT]),
+                legend=alt.Legend(title=None, labelExpr=f"datum.value == 'Principal' ? '元本' : '運用益'"),
+            ),
+            tooltip=[
+                alt.Tooltip("Year", title="年数"),
+                alt.Tooltip("Label", title="内訳"),
+                alt.Tooltip("Amount", format=",.0f", title="金額(円)")
+            ]
+        ).properties(
+            # ★重要: width='container' で親要素に合わせて伸縮させる
+            width="container",
+            height=350
+        )
+
+    return chart, color_map, df_melt, label_map, stats_section
+
+
+@app.cell
+def _(
+    chart,
+    header_section,
+    input_monthly,
+    input_rate,
+    input_section,
+    input_years,
+    mo,
+    stats_section,
+):
+    # --- 最終レイアウト組立 ---
+    
     app_layout = mo.vstack([
-        header_img,
-        mo.md("## パラメーター"),
-        mo.hstack([investment_input, years_input, rate_input], gap=2),
-        error_callout if error_callout else mo.md(""),
-        mo.md("## シミュレーション結果"),
-        summary_stats,
-        chart_viz
-    ])
+        header_section,
+        mo.md("---"), # 区切り線
+        
+        input_section,
+        # vstackを使用することで、スマホでも無理なく表示できる
+        mo.vstack([
+            input_monthly,
+            input_years,
+            input_rate
+        ], gap=1),
+        
+        mo.md("### 📊 シミュレーション結果"),
+        stats_section,
+        
+        # チャートを配置（mo.ui.altair_chartは不要、直接オブジェクトを置く）
+        chart
+        
+    ], gap=1.5) # 要素間の余白を統一
+
+    app_layout
     return app_layout,
 
-
-@app.cell
-def _(app_layout):
-    app_layout
-    return
-
-@app.cell
-def _(mo):
-    # 【最終手段】 CSSでグラフを強制的に画面内に収めるパッチ
-    # これにより、グラフの内部設定に関わらず、表示サイズがスマホ幅に合わせて縮小されます
-    mo.md(
-        """
-        <style>
-        /* グラフ（Canvas/SVG）を画面幅に合わせて強制リサイズ */
-        canvas, svg {
-            max-width: 100% !important;
-            height: auto !important;
-        }
-        
-        /* 横スクロール発生時の保険 */
-        .marimo-output-content {
-            overflow-x: hidden !important;
-        }
-        </style>
-        """
-    )
-    return
 
 if __name__ == "__main__":
     app.run()
