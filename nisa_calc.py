@@ -313,6 +313,35 @@ def _(mo):
     )
     return
 
+@app.cell
+def _(mo):
+    # ポートフォリオリンクの追加
+    mo.md(
+        """
+        ---
+        ### 🚀 他のツールも試してみる
+        
+        <a href="pfc.html" style="text-decoration: none;">
+            <div style="
+                border: 1px solid #e0e0e0;
+                padding: 15px;
+                border-radius: 8px;
+                background-color: #f9f9f9;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                transition: background-color 0.3s;
+            " onmouseover="this.style.backgroundColor='#f0f0f0'" onmouseout="this.style.backgroundColor='#f9f9f9'">
+                <div style="font-size: 24px;">💪</div>
+                <div>
+                    <div style="font-weight: bold; color: #333;">トレーニー専用 PFCバランス計算機</div>
+                    <div style="font-size: 12px; color: #666;">筋トレ・ダイエット中のカロリー計算はこちら</div>
+                </div>
+            </div>
+        </a>
+        """
+    )
+    return
 
 if __name__ == "__main__":
     app.run()
