@@ -11,7 +11,6 @@ def _():
     import pandas as pd
     from decimal import Decimal, ROUND_HALF_UP
     import math
-    import os
     return Decimal, ROUND_HALF_UP, alt, math, mo, os, pd
 
 
@@ -34,18 +33,19 @@ def _(mo):
 
 
 @app.cell
-def _(mo, os):
+def _(mo):
     # --- ヘッダー表示エリア ---
-    # 画像パスを確認し、存在しない場合はテキストのみを表示する安全設計
+    # WASM環境(Web上)では os.path.exists が効かないため、チェックを外して直接指定します。
+    # ブラウザがサーバー上の画像を正しく読み込みます。
     image_path = "assets/header_pfc.png"
     
-    if os.path.exists(image_path):
-        header_img = mo.image(src=image_path, alt="PFC Calculator Header", width="100%", rounded=True)
-    else:
-        # 画像がない場合のプレースホルダー
-        header_img = mo.md(f"_{image_path} が見つかりません_")
+    header_img = mo.image(
+        src=image_path,
+        alt="PFC Calculator Header",
+        width="100%", 
+        rounded=True
+    )
 
-    # 【修正1】ここを作成するだけでなく、変数に格納して return します
     header_section = mo.vstack([
         header_img,
         mo.md("# 💪 トレーニー専用 PFCバランス計算機 (Secured)"),
