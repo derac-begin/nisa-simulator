@@ -16,15 +16,39 @@ def _():
 
 @app.cell
 def _(mo):
-    # CSS注入: スマホ最適化とグラフの横スクロール対応
+    # CSS注入: スマホ最適化とグラフの横スクロール対応 + 【追加】グラフメニュー非表示
     mo.md(
         """
         <style>
-        .marimo { width: 100% !important; max-width: 100% !important; padding: 1rem; }
-        .chart-container { width: 100%; overflow-x: auto; padding-bottom: 20px; }
-        .error-box { 
-            background-color: #ffebee; color: #c62828; 
-            padding: 10px; border-radius: 4px; border: 1px solid #ef9a9a; font-weight: bold; 
+        /* 全体の幅を強制的に100%にする */
+        .marimo {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 1rem;
+        }
+        /* グラフコンテナに横スクロールを適用 */
+        .chart-container {
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 20px;
+        }
+        /* エラーメッセージのスタイル */
+        .error-box {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ef9a9a;
+            font-weight: bold;
+        }
+        /* 【追加】Altair(Vega)の「...」メニューを強制的に非表示にする */
+        .vega-actions {
+            display: none !important;
+        }
+        /* 【追加】詳細タグ(summary)のカーソルをポインターにする */
+        details > summary {
+            cursor: pointer;
+            outline: none;
         }
         </style>
         """
