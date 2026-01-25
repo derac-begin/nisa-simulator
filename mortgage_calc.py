@@ -316,7 +316,7 @@ def _(alt, mo, pd, sim_schedule):
             y=alt.Y("balance:Q", title="ローン残高 (円)"),
             tooltip=[alt.Tooltip("year", title="年"), alt.Tooltip("balance", title="残高", format=",")]
         )
-        .properties(height=300, width="container")
+        .properties(height=300, width="600")
     )
 
     _table_html = _df.head(24).to_html(index=False, classes="table", border=0)
