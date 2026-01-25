@@ -1,0 +1,125 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.18.4"
+  },
+  "cells": [
+    {
+      "id": "MJUe",
+      "code_hash": "b689b1f5d7a5cfce16d6f146c1d6ca3b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"_1\">\ud83c\udfe0 \u4f4f\u5b85\u30ed\u30fc\u30f3\u8fd4\u6e08\u30b7\u30df\u30e5\u30ec\u30fc\u30bf\u30fc</h1>\n<hr /></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "7fa2deba99ec56255b62e9761b5ccdc0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><style>\n.marimo { max-width: 1200px !important; margin: 0 auto; }\n.input-card {\n    background: #ffffff;\n    border: 1px solid #e2e8f0;\n    border-radius: 12px;\n    padding: 20px;\n    margin-bottom: 20px;\n    box-shadow: 0 1px 3px rgba(0,0,0,0.1);\n}\n.flex-container {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 16px;\n    width: 100%;\n}\n.flex-item {\n    flex: 1 1 300px;\n    min-width: 280px;\n}\n.metric-grid {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 12px;\n    margin: 20px 0;\n}\n.metric-card {\n    flex: 1 1 calc(33.333% - 12px);\n    min-width: 280px;\n    padding: 20px;\n    border-radius: 12px;\n    background: #f8fafc;\n    border-left: 6px solid #3b82f6;\n    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);\n}\n.metric-title { font-size: 0.85rem; color: #64748b; font-weight: 600; }\n.metric-value { font-size: 1.6rem; color: #1e293b; font-weight: 800; margin: 4px 0; }\n.metric-unit { font-size: 0.9rem; color: #94a3b8; }\n.scrollable-container {\n    width: 100%;\n    overflow-x: auto;\n    border-radius: 8px;\n    border: 1px solid #e2e8f0;\n    background: white;\n    padding: 10px;\n}\n</style></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hbol",
+      "code_hash": "045a734c525fd44aa28dc714c1805336",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "d7bad115064f6cf0b4472d13699dddda",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "16804ace69a949d754d04ac8ce1610ef",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "38d2b6af9c63ed095307effc3b8d9bf0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem'><span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"_1\">\u2699\ufe0f \u57fa\u672c\u8a2d\u5b9a</h3></span>\n    <div class=\"input-card\">\n        <div class=\"flex-container\">\n            <div class=\"flex-item\"><marimo-ui-element object-id='bkHC-0' random-id='265d3e33-83d4-b836-42d8-8fe7da059242'><marimo-number data-initial-value='3500' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;\u501f\u5165\u91d1\u984d (\u4e07\u5186)&lt;/span&gt;&lt;/span&gt;&quot;' data-start='100' data-stop='30000' data-step='10' data-debounce='false' data-full-width='true' data-disabled='false'></marimo-number></marimo-ui-element></div>\n            <div class=\"flex-item\"><marimo-ui-element object-id='bkHC-1' random-id='7ecd4fd7-71ff-c65c-9b0a-a0fd3454c064'><marimo-number data-initial-value='0.525' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;\u5e74\u5229 (%)&lt;/span&gt;&lt;/span&gt;&quot;' data-start='0.0' data-stop='20.0' data-step='0.001' data-debounce='false' data-full-width='true' data-disabled='false'></marimo-number></marimo-ui-element></div>\n            <div class=\"flex-item\"><marimo-ui-element object-id='bkHC-2' random-id='81bd00e2-c73e-d584-5a55-82c14d92e43c'><marimo-slider data-initial-value='35' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;\u8fd4\u6e08\u671f\u9593 (\u5e74)&lt;/span&gt;&lt;/span&gt;&quot;' data-start='1' data-stop='50' data-step='1' data-steps='[]' data-debounce='false' data-disabled='false' data-orientation='&quot;horizontal&quot;' data-show-value='false' data-include-input='false' data-full-width='true'></marimo-slider></marimo-ui-element></div>\n            <div class=\"flex-item\"><marimo-ui-element object-id='bkHC-3' random-id='33784756-b061-6d9b-ddd8-c1b0a8243de7'><marimo-dropdown data-initial-value='[&quot;\u5143\u5229\u5747\u7b49\u8fd4\u6e08 (\u6bce\u6708\u4e00\u5b9a\u984d)&quot;]' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;\u8fd4\u6e08\u65b9\u5f0f&lt;/span&gt;&lt;/span&gt;&quot;' data-options='[&quot;\u5143\u5229\u5747\u7b49\u8fd4\u6e08 (\u6bce\u6708\u4e00\u5b9a\u984d)&quot;,&quot;\u5143\u91d1\u5747\u7b49\u8fd4\u6e08 (\u5143\u91d1\u3092\u4e00\u5b9a\u984d)&quot;]' data-allow-select-none='false' data-searchable='false' data-full-width='true'></marimo-dropdown></marimo-ui-element></div>\n        </div>\n        <div style=\"margin-top: 15px;\"><marimo-ui-element object-id='bkHC-4' random-id='51c3489c-1b9f-a82e-1bb9-355655c24f49'><marimo-switch data-initial-value='false' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;\u30dc\u30fc\u30ca\u30b9\u6255\u3044\u3092\u5229\u7528\u3059\u308b&lt;/span&gt;&lt;/span&gt;&quot;' data-disabled='false'></marimo-switch></marimo-ui-element></div>\n        <div style=\"margin-top: 10px;\"><div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem'><span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"50-1000\">\ud83c\udf81 \u30dc\u30fc\u30ca\u30b9\u8a2d\u5b9a (\u6700\u5927\u501f\u5165\u984d\u306e50%: 1000\u4e07\u5186)</h3></span><marimo-ui-element object-id='lEQa-0' random-id='4cf64810-2aef-de5a-6325-463c8ebcec67'><marimo-number data-initial-value='0' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;\u30dc\u30fc\u30ca\u30b9\u6255\u3044\u5143\u91d1\u5408\u8a08 (\u4e07\u5186)&lt;/span&gt;&lt;/span&gt;&quot;' data-start='0' data-stop='1000' data-step='10' data-debounce='false' data-full-width='true' data-disabled='false'></marimo-number></marimo-ui-element></div></div>\n    </div>\n    </div>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "ca3370a4e918845abd838512eb1e8b63",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "bced3622f6c8d1a4a615a5145b7f08eb",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><div class=\"metric-grid\">\n    <div class=\"metric-card\" style=\"border-left-color: #10b981;\">\n        <div class=\"metric-title\">\u6bce\u6708\u306e\u8fd4\u6e08\u984d (\u76ee\u5b89)</div>\n        <div class=\"metric-value\">98,214 <span class=\"metric-unit\">\u5186</span></div>\n        <div class=\"metric-title\" style=\"margin-top:8px;\">\u521d\u56de\u652f\u6255\u984d</div>\n    </div>\n\n    <div class=\"metric-card\" style=\"border-left-color: #f59e0b;\">\n        <div class=\"metric-title\">\u30dc\u30fc\u30ca\u30b9\u6708 \u52a0\u7b97\u984d</div>\n        <div class=\"metric-value\">196,279 <span class=\"metric-unit\">\u5186</span></div>\n        <div class=\"metric-title\" style=\"margin-top:8px;\">\u5e742\u56de\u52a0\u7b97</div>\n    </div>\n\n    <div class=\"metric-card\" style=\"border-left-color: #3b82f6;\">\n        <div class=\"metric-title\">\u7dcf\u652f\u6255\u984d</div>\n        <div class=\"metric-value\">37,593,650 <span class=\"metric-unit\">\u5186</span></div>\n        <div class=\"metric-title\" style=\"margin-top:8px;\">\u5229\u606f\u5408\u8a08: 17,593,650 \u5186</div>\n    </div>\n</div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "011e5c16b3c9128a163e31ce0ef301ff",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem'><span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"_1\">\ud83d\udcc9 \u8fd4\u6e08\u63a8\u79fb\u30b7\u30df\u30e5\u30ec\u30fc\u30b7\u30e7\u30f3</h3></span><div class=\"scrollable-container\"><marimo-ui-element object-id='BYtC-0' random-id='95c874fb-e3da-dbfe-37ac-680e50a53a32'><marimo-vega data-initial-value='{}' data-label='null' data-spec='{&quot;config&quot;:{&quot;view&quot;:{&quot;continuousWidth&quot;:300,&quot;continuousHeight&quot;:300}},&quot;data&quot;:{&quot;url&quot;:&quot;./@file/6802-7704-REmLv1m0.arrow&quot;,&quot;format&quot;:{&quot;type&quot;:&quot;arrow&quot;}},&quot;mark&quot;:{&quot;type&quot;:&quot;area&quot;,&quot;color&quot;:{&quot;gradient&quot;:&quot;linear&quot;,&quot;stops&quot;:[{&quot;color&quot;:&quot;#3b82f6&quot;,&quot;offset&quot;:0},{&quot;color&quot;:&quot;rgba(59, 130, 246, 0.1)&quot;,&quot;offset&quot;:1}],&quot;x1&quot;:1,&quot;x2&quot;:1,&quot;y1&quot;:1,&quot;y2&quot;:0},&quot;line&quot;:{&quot;color&quot;:&quot;#3b82f6&quot;}},&quot;encoding&quot;:{&quot;tooltip&quot;:[{&quot;field&quot;:&quot;year&quot;,&quot;title&quot;:&quot;\u5e74&quot;,&quot;type&quot;:&quot;quantitative&quot;},{&quot;field&quot;:&quot;balance&quot;,&quot;format&quot;:&quot;,&quot;,&quot;title&quot;:&quot;\u6b8b\u9ad8&quot;,&quot;type&quot;:&quot;quantitative&quot;}],&quot;x&quot;:{&quot;field&quot;:&quot;year&quot;,&quot;title&quot;:&quot;\u7d4c\u904e\u5e74\u6570&quot;,&quot;type&quot;:&quot;quantitative&quot;},&quot;y&quot;:{&quot;field&quot;:&quot;balance&quot;,&quot;title&quot;:&quot;\u30ed\u30fc\u30f3\u6b8b\u9ad8 (\u5186)&quot;,&quot;type&quot;:&quot;quantitative&quot;}},&quot;height&quot;:300,&quot;width&quot;:&quot;container&quot;,&quot;&#36;schema&quot;:&quot;https://vega.github.io/schema/vega-lite/v5.20.1.json&quot;}' data-chart-selection='true' data-field-selection='true' data-embed-options='{}'></marimo-vega></marimo-ui-element></div><span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"24\">\ud83d\udcc5 \u8fd4\u6e08\u4e88\u5b9a\u8868 (\u629c\u7c8b: 24\u30f6\u6708\u5206)</h3></span><div class=\"scrollable-container\"><table class=\"dataframe table\">\n  <thead>\n    <tr style=\"text-align: right;\">\n      <th>month</th>\n      <th>year</th>\n      <th>payment</th>\n      <th>principal</th>\n      <th>interest</th>\n      <th>balance</th>\n      <th>type</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>1</td>\n      <td>1</td>\n      <td>98214</td>\n      <td>35714</td>\n      <td>62500</td>\n      <td>19964286</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>2</td>\n      <td>1</td>\n      <td>98065</td>\n      <td>35714</td>\n      <td>62351</td>\n      <td>19928572</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>3</td>\n      <td>1</td>\n      <td>97916</td>\n      <td>35714</td>\n      <td>62202</td>\n      <td>19892858</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>4</td>\n      <td>1</td>\n      <td>97767</td>\n      <td>35714</td>\n      <td>62053</td>\n      <td>19857144</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>5</td>\n      <td>1</td>\n      <td>97618</td>\n      <td>35714</td>\n      <td>61904</td>\n      <td>19821430</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>6</td>\n      <td>1</td>\n      <td>293897</td>\n      <td>107142</td>\n      <td>186755</td>\n      <td>19714288</td>\n      <td>\u901a\u5e38+\u30dc\u30fc\u30ca\u30b9</td>\n    </tr>\n    <tr>\n      <td>7</td>\n      <td>1</td>\n      <td>97321</td>\n      <td>35714</td>\n      <td>61607</td>\n      <td>19678574</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>8</td>\n      <td>1</td>\n      <td>97172</td>\n      <td>35714</td>\n      <td>61458</td>\n      <td>19642860</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>9</td>\n      <td>1</td>\n      <td>97023</td>\n      <td>35714</td>\n      <td>61309</td>\n      <td>19607146</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>10</td>\n      <td>1</td>\n      <td>96874</td>\n      <td>35714</td>\n      <td>61160</td>\n      <td>19571432</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>11</td>\n      <td>1</td>\n      <td>96725</td>\n      <td>35714</td>\n      <td>61011</td>\n      <td>19535718</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>12</td>\n      <td>1</td>\n      <td>291219</td>\n      <td>107142</td>\n      <td>184077</td>\n      <td>19428576</td>\n      <td>\u901a\u5e38+\u30dc\u30fc\u30ca\u30b9</td>\n    </tr>\n    <tr>\n      <td>13</td>\n      <td>2</td>\n      <td>96428</td>\n      <td>35714</td>\n      <td>60714</td>\n      <td>19392862</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>14</td>\n      <td>2</td>\n      <td>96279</td>\n      <td>35714</td>\n      <td>60565</td>\n      <td>19357148</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>15</td>\n      <td>2</td>\n      <td>96130</td>\n      <td>35714</td>\n      <td>60416</td>\n      <td>19321434</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>16</td>\n      <td>2</td>\n      <td>95981</td>\n      <td>35714</td>\n      <td>60267</td>\n      <td>19285720</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>17</td>\n      <td>2</td>\n      <td>95833</td>\n      <td>35714</td>\n      <td>60119</td>\n      <td>19250006</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>18</td>\n      <td>2</td>\n      <td>288540</td>\n      <td>107142</td>\n      <td>181398</td>\n      <td>19142864</td>\n      <td>\u901a\u5e38+\u30dc\u30fc\u30ca\u30b9</td>\n    </tr>\n    <tr>\n      <td>19</td>\n      <td>2</td>\n      <td>95535</td>\n      <td>35714</td>\n      <td>59821</td>\n      <td>19107150</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>20</td>\n      <td>2</td>\n      <td>95386</td>\n      <td>35714</td>\n      <td>59672</td>\n      <td>19071436</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>21</td>\n      <td>2</td>\n      <td>95237</td>\n      <td>35714</td>\n      <td>59523</td>\n      <td>19035722</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>22</td>\n      <td>2</td>\n      <td>95089</td>\n      <td>35714</td>\n      <td>59375</td>\n      <td>19000008</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>23</td>\n      <td>2</td>\n      <td>94940</td>\n      <td>35714</td>\n      <td>59226</td>\n      <td>18964294</td>\n      <td>\u901a\u5e38</td>\n    </tr>\n    <tr>\n      <td>24</td>\n      <td>2</td>\n      <td>285861</td>\n      <td>107142</td>\n      <td>178719</td>\n      <td>18857152</td>\n      <td>\u901a\u5e38+\u30dc\u30fc\u30ca\u30b9</td>\n    </tr>\n  </tbody>\n</table></div><span class=\"markdown prose dark:prose-invert contents\"><hr />\n<span class=\"paragraph\"><em>\u203b \u672c\u30b7\u30df\u30e5\u30ec\u30fc\u30b7\u30e7\u30f3\u306f\u6982\u7b97\u3067\u3059\u3002\u5b9f\u969b\u306e\u5951\u7d04\u6642\u306b\u306f\u91d1\u878d\u6a5f\u95a2\u306e\u8a08\u7b97\u8a73\u7d30\u3092\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044\u3002</em></span></span></div>"
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}
