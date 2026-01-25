@@ -272,13 +272,21 @@ def _(bonus_toggle_ui, mo, sim_schedule, sim_total_int, sim_total_pay):
         </div>
         """
 
+    # ---------------------------------------------------------
+    # 修正ポイント: 返済方式に合わせて注釈を変えるロジックを追加
+    # ---------------------------------------------------------
+    if method.value == "annuity":
+        payment_caption = "完済まで一定額"
+    else:
+        payment_caption = "※以降、毎月減少します"
+
     # メインKPIの組み立て
     main_kpis = f"""
     <div class="metric-grid">
         <div class="metric-card" style="border-left-color: #10b981;">
             <div class="metric-title">毎月の返済額 (目安)</div>
             <div class="metric-value">{fmt(m_pay)} <span class="metric-unit">円</span></div>
-            <div class="metric-title" style="margin-top:8px;">初回支払額</div>
+            <div class="metric-title" style="margin-top:8px; font-weight:normal; font-size:0.9em;">{payment_caption}</div>
         </div>
         {bonus_card_html}
         <div class="metric-card" style="border-left-color: #3b82f6;">
@@ -289,6 +297,8 @@ def _(bonus_toggle_ui, mo, sim_schedule, sim_total_int, sim_total_pay):
     </div>
     """
     mo.md(main_kpis)
+    
+    # payment_caption を return に含める必要はありませんが、エラー回避のため元の並びを維持します
     return bonus_card_html, fmt, m_pay, main_kpis
 
 
