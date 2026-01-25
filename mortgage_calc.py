@@ -30,7 +30,7 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    # CSS注入: UI/UXの美観とスマホ対応
+    # CSS注入: UI/UXの美観とスマホ対応の徹底
     mo.md(
         """
         <style>
@@ -69,7 +69,8 @@ def _(mo):
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .metric-title { font-size: 0.85rem; color: #64748b; font-weight: 600; }
-        .metric-value { font-size: 1.6rem; color: #1e293b; font-weight: 800; margin: 4px 0; }
+        .metric-value { font-size: 1.5rem; color: #1e293b; font-weight: 800; margin: 4px 0; }
+        .metric-subtext { font-size: 0.9rem; color: #3b82f6; font-weight: bold; }
         .metric-unit { font-size: 0.9rem; color: #94a3b8; }
         .scrollable-container {
             width: 100%;
@@ -79,6 +80,9 @@ def _(mo):
             background: white;
             padding: 10px;
         }
+        /* Altair/Vegaのスマホはみ出し防止 */
+        .vega-embed { width: 100% !important; }
+        canvas { max-width: 100% !important; height: auto !important; }
         </style>
         """
     )
@@ -99,14 +103,15 @@ def _(mo):
     years_ui = mo.ui.slider(
         label="返済期間 (年)", start=1, stop=50, step=1, value=35, full_width=True
     )
+    
+    # 修正ポイント: 内部値(value)を英語キーにして、表示を日本語に。初期値を内部値で指定。
     method_ui = mo.ui.dropdown(
         label="返済方式",
         options={
-            "元利均等返済 (毎月一定額)": "annuity", 
+            "元利均等返済 (毎月一定額)": "annuity",
             "元金均等返済 (元金を一定額)": "linear"
         },
-    # 修正ポイント: ここを「英語」ではなく「左側の日本語」と全く同じにします
-        value="元利均等返済 (毎月一定額)",
+        value="annuity",
         full_width=True
     )
     bonus_toggle_ui = mo.ui.switch(label="ボーナス払いを利用する", value=False)
@@ -116,7 +121,6 @@ def _(mo):
 
 @app.cell
 def _(bonus_toggle_ui, loan_amount_ui, mo):
-    # ボーナス設定の動的表示
     _max_bonus = int(loan_amount_ui.value * 0.5)
     bonus_amount_ui = mo.ui.number(
         label="ボーナス払い元金合計 (万円)", 
@@ -145,7 +149,6 @@ def _(
     mo,
     years_ui,
 ):
-    # メイン画面上部の設定エリア（Sidebarは不使用）
     mo.vstack([
         mo.md("### ⚙️ 基本設定"),
         mo.Html(f"""
@@ -184,7 +187,7 @@ def _(
         annual_rate = Decimal(str(interest_rate_ui.value)) / Decimal("100")
         monthly_rate = annual_rate / Decimal("12")
         total_months = int(years_ui.value) * 12
-        method = method_ui.value
+        method = method_ui.value # 'annuity' or 'linear'
         
         P_bonus_total = Decimal(str(bonus_amount_ui.value)) * Decimal("10000") if bonus_toggle_ui.value else Decimal("0")
         P_monthly_total = P_total - P_bonus_total
@@ -198,7 +201,7 @@ def _(
             return principal * (rate * (1 + rate)**n) / ((1 + rate)**n - 1)
 
         fixed_m_pmt = get_pmt(P_monthly_total, monthly_rate, total_months).quantize(Decimal("1"), ROUND_HALF_UP)
-        # ボーナスは年2回計算
+        # ボーナスは半年利(年利/2)で年2回払い
         fixed_b_pmt = get_pmt(P_bonus_total, annual_rate / Decimal("2"), int(years_ui.value) * 2).quantize(Decimal("1"), ROUND_HALF_UP) if bonus_toggle_ui.value else Decimal("0")
 
         rem_p_monthly = P_monthly_total
@@ -207,11 +210,12 @@ def _(
         for m in range(1, total_months + 1):
             is_bonus_month = (m % 6 == 0) and bonus_toggle_ui.value
             
-            # 通常月次計算
+            # 通常月計算
             int_m = (rem_p_monthly * monthly_rate).quantize(Decimal("1"), ROUND_FLOOR)
             if method == "annuity":
                 pri_m = (fixed_m_pmt - int_m) if m < total_months else rem_p_monthly
             else:
+                # 元金均等
                 pri_m = (P_monthly_total / total_months).quantize(Decimal("1"), ROUND_FLOOR) if m < total_months else rem_p_monthly
             
             # ボーナス計算
@@ -222,6 +226,7 @@ def _(
                 if method == "annuity":
                     pri_b = (fixed_b_pmt - int_b) if m < total_months else rem_p_bonus
                 else:
+                    # 元金均等(ボーナス分)
                     pri_b = (P_bonus_total / (int(years_ui.value) * 2)).quantize(Decimal("1"), ROUND_FLOOR) if m < total_months else rem_p_bonus
 
             pri_m = min(pri_m, rem_p_monthly)
@@ -253,32 +258,34 @@ def _(
 @app.cell
 def _(bonus_toggle_ui, mo, sim_schedule, sim_total_int, sim_total_pay):
     # ---------------------------------------------------------
-    # Result Visualization (KPI Cards) - Error Fixed Version
+    # Result Visualization (KPI Cards)
     # ---------------------------------------------------------
     def fmt(v):
         return f"{v:,}"
 
+    # 初回支払額
     m_pay = sim_schedule[0]["payment"]
     
-    # ボーナスカードのHTMLを事前に生成（f-string内でのバックスラッシュを回避）
+    # ボーナス加算額の算出
     bonus_card_html = ""
     if bonus_toggle_ui.value and len(sim_schedule) >= 6:
+        # 6ヶ月目（通常+ボーナス）と5ヶ月目（通常）の差分
         b_extra = sim_schedule[5]["payment"] - sim_schedule[4]["payment"]
         bonus_card_html = f"""
         <div class="metric-card" style="border-left-color: #f59e0b;">
             <div class="metric-title">ボーナス月 加算額</div>
             <div class="metric-value">{fmt(b_extra)} <span class="metric-unit">円</span></div>
-            <div class="metric-title" style="margin-top:8px;">年2回加算</div>
+            <div class="metric-title" style="margin-top:8px;">年2回 (夏・冬)</div>
         </div>
         """
 
-    # メインKPIの組み立て
+    # メインKPI
     main_kpis = f"""
     <div class="metric-grid">
         <div class="metric-card" style="border-left-color: #10b981;">
             <div class="metric-title">毎月の返済額 (目安)</div>
             <div class="metric-value">{fmt(m_pay)} <span class="metric-unit">円</span></div>
-            <div class="metric-title" style="margin-top:8px;">初回支払額</div>
+            <div class="metric-subtext">初回支払額: {fmt(m_pay)} 円</div>
         </div>
         {bonus_card_html}
         <div class="metric-card" style="border-left-color: #3b82f6;">
@@ -295,11 +302,13 @@ def _(bonus_toggle_ui, mo, sim_schedule, sim_total_int, sim_total_pay):
 @app.cell
 def _(alt, mo, pd, sim_schedule):
     # ---------------------------------------------------------
-    # Charts & Tables
+    # Charts & Tables (Outputs)
     # ---------------------------------------------------------
     _df = pd.DataFrame(sim_schedule)
     _df_yearly = _df[_df['month'] % 12 == 0].copy()
     
+    # 修正ポイント: width="container" にしてスマホ対応。
+    # さらに tooltip を日本語ラベルに。
     _chart = (
         alt.Chart(_df_yearly)
         .mark_area(
@@ -312,11 +321,14 @@ def _(alt, mo, pd, sim_schedule):
             )
         )
         .encode(
-            x=alt.X("year:Q", title="経過年数"),
+            x=alt.X("year:Q", title="経過年数 (年)"),
             y=alt.Y("balance:Q", title="ローン残高 (円)"),
-            tooltip=[alt.Tooltip("year", title="年"), alt.Tooltip("balance", title="残高", format=",")]
+            tooltip=[
+                alt.Tooltip("year:Q", title="経過年数"), 
+                alt.Tooltip("balance:Q", title="残高", format=",")
+            ]
         )
-        .properties(height=300, width="600")
+        .properties(height=300, width="container")
     )
 
     _table_html = _df.head(24).to_html(index=False, classes="table", border=0)
@@ -324,9 +336,9 @@ def _(alt, mo, pd, sim_schedule):
     mo.vstack([
         mo.md("### 📉 返済推移シミュレーション"),
         mo.Html(f'<div class="scrollable-container">{mo.ui.altair_chart(_chart)}</div>'),
-        mo.md("### 📅 返済予定表 (抜粋: 24ヶ月分)"),
+        mo.md("### 📅 返済予定表 (最初の24ヶ月)"),
         mo.Html(f'<div class="scrollable-container">{_table_html}</div>'),
-        mo.md("--- \n *※ 本シミュレーションは概算です。実際の契約時には金融機関の計算詳細を確認してください。*")
+        mo.md("--- \n *※ 本結果はシミュレーションであり、実際の契約内容とは異なる場合があります。*")
     ])
     return
 
