@@ -1,0 +1,99 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.19.0"
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "5d45ec83b6791070653c51f86dd253e5",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "f90b8fbe2c17d525353659c186d646e1",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem'><span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"nisa\">\ud83d\udcc8 \u7a4d\u7acbNISA\u30b7\u30df\u30e5\u30ec\u30fc\u30bf\u30fc</h1></span><span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">\u6bce\u6708\u306e\u7a4d\u7acb\u984d\u3068\u671f\u9593\u3001\u5229\u56de\u308a\u3092\u5165\u529b\u3059\u308b\u3068\u3001\u5c06\u6765\u306e\u8cc7\u7523\u63a8\u79fb\u3092\u30b7\u30df\u30e5\u30ec\u30fc\u30b7\u30e7\u30f3\u3057\u307e\u3059\u3002</span></span></div>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "4fa95de4f29b8fdfcdc09513d04ebbb4",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "dd173d038d9840c88c0bed4504191449",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "f02c77d52e5e06bf0889073e7f4d0842",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "de2379f2b7c117cfc9d233e59b5fb483",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "b5537c8b14108d28f850232595768f59",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 1.5rem'><div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem'><span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"_1\">\ud83d\udee0 \u30d1\u30e9\u30e1\u30fc\u30bf\u30fc\u8a2d\u5b9a</h3></span><div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 1rem'><marimo-ui-element object-id='vblA-0' random-id='f11deda3-944e-d105-754a-976cf50faa32'><marimo-slider data-initial-value='30000' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;\u6bce\u6708\u306e\u7a4d\u7acb\u984d (\u5186)&lt;/span&gt;&lt;/span&gt;&quot;' data-start='1000' data-stop='300000' data-step='100' data-steps='[]' data-debounce='false' data-disabled='false' data-orientation='&quot;horizontal&quot;' data-show-value='false' data-include-input='false' data-full-width='true'></marimo-slider></marimo-ui-element><marimo-ui-element object-id='vblA-1' random-id='eb8ca99d-ded8-cdb1-1a3b-682918ebfcc1'><marimo-slider data-initial-value='20' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;\u7a4d\u7acb\u671f\u9593 (\u5e74)&lt;/span&gt;&lt;/span&gt;&quot;' data-start='1' data-stop='50' data-step='1' data-steps='[]' data-debounce='false' data-disabled='false' data-orientation='&quot;horizontal&quot;' data-show-value='false' data-include-input='false' data-full-width='true'></marimo-slider></marimo-ui-element><marimo-ui-element object-id='vblA-2' random-id='bc19cae4-4137-8ea8-3bbf-59f415cb9c70'><marimo-slider data-initial-value='5.0' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;\u60f3\u5b9a\u5229\u56de\u308a (%)&lt;/span&gt;&lt;/span&gt;&quot;' data-start='0.1' data-stop='15.0' data-step='0.1' data-steps='[]' data-debounce='false' data-disabled='false' data-orientation='&quot;horizontal&quot;' data-show-value='false' data-include-input='false' data-full-width='true'></marimo-slider></marimo-ui-element></div></div><div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem'><span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"_1\">\ud83d\udcca \u30b7\u30df\u30e5\u30ec\u30fc\u30b7\u30e7\u30f3\u7d50\u679c</h3></span><div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 1rem'><marimo-stat data-value='&quot;\u00a512,382,389&quot;' data-label='&quot;\u7dcf\u8cc7\u7523&quot;' data-caption='&quot;\u7a4d\u7acb\u7dcf\u984d + \u904b\u7528\u76ca&quot;' data-bordered='true' data-target_direction='&quot;increase&quot;'></marimo-stat><marimo-stat data-value='&quot;\u00a57,200,000&quot;' data-label='&quot;\u5143\u672c&quot;' data-bordered='true' data-target_direction='&quot;increase&quot;'></marimo-stat><marimo-stat data-value='&quot;\u00a55,182,389&quot;' data-label='&quot;\u904b\u7528\u76ca&quot;' data-direction='&quot;increase&quot;' data-bordered='true' data-target_direction='&quot;increase&quot;'></marimo-stat></div></div><marimo-ui-element object-id='PKri-0' random-id='0ff3e48d-02c0-2ab4-7acd-5a7d0f1ba0e6'><marimo-vega data-initial-value='{}' data-label='null' data-spec='{&quot;config&quot;:{&quot;view&quot;:{&quot;continuousWidth&quot;:300,&quot;continuousHeight&quot;:300}},&quot;data&quot;:{&quot;url&quot;:&quot;./@file/3354-1748-dtvbbTHo.arrow&quot;,&quot;format&quot;:{&quot;type&quot;:&quot;arrow&quot;}},&quot;mark&quot;:{&quot;type&quot;:&quot;area&quot;,&quot;opacity&quot;:0.85},&quot;encoding&quot;:{&quot;color&quot;:{&quot;field&quot;:&quot;Type&quot;,&quot;legend&quot;:{&quot;title&quot;:&quot;\u5185\u8a33&quot;},&quot;scale&quot;:{&quot;domain&quot;:[&quot;Principal&quot;,&quot;Profit&quot;],&quot;range&quot;:[&quot;#0056b3&quot;,&quot;#28a745&quot;]},&quot;type&quot;:&quot;nominal&quot;},&quot;tooltip&quot;:[{&quot;field&quot;:&quot;Year&quot;,&quot;type&quot;:&quot;quantitative&quot;},{&quot;field&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;nominal&quot;},{&quot;field&quot;:&quot;Amount&quot;,&quot;format&quot;:&quot;,&quot;,&quot;title&quot;:&quot;\u91d1\u984d&quot;,&quot;type&quot;:&quot;quantitative&quot;}],&quot;x&quot;:{&quot;field&quot;:&quot;Year&quot;,&quot;title&quot;:&quot;\u7d4c\u904e\u5e74\u6570&quot;,&quot;type&quot;:&quot;quantitative&quot;},&quot;y&quot;:{&quot;field&quot;:&quot;Amount&quot;,&quot;stack&quot;:true,&quot;title&quot;:&quot;\u91d1\u984d&quot;,&quot;type&quot;:&quot;quantitative&quot;}},&quot;height&quot;:300,&quot;width&quot;:&quot;container&quot;,&quot;&#36;schema&quot;:&quot;https://vega.github.io/schema/vega-lite/v5.20.1.json&quot;}' data-chart-selection='true' data-field-selection='true' data-embed-options='{}'></marimo-vega></marimo-ui-element></div>"
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}

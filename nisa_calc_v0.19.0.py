@@ -14,8 +14,8 @@ def _():
     # 設定・定数
     COLOR_PRINCIPAL = "#0056b3"
     COLOR_PROFIT = "#28a745"
-    
-    return Decimal, ROUND_HALF_UP, alt, mo, pd, COLOR_PRINCIPAL, COLOR_PROFIT
+
+    return COLOR_PRINCIPAL, COLOR_PROFIT, Decimal, ROUND_HALF_UP, alt, mo, pd
 
 
 @app.cell
@@ -56,7 +56,7 @@ def _(mo):
 def _(Decimal, ROUND_HALF_UP, input_monthly, input_rate, input_years, mo, pd):
     # --- 計算ロジック ---
     # mo.status は維持 (v0.19.0準拠)
-    with mo.status("資産推移をシミュレーション中..."):
+    with mo.status.spinner("資産推移をシミュレーション中..."):
         monthly_yen = input_monthly.value
         years = input_years.value
         rate_pct = input_rate.value
@@ -68,7 +68,7 @@ def _(Decimal, ROUND_HALF_UP, input_monthly, input_rate, input_years, mo, pd):
             d_monthly = Decimal(str(monthly_yen))
             d_rate_annual = Decimal(str(rate_pct)) / Decimal("100")
             d_rate_monthly = d_rate_annual / Decimal("12")
-            
+
             months = int(years * 12)
             data = []
             current_principal = Decimal("0")
@@ -90,13 +90,12 @@ def _(Decimal, ROUND_HALF_UP, input_monthly, input_rate, input_years, mo, pd):
                         "Profit": total_int - principal_int,
                         "Total": total_int
                     })
-            
+
             df_result = pd.DataFrame(data)
             last_rec = df_result.iloc[-1]
             final_total = last_rec["Total"]
             final_principal = last_rec["Principal"]
             final_profit = last_rec["Profit"]
-
     return df_result, final_principal, final_profit, final_total
 
 
@@ -105,7 +104,7 @@ def _(final_principal, final_profit, final_total, mo):
     # --- KPI表示 (Refactored) ---
     # mo.flex を廃止し、スマホファーストな vstack (縦並び) に変更
     # mo.hstack(wrap=True) が環境によって不安定な可能性があるため、安全策を取っています。
-    
+
     kpi_section = mo.vstack([
         mo.md("### 📊 シミュレーション結果"),
         mo.vstack([
@@ -128,7 +127,7 @@ def _(final_principal, final_profit, final_total, mo):
             )
         ], gap=1)
     ])
-    return kpi_section
+    return (kpi_section,)
 
 
 @app.cell
@@ -141,7 +140,7 @@ def _(COLOR_PRINCIPAL, COLOR_PROFIT, alt, df_result, mo):
             id_vars=["Year"], value_vars=["Principal", "Profit"],
             var_name="Type", value_name="Amount"
         )
-        
+
         # width="container" は Altair の機能なので維持 (marimo依存ではないため安全)
         base_chart = alt.Chart(df_melt).mark_area(opacity=0.85).encode(
             x=alt.X("Year", title="経過年数"),
@@ -154,8 +153,7 @@ def _(COLOR_PRINCIPAL, COLOR_PROFIT, alt, df_result, mo):
         )
 
         chart_ui = mo.ui.altair_chart(base_chart)
-
-    return chart_ui
+    return (chart_ui,)
 
 
 @app.cell
