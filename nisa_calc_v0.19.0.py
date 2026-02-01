@@ -31,7 +31,7 @@ def _(mo):
 @app.cell
 def _(mo):
     # 入力フォーム
-    # 【修正】stepを1000から100に変更し、細かい金額設定に対応
+    # mo.flex を廃止し、堅牢な vstack に変更
     input_monthly = mo.ui.slider(
         start=1000, stop=300000, step=100, value=30000, 
         label="毎月の積立額 (円)", full_width=True
@@ -47,7 +47,7 @@ def _(mo):
 
     input_section = mo.vstack([
         mo.md("### 🛠 パラメーター設定"),
-        mo.flex([input_monthly, input_years, input_rate], wrap=True, gap=1)
+        mo.vstack([input_monthly, input_years, input_rate], gap=1)
     ])
     return input_monthly, input_rate, input_section, input_years
 
@@ -55,7 +55,7 @@ def _(mo):
 @app.cell
 def _(Decimal, ROUND_HALF_UP, input_monthly, input_rate, input_years, mo, pd):
     # --- 計算ロジック ---
-    # 【修正】mo.status で計算中であることを明示
+    # mo.status は維持 (v0.19.0準拠)
     with mo.status("資産推移をシミュレーション中..."):
         monthly_yen = input_monthly.value
         years = input_years.value
@@ -102,10 +102,13 @@ def _(Decimal, ROUND_HALF_UP, input_monthly, input_rate, input_years, mo, pd):
 
 @app.cell
 def _(final_principal, final_profit, final_total, mo):
-    # --- KPI表示 (Modern Style) ---
+    # --- KPI表示 (Refactored) ---
+    # mo.flex を廃止し、スマホファーストな vstack (縦並び) に変更
+    # mo.hstack(wrap=True) が環境によって不安定な可能性があるため、安全策を取っています。
+    
     kpi_section = mo.vstack([
         mo.md("### 📊 シミュレーション結果"),
-        mo.flex([
+        mo.vstack([
             mo.stat(
                 value=f"¥{final_total:,.0f}", 
                 label="総資産", 
@@ -123,7 +126,7 @@ def _(final_principal, final_profit, final_total, mo):
                 direction="increase" if final_profit >= 0 else "decrease",
                 bordered=True
             )
-        ], wrap=True, gap=1, justify="start")
+        ], gap=1)
     ])
     return kpi_section
 
@@ -139,7 +142,7 @@ def _(COLOR_PRINCIPAL, COLOR_PROFIT, alt, df_result, mo):
             var_name="Type", value_name="Amount"
         )
         
-        # width="container" でレスポンシブ対応
+        # width="container" は Altair の機能なので維持 (marimo依存ではないため安全)
         base_chart = alt.Chart(df_melt).mark_area(opacity=0.85).encode(
             x=alt.X("Year", title="経過年数"),
             y=alt.Y("Amount", title="金額", stack=True),
