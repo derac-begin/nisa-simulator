@@ -279,6 +279,21 @@ def _(alt, mo, pd, results):
         </div>
         """
 
+        # 4. 解説アコーディオン (Katch-McArdle式)
+        # ユーザーに納得感を与えるための専門的な解説
+        explanation_md = mo.md("""
+        ### 💪 筋肉量を基準にする「Katch-McArdle式」
+        一般的な計算式（ハリス・ベネディクト式など）は「体重」と「年齢」を基準にするため、
+        筋肉量の多いトレーニーの基礎代謝を**低く見積もってしまう**弱点があります。
+
+        本ツールでは、**除脂肪体重（LBM: 筋肉や骨、内臓の重さ）**を基準に計算しているため、
+        あなたの筋肉量に見合った、より正確なカロリー収支を算出できます。        
+        """)
+        
+        explanation_section = mo.accordion({
+            "💡 なぜ「Katch-McArdle式」なのか？ (クリック・タップで解説)": explanation_md
+        })
+
         # 3. 最終レイアウト組立
         result_view = mo.vstack([
             mo.md("## 📊 診断結果"),
@@ -291,7 +306,9 @@ def _(alt, mo, pd, results):
             mo.md("---"),
             # グラフを中央寄せ (justify="center") で配置
             mo.hstack([chart_ui], justify="center"),
-            mo.Html(cards_html)
+            mo.Html(cards_html),
+            mo.md("---"), # 区切り線
+            explanation_section 
         ], gap=1.5)
     return (result_view,)
 
