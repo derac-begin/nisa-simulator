@@ -31,11 +31,15 @@
 
 ## 📂 Directory Structure
 
+```text
+.
 ├── assets/             # WASM Assets & CSS
 ├── src/                # Python Source Codes (v0.19.0)
 ├── archive/            # Legacy Codes
 ├── tools/              # Utility Scripts
 └── *.html              # Deployed Applications
+
+---
 
 ## ⚠️ Disclaimer
 
