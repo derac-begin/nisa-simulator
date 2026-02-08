@@ -4,9 +4,9 @@ from PIL import Image
 import os
 
 # 入力ファイル名
-INPUT_IMAGE = "header_nisa_calc.png"
+INPUT_IMAGE = "header_pfc.png"
 # 出力ファイル名
-OUTPUT_TEXT = "optimized_header_base64.txt"
+OUTPUT_TEXT = "optimized_header_pfc_base64.txt"
 
 # 目標設定
 MAX_WIDTH = 800  # スマホなら幅800pxあれば十分綺麗です

@@ -1,0 +1,73 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.19.0"
+  },
+  "cells": [
+    {
+      "id": "MJUe",
+      "code_hash": "624dc2177d17107743242882cee52bde",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"phase-1-v4\">\ud83d\udcc5 \u30b7\u30d5\u30c8\u81ea\u52d5\u4f5c\u6210\u30a8\u30f3\u30b8\u30f3 (Phase 1: v4)</h1>\n<span class=\"paragraph\"><strong>\u6a5f\u80fd:</strong> \u9023\u52e4\u9632\u6b62\u30fb\u516c\u5e73\u5316 | <strong>Mode:</strong> Safe Form &amp; Stop Fix</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hbol",
+      "code_hash": "282de1dddb3c517750fd4eef28e5d19e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "ff28b21110ef315098dafe35bb0ba7a4",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem'><span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"_1\">\ud83d\udee0\ufe0f \u30b7\u30d5\u30c8\u6761\u4ef6\u8a2d\u5b9a</h3></span><marimo-ui-element object-id='vblA-14' random-id='5aa3b4ce-3967-1ec6-cda5-3efd1c39ed75'><marimo-form data-initial-value='null' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;\ud83d\ude80 \u30b7\u30d5\u30c8\u3092\u4f5c\u6210\u3059\u308b&lt;/span&gt;&lt;/span&gt;&quot;' data-element-id='&quot;vblA-13&quot;' data-loading='false' data-bordered='true' data-submit-button-label='&quot;Submit&quot;' data-submit-button-disabled='false' data-clear-on-submit='false' data-show-clear-button='false' data-clear-button-label='&quot;Clear&quot;' data-should-validate='false'><marimo-ui-element object-id='vblA-13' random-id='6ec099fd-48b1-0965-48c2-15a63128831f'><marimo-dict data-initial-value='{&quot;0&quot;:5,&quot;1&quot;:14,&quot;2&quot;:2,&quot;3&quot;:3}' data-label='null' data-element-ids='{&quot;vblA-9&quot;:&quot;0&quot;,&quot;vblA-10&quot;:&quot;1&quot;,&quot;vblA-11&quot;:&quot;2&quot;,&quot;vblA-12&quot;:&quot;3&quot;}'><marimo-json-output data-json-data='[&quot;text/html:&lt;marimo-ui-element object-id=&#x27;vblA-9&#x27; random-id=&#x27;9593d2fa-60d7-a3c5-1fdf-fdc84ba7141e&#x27;&gt;&lt;marimo-slider data-initial-value=&#x27;5&#x27; data-label=&#x27;&amp;quot;&amp;lt;span class=&amp;#92;&amp;quot;markdown prose dark:prose-invert contents&amp;#92;&amp;quot;&amp;gt;&amp;lt;span class=&amp;#92;&amp;quot;paragraph&amp;#92;&amp;quot;&amp;gt;\u30b9\u30bf\u30c3\u30d5\u4eba\u6570&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;quot;&#x27; data-start=&#x27;3&#x27; data-stop=&#x27;15&#x27; data-steps=&#x27;[]&#x27; data-debounce=&#x27;false&#x27; data-disabled=&#x27;false&#x27; data-orientation=&#x27;&amp;quot;horizontal&amp;quot;&#x27; data-show-value=&#x27;false&#x27; data-include-input=&#x27;false&#x27; data-full-width=&#x27;false&#x27;&gt;&lt;/marimo-slider&gt;&lt;/marimo-ui-element&gt;&quot;,&quot;text/html:&lt;marimo-ui-element object-id=&#x27;vblA-10&#x27; random-id=&#x27;d5a0a01c-32d9-fec1-141f-bad71b895367&#x27;&gt;&lt;marimo-slider data-initial-value=&#x27;14&#x27; data-label=&#x27;&amp;quot;&amp;lt;span class=&amp;#92;&amp;quot;markdown prose dark:prose-invert contents&amp;#92;&amp;quot;&amp;gt;&amp;lt;span class=&amp;#92;&amp;quot;paragraph&amp;#92;&amp;quot;&amp;gt;\u4f5c\u6210\u671f\u9593\uff08\u65e5\uff09&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;quot;&#x27; data-start=&#x27;7&#x27; data-stop=&#x27;31&#x27; data-steps=&#x27;[]&#x27; data-debounce=&#x27;false&#x27; data-disabled=&#x27;false&#x27; data-orientation=&#x27;&amp;quot;horizontal&amp;quot;&#x27; data-show-value=&#x27;false&#x27; data-include-input=&#x27;false&#x27; data-full-width=&#x27;false&#x27;&gt;&lt;/marimo-slider&gt;&lt;/marimo-ui-element&gt;&quot;,&quot;text/html:&lt;marimo-ui-element object-id=&#x27;vblA-11&#x27; random-id=&#x27;2361b1fc-b501-569a-8698-6e23817bbfb6&#x27;&gt;&lt;marimo-slider data-initial-value=&#x27;2&#x27; data-label=&#x27;&amp;quot;&amp;lt;span class=&amp;#92;&amp;quot;markdown prose dark:prose-invert contents&amp;#92;&amp;quot;&amp;gt;&amp;lt;span class=&amp;#92;&amp;quot;paragraph&amp;#92;&amp;quot;&amp;gt;1\u65e5\u306e\u5fc5\u8981\u4eba\u6570&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;quot;&#x27; data-start=&#x27;1&#x27; data-stop=&#x27;5&#x27; data-steps=&#x27;[]&#x27; data-debounce=&#x27;false&#x27; data-disabled=&#x27;false&#x27; data-orientation=&#x27;&amp;quot;horizontal&amp;quot;&#x27; data-show-value=&#x27;false&#x27; data-include-input=&#x27;false&#x27; data-full-width=&#x27;false&#x27;&gt;&lt;/marimo-slider&gt;&lt;/marimo-ui-element&gt;&quot;,&quot;text/html:&lt;marimo-ui-element object-id=&#x27;vblA-12&#x27; random-id=&#x27;4c3a6b55-1b5a-cc8a-1ddf-06ca69e767d4&#x27;&gt;&lt;marimo-slider data-initial-value=&#x27;3&#x27; data-label=&#x27;&amp;quot;&amp;lt;span class=&amp;#92;&amp;quot;markdown prose dark:prose-invert contents&amp;#92;&amp;quot;&amp;gt;&amp;lt;span class=&amp;#92;&amp;quot;paragraph&amp;#92;&amp;quot;&amp;gt;\u6700\u5927\u9023\u52e4\u6570\uff08\u3053\u308c\u3092\u8d85\u3048\u305f\u3089\u4f11\u307f\uff09&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;quot;&#x27; data-start=&#x27;2&#x27; data-stop=&#x27;7&#x27; data-steps=&#x27;[]&#x27; data-debounce=&#x27;false&#x27; data-disabled=&#x27;false&#x27; data-orientation=&#x27;&amp;quot;horizontal&amp;quot;&#x27; data-show-value=&#x27;false&#x27; data-include-input=&#x27;false&#x27; data-full-width=&#x27;false&#x27;&gt;&lt;/marimo-slider&gt;&lt;/marimo-ui-element&gt;&quot;]' data-value-types='&quot;python&quot;' data-name='&quot;array&quot;'></marimo-json-output></marimo-dict></marimo-ui-element></marimo-form></marimo-ui-element></div>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "3d4b1d8f26b7e65173670d5f3d85b0f3",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><strong>\ud83d\udc46 \u8a2d\u5b9a\u3092\u5165\u529b\u3057\u3066\u30dc\u30bf\u30f3\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044</strong></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "aa4209a8d4498b72c0da74ef675fa68e",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "ancestor-stopped",
+          "evalue": "This cell wasn't run because an ancestor was stopped with `mo.stop`: ",
+          "traceback": []
+        }
+      ],
+      "console": []
+    }
+  ]
+}
