@@ -1,8 +1,9 @@
+# Ver 1.2
 import marimo
 
 __generated_with = "0.19.0"
 # アプリ設定
-app = marimo.App(width="full", app_title="AI Shift Scheduler v1.1")
+app = marimo.App(width="full", app_title="AI Shift Scheduler v1.2")
 
 @app.cell
 def _():
@@ -53,6 +54,11 @@ def _(mo):
             background-color: #ffffff;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
+        /* テキストエリアの調整 */
+        textarea {
+            font-family: monospace !important;
+            line-height: 1.5 !important;
+        }
         </style>
         """
     )
@@ -65,7 +71,7 @@ def _(mo):
         """
         <div class="app-header">
             <div class="app-title">📅 AI Shift Scheduler</div>
-            <div class="app-subtitle">公平・高速・サーバーレス | 自動シフト作成エンジン v1.1</div>
+            <div class="app-subtitle">公平・高速・サーバーレス | 自動シフト作成エンジン v1.2</div>
         </div>
         """
     )
@@ -75,16 +81,24 @@ def _(mo):
 def _(mo):
     # --- Input UI Section ---
     
-    # UI Components
-    staff_count = mo.ui.slider(3, 20, value=7, label="スタッフ人数")
+    # Feature Add: スタッフ登録機能 (Text Area)
+    # スライダーの代わりにテキスト入力を使用
+    staff_input = mo.ui.text_area(
+        value="佐藤, 鈴木, 高橋, 田中, 伊藤", 
+        label="スタッフリスト（カンマ区切り、または改行で入力）",
+        placeholder="例: 佐藤, 鈴木, 高橋...",
+        full_width=True,
+        rows=3
+    )
+
     days_count = mo.ui.slider(7, 31, value=14, label="作成期間（日）")
-    req_staff = mo.ui.slider(1, 10, value=3, label="1日の必要人数")
+    req_staff = mo.ui.slider(1, 10, value=2, label="1日の必要人数")
     max_conse = mo.ui.slider(2, 7, value=4, label="最大連勤数（制限）")
 
-    # Form Definition (Safe Array Pattern)
+    # Form Definition
     shift_form = mo.ui.form(
         element=mo.ui.array([
-            staff_count, 
+            staff_input, 
             days_count, 
             req_staff, 
             max_conse
@@ -96,7 +110,7 @@ def _(mo):
     # Control Panel Layout
     control_panel = mo.vstack([
         mo.md("### 🛠️ 条件設定"),
-        mo.md("以下の条件を入力し、「Submit」ボタンを押してください。"),
+        mo.md("スタッフ名簿と条件を入力し、「Submit」ボタンを押してください。"),
         mo.Html('<div class="form-container">'),
         shift_form,
         mo.Html('</div>'),
@@ -133,22 +147,33 @@ def _(
 
     # パラメータ取得
     vals = shift_form.value
-    p_staff_count = vals[0]
+    raw_staff_text = vals[0] # テキストエリアの値
     p_days_count = vals[1]
     p_req_staff = vals[2]
     p_max_conse = vals[3]
 
+    # スタッフリストのパース処理 (Logic)
+    # カンマまたは改行で分割し、空白を除去
+    staff_list = [
+        name.strip() 
+        for name in raw_staff_text.replace("\n", ",").split(",") 
+        if name.strip()
+    ]
+    p_staff_count = len(staff_list)
     # 停止条件2: 入力バリデーション (修正: マークダウン・HTMLタグを除去)
-    # 必要人数がスタッフ総数を超えている場合、計算させない
-    if p_req_staff > p_staff_count:
+    # スタッフが0人、または必要人数が総数を超えている場合
+    error_msg = ""
+    if p_staff_count == 0:
+        error_msg = "⚠️ エラー: スタッフ名が入力されていません。"
+    elif p_req_staff > p_staff_count:
+        error_msg = f"⚠️ 設定エラー: 1日の必要人数 ({p_req_staff}人) がスタッフ総数 ({p_staff_count}人) を超えています。"
+
+    if error_msg:
         error_view = mo.vstack([
             header,
             control_panel,
             mo.md("---"),
-            mo.callout(
-                f"⚠️ 設定エラー : 1日の必要人数 ({p_req_staff}人) がスタッフ総数 ({p_staff_count}人) を超えています。条件を見直してください。",
-                kind="danger"
-            )
+            mo.callout(error_msg, kind="danger")
         ])
         mo.stop(True, error_view)
 
@@ -157,7 +182,6 @@ def _(
     with mo.status.spinner("AIが最適なシフトパズルを解いています..."):
 
         # 1. ロジック実行
-        staff_list = [f"Staff_{i+1}" for i in range(p_staff_count)]
         dates = [datetime.now().date() + timedelta(days=i) for i in range(p_days_count)]
         
         schedule = {date: [] for date in dates}
@@ -227,10 +251,19 @@ def _(
         
         chart_ui = mo.ui.altair_chart(chart)
 
-        # 4. 結果通知エリア (成功/警告)
+        # 4. CSVダウンロード機能 (Mobile Fix)
+        # mo.download を使用して独立したボタンを作成
+        csv_data = df_calendar.to_csv(index=False)
+        download_btn = mo.download(
+            data=csv_data, 
+            filename="shift_schedule.csv", 
+            label="📥 CSVをダウンロード"
+        )
+
+        # 5. 結果通知エリア (成功/警告)
         if failed_dates:
             status_alert = mo.callout(
-                f"⚠️ 注意 : 以下の日程で必要人数を確保できませんでした（連勤制限のため）。欠員日 : {', '.join(failed_dates)} ⇒ スタッフを増やすか、連勤制限を緩和してください。",
+                f"⚠️ 注意 : 以下の日程で必要人数を確保できませんでした（連勤制限のため）。\n欠員日 : {', '.join(failed_dates)}\n ⇒ スタッフを増やすか、連勤制限を緩和してください。",
                 kind="warn"
             )
         else:
@@ -239,7 +272,8 @@ def _(
                 kind="success"
             )
 
-        # 5. 最終レイアウト構築
+        # 6. 最終レイアウト構築
+        # ダウンロードボタンをテーブル直上に配置し、スマホでも押しやすくする
         dashboard = mo.vstack([
             header,
             control_panel,
@@ -248,10 +282,10 @@ def _(
             mo.md("### 📈 分析レポート"),
             chart_ui,
             mo.md("### 📅 確定シフト表"),
-            mo.md("右下の「Download」からCSVでダウンロードできます ↓"),
+            download_btn, # UI Fix: テキストではなく実ボタンを配置
             mo.ui.table(df_calendar, pagination=True, page_size=10, selection=None),
             mo.md("---"),
-            mo.md(f"<small>Generated by AI Shift Scheduler v1.1 | {datetime.now().strftime('%Y-%m-%d')}</small>")
+            mo.md(f"<small>Generated by AI Shift Scheduler v1.2 | {datetime.now().strftime('%Y-%m-%d')}</small>")
         ], gap=1.5)
 
     return (
@@ -260,17 +294,20 @@ def _(
         candidates,
         chart,
         chart_ui,
+        csv_data,
         d,
         dashboard,
         dates,
         df_calendar,
         df_stats,
+        download_btn,
         error_view,
         failed_dates,
         p_days_count,
         p_max_conse,
         p_req_staff,
         p_staff_count,
+        raw_staff_text,
         schedule,
         staff_list,
         staff_stats,
