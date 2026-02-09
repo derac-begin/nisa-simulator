@@ -81,41 +81,31 @@ def _(mo):
 def _(mo):
     # --- Input UI Section (Refactored for Mobile) ---
     
-    # 1. Elements Definition (Labelレス, Full Width)
-    # スタッフ入力
+    # 1. Elements Definition (Mobile Optimized Labels)
+    # ラベルを短くし、full_width=Trueにすることでスマホでの折り返しを防ぐ
+    
     staff_input = mo.ui.text_area(
         value="佐藤, 鈴木, 高橋, 田中, 伊藤", 
-        label="", # ラベルは外に出す
+        label="👥 スタッフ名簿 (カンマ区切り)", # 短縮
         placeholder="例: 佐藤, 鈴木, 高橋...",
         full_width=True,
         rows=3
     )
 
-    # スライダー群 (ラベル削除, full_width適用)
-    days_count = mo.ui.slider(7, 31, value=14, label="", full_width=True)
-    req_staff = mo.ui.slider(1, 10, value=2, label="", full_width=True)
-    max_conse = mo.ui.slider(2, 7, value=4, label="", full_width=True)
+    # スライダー群 (ラベルを短く、全幅表示)
+    days_count = mo.ui.slider(7, 31, value=14, label="📅 作成期間 (日)", full_width=True)
+    req_staff = mo.ui.slider(1, 10, value=2, label="👤 必要人数/日", full_width=True)
+    max_conse = mo.ui.slider(2, 7, value=4, label="🛑 連勤上限", full_width=True)
 
-    # 2. Layout Strategy (Vertical Stack with Markdown Labels)
-    # スマホで見やすいよう、ラベルを上、入力を下に配置
-    form_layout = mo.vstack([
-        mo.md("**👥 スタッフリスト (カンマ区切り)**"),
-        staff_input,
-        
-        mo.md("**📅 作成期間 (日)**"),
-        days_count,
-        
-        mo.md("**👤 必要人数 / 日**"),
-        req_staff,
-        
-        mo.md("**🛑 連勤上限**"),
-        max_conse
-    ])
-
-    # 3. Form Definition
-    # mo.ui.array ではなく vstack を直接フォームに入れる
+    # 2. Form Definition (Must use mo.ui.array)
+    # mo.vstack(HTML) は渡せないので、mo.ui.array を使用する
     shift_form = mo.ui.form(
-        element=form_layout,
+        element=mo.ui.array([
+            staff_input, 
+            days_count, 
+            req_staff, 
+            max_conse
+        ]),
         label="🚀 条件を確定してシフトを作成", 
         bordered=False
     )
@@ -158,14 +148,13 @@ def _(
         mo.vstack([header, control_panel])
     )
 
-    # パラメータ取得 (Refactored Indices)
-    # フォーム内が [md, input, md, slider, md, slider, md, slider] の順になっているため
-    # 奇数番目のインデックスを取得する
+    # パラメータ取得 (Fixed Indices)
+    # mo.ui.array の順番通りに取得 (0:Staff, 1:Days, 2:Req, 3:Max)
     vals = shift_form.value
-    raw_staff_text = vals[1] 
-    p_days_count = vals[3]
-    p_req_staff = vals[5]
-    p_max_conse = vals[7]
+    raw_staff_text = vals[0]
+    p_days_count = vals[1]
+    p_req_staff = vals[2]
+    p_max_conse = vals[3]
 
     # スタッフリストのパース処理 (Logic)
     # カンマまたは改行で分割し、空白を除去
