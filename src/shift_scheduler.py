@@ -79,30 +79,43 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    # --- Input UI Section ---
+    # --- Input UI Section (Refactored for Mobile) ---
     
-    # Feature Add: スタッフ登録機能 (Text Area)
-    # スライダーの代わりにテキスト入力を使用
+    # 1. Elements Definition (Labelレス, Full Width)
+    # スタッフ入力
     staff_input = mo.ui.text_area(
         value="佐藤, 鈴木, 高橋, 田中, 伊藤", 
-        label="スタッフリスト（カンマ区切り、または改行で入力）",
+        label="", # ラベルは外に出す
         placeholder="例: 佐藤, 鈴木, 高橋...",
         full_width=True,
         rows=3
     )
 
-    days_count = mo.ui.slider(7, 31, value=14, label="作成期間（日）")
-    req_staff = mo.ui.slider(1, 10, value=2, label="1日の必要人数")
-    max_conse = mo.ui.slider(2, 7, value=4, label="最大連勤数（制限）")
+    # スライダー群 (ラベル削除, full_width適用)
+    days_count = mo.ui.slider(7, 31, value=14, label="", full_width=True)
+    req_staff = mo.ui.slider(1, 10, value=2, label="", full_width=True)
+    max_conse = mo.ui.slider(2, 7, value=4, label="", full_width=True)
 
-    # Form Definition
+    # 2. Layout Strategy (Vertical Stack with Markdown Labels)
+    # スマホで見やすいよう、ラベルを上、入力を下に配置
+    form_layout = mo.vstack([
+        mo.md("**👥 スタッフリスト (カンマ区切り)**"),
+        staff_input,
+        
+        mo.md("**📅 作成期間 (日)**"),
+        days_count,
+        
+        mo.md("**👤 必要人数 / 日**"),
+        req_staff,
+        
+        mo.md("**🛑 連勤上限**"),
+        max_conse
+    ])
+
+    # 3. Form Definition
+    # mo.ui.array ではなく vstack を直接フォームに入れる
     shift_form = mo.ui.form(
-        element=mo.ui.array([
-            staff_input, 
-            days_count, 
-            req_staff, 
-            max_conse
-        ]),
+        element=form_layout,
         label="🚀 条件を確定してシフトを作成", 
         bordered=False
     )
@@ -122,7 +135,7 @@ def _(mo):
         max_conse,
         req_staff,
         shift_form,
-        staff_count,
+        staff_input,
     )
 
 @app.cell
@@ -145,12 +158,14 @@ def _(
         mo.vstack([header, control_panel])
     )
 
-    # パラメータ取得
+    # パラメータ取得 (Refactored Indices)
+    # フォーム内が [md, input, md, slider, md, slider, md, slider] の順になっているため
+    # 奇数番目のインデックスを取得する
     vals = shift_form.value
-    raw_staff_text = vals[0] # テキストエリアの値
-    p_days_count = vals[1]
-    p_req_staff = vals[2]
-    p_max_conse = vals[3]
+    raw_staff_text = vals[1] 
+    p_days_count = vals[3]
+    p_req_staff = vals[5]
+    p_max_conse = vals[7]
 
     # スタッフリストのパース処理 (Logic)
     # カンマまたは改行で分割し、空白を除去
@@ -160,6 +175,7 @@ def _(
         if name.strip()
     ]
     p_staff_count = len(staff_list)
+
     # 停止条件2: 入力バリデーション (修正: マークダウン・HTMLタグを除去)
     # スタッフが0人、または必要人数が総数を超えている場合
     error_msg = ""
@@ -253,7 +269,8 @@ def _(
 
         # 4. CSVダウンロード機能 (Mobile Fix)
         # mo.download を使用して独立したボタンを作成
-        csv_data = df_calendar.to_csv(index=False)
+        # .encode("utf-8-sig") を追加して、Excel用の「BOM」を付与
+        csv_data = df_calendar.to_csv(index=False).encode("utf-8-sig")
         download_btn = mo.download(
             data=csv_data, 
             filename="shift_schedule.csv", 
@@ -301,6 +318,7 @@ def _(
         df_calendar,
         df_stats,
         download_btn,
+        error_msg,
         error_view,
         failed_dates,
         p_days_count,
