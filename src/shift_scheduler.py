@@ -18,7 +18,7 @@ def _():
 
 @app.cell
 def _(mo):
-    # --- CSS Styling Section ---
+    # --- CSS Styling Section (Mobile Polish) ---
     mo.md(
         """
         <style>
@@ -59,6 +59,24 @@ def _(mo):
             font-family: monospace !important;
             line-height: 1.5 !important;
         }
+
+        /* --- スマホ最適化 (Media Query) --- */
+        @media (max-width: 480px) {
+            .app-header {
+                padding: 1.5rem 1rem; /* ヘッダーの余白を減らす */
+                border-radius: 0 0 16px 16px; /* 上部の角丸をなくして画面一杯に */
+                margin-bottom: 1.5rem;
+            }
+            .app-title {
+                font-size: 1.6rem; /* タイトル文字サイズ調整 */
+            }
+            .form-container {
+                padding: 1rem; /* フォーム枠内の余白を減らす */
+                border-left: none;
+                border-right: none;
+                border-radius: 0; /* スマホでは画面幅いっぱいに */
+            }
+        }
         </style>
         """
     )
@@ -89,7 +107,7 @@ def _(mo):
         label="👥 スタッフ名簿 (カンマ区切り)", # 短縮
         placeholder="例: 佐藤, 鈴木, 高橋...",
         full_width=True,
-        rows=3
+        rows=5 # 【修正】行数を3→5に増やしてタップしやすく
     )
 
     # スライダー群 (ラベルを短く、全幅表示)
@@ -106,14 +124,14 @@ def _(mo):
             req_staff, 
             max_conse
         ]),
-        label="🚀 条件を確定してシフトを作成", 
+        label="🚀 シフトを作成", # 【修正】文言を短縮して折り返し回避
         bordered=False
     )
     
     # Control Panel Layout
     control_panel = mo.vstack([
         mo.md("### 🛠️ 条件設定"),
-        mo.md("スタッフ名簿と条件を入力し、「Submit」ボタンを押してください。"),
+        mo.md("スタッフ名簿と条件を入力し、ボタンを押してください。"),
         mo.Html('<div class="form-container">'),
         shift_form,
         mo.Html('</div>'),
