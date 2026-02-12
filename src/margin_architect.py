@@ -12,67 +12,72 @@ def _():
     return Decimal, ROUND_HALF_UP, math, mo, np
 
 @app.cell
-def _(mo):
+async def _(mo):
     import matplotlib.pyplot as plt
     import matplotlib.font_manager as fm
     import os
-    import sys
+    import js # ブラウザのJavaScript機能にアクセスする魔法のモジュール
 
     # ---------------------------------------------------------
-    # 🛠️ WASM (Pyodide) 日本語フォント解決パッチ (v4.0 Final Stable)
+    # 🛠️ WASM (Pyodide) 日本語フォント解決パッチ (v5.0 JS-Fetch)
     # ---------------------------------------------------------
-    def setup_japanese_font():
-        # 【変更】Noto Sans JP ではなく、実績のある "IPAexGothic" を使用
-        # 安定したリポジトリから jsDelivr 経由で取得
-        FONT_URL = "https://cdn.jsdelivr.net/gh/masaru-b-cl/setup_jp_fonts@master/fonts/IPAexGothic.ttf"
-        FONT_FILE = "IPAexGothic.ttf"
+    
+    # IPAexゴシック (CDN)
+    FONT_URL = "https://cdn.jsdelivr.net/gh/masaru-b-cl/setup_jp_fonts@master/fonts/IPAexGothic.ttf"
+    FONT_FILE = "IPAexGothic.ttf"
 
-        # すでにダウンロード済みならスキップ
-        if os.path.exists(FONT_FILE):
-            # ファイルサイズが小さすぎる（エラーページの可能性）場合は削除して再DL
-            if os.path.getsize(FONT_FILE) < 1000:
-                os.remove(FONT_FILE)
-            else:
-                return
+    with mo.status.spinner("ブラウザの機能を使ってフォントをダウンロード中..."):
+        
+        # 1. ファイルが存在しない、または壊れている(小さい)場合に再取得
+        need_download = False
+        if not os.path.exists(FONT_FILE):
+            need_download = True
+        elif os.path.getsize(FONT_FILE) < 1000: # 1KB以下なら壊れているとみなす
+            print("⚠️ 壊れたファイルを検知。削除して再取得します。")
+            os.remove(FONT_FILE)
+            need_download = True
 
-        # ダウンロード処理
-        if "pyodide" in sys.modules:
-            import urllib.request
-            print(f"📥 Downloading font (IPAexGothic): {FONT_URL}...")
-            
+        if need_download:
             try:
-                urllib.request.urlretrieve(FONT_URL, FONT_FILE)
+                print(f"📡 Fetching via JS: {FONT_URL}...")
                 
-                # ダウンロード後の検証
-                if not os.path.exists(FONT_FILE) or os.path.getsize(FONT_FILE) < 1000:
-                    print("❌ Error: Downloaded file is too small (likely HTML error page).")
-                    if os.path.exists(FONT_FILE): os.remove(FONT_FILE)
-                    return
+                # JavaScriptの fetch を Pythonから直接叩く (最強の回避策)
+                response = await js.fetch(FONT_URL)
+                
+                if not response.ok:
+                    raise Exception(f"HTTP Error: {response.status}")
+                
+                # JSの ArrayBuffer を取得
+                array_buffer = await response.arrayBuffer()
+                
+                # JSのバッファを Pythonの bytes に変換
+                # to_py() で memoryview が返る -> tobytes() でバイト列へ
+                byte_data = array_buffer.to_py().tobytes()
+                
+                with open(FONT_FILE, "wb") as f:
+                    f.write(byte_data)
                     
+                print(f"💾 Saved {len(byte_data)} bytes to virtual FS.")
+                
             except Exception as e:
-                print(f"❌ Download failed: {e}")
-                return
+                print(f"❌ JS Fetch failed: {e}")
 
-    # UIにロード状況を表示しながら実行
-    with mo.status.spinner("日本語フォント(IPAexGothic)を準備中..."):
-        setup_japanese_font()
-
-        font_path = "IPAexGothic.ttf"
-        if os.path.exists(font_path):
+        # 2. フォントの登録
+        if os.path.exists(FONT_FILE) and os.path.getsize(FONT_FILE) > 1000:
             try:
-                fm.fontManager.addfont(font_path)
-                prop = fm.FontProperties(fname=font_path)
+                fm.fontManager.addfont(FONT_FILE)
+                prop = fm.FontProperties(fname=FONT_FILE)
                 font_name = prop.get_name()
                 
-                # フォントを強制適用
+                # 強制適用
                 plt.rcParams['font.family'] = font_name
                 print(f"✅ Font loaded successfully: {font_name}")
             except Exception as e:
-                print(f"⚠️ Font add failed: {e}")
+                print(f"⚠️ Registration error: {e}")
         else:
-            print("⚠️ Font file not found. Fallback to default.")
+            print("❌ Font file is missing or corrupt.")
 
-    return fm, os, plt, setup_japanese_font, sys
+    return fm, js, os, plt
 
 @app.cell
 def _(mo):
