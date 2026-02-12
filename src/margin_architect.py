@@ -18,11 +18,10 @@ def _(mo):
     import os
 
     # ---------------------------------------------------------
-    # 🛠️ WASM (Pyodide) 日本語フォント解決パッチ (v3.1 Final)
+    # 🛠️ WASM (Pyodide) 日本語フォント解決パッチ (v3.2 urllib Fix)
     # ---------------------------------------------------------
     def setup_japanese_font():
-        # 【修正】GitHub Raw はCORSで弾かれるため、jsDelivr (CDN) を経由する
-        # これにより "NetworkError" を回避できます
+        # CORS回避のため jsDelivr (CDN) を使用
         FONT_URL = "https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/notosansjp/NotoSansJP-Regular.ttf"
         FONT_FILE = "NotoSansJP-Regular.ttf"
 
@@ -30,39 +29,35 @@ def _(mo):
         if os.path.exists(FONT_FILE):
             return
 
-        # WASM環境判定 & ダウンロード
+        # ダウンロード処理
+        # Pyodide環境でも標準の urllib がパッチされており、最も安定して動作します
         import sys
         if "pyodide" in sys.modules:
-            import pyodide.http
-            print(f"📥 Downloading font from {FONT_URL}...")
-            # 同期的にダウンロードしてファイルに書き込む
-            content = pyodide.http.open_url(FONT_URL).read()
-            with open(FONT_FILE, "wb") as f:
-                f.write(content)
-        else:
-            # ローカル環境用（念の為）
-            # import urllib.request
-            # urllib.request.urlretrieve(FONT_URL, FONT_FILE)
-            pass
+            import urllib.request
+            print(f"📥 Downloading font via CDN (urllib): {FONT_URL}...")
+            
+            try:
+                # urlretrieve は ダウンロード -> 保存 を一発で行い、
+                # バイナリ/テキストの扱いも適切に処理してくれます
+                urllib.request.urlretrieve(FONT_URL, FONT_FILE)
+            except Exception as e:
+                print(f"❌ Download failed: {e}")
+                return
 
     # UIにロード状況を表示しながら実行
     with mo.status.spinner("日本語フォントをセットアップ中..."):
         setup_japanese_font()
 
-        # ここが重要: ファイルパスからフォントを追加し、その「正式名称」を取得する
         font_path = "NotoSansJP-Regular.ttf"
         if os.path.exists(font_path):
-            fm.fontManager.addfont(font_path) # フォントマネージャに追加
-            
-            # 追加したフォントのプロパティを直接取得
+            fm.fontManager.addfont(font_path)
             prop = fm.FontProperties(fname=font_path)
-            font_name = prop.get_name() # 内部的な正式名称 (例: 'Noto Sans JP')
+            font_name = prop.get_name()
             
-            # 全体のデフォルトフォントとして強制設定
             plt.rcParams['font.family'] = font_name
             print(f"✅ Font loaded: {font_name}")
         else:
-            print("⚠️ Font file not found. Fallback to default.")
+            print("⚠️ Font setup skipped or failed. Using default.")
 
     return fm, os, plt, setup_japanese_font
 
