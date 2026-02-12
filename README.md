@@ -16,6 +16,7 @@
 | **[🏠 住宅ローン計算アプリ](https://derac-begin.github.io/nisa-simulator/mortgage.html)** | `mortgage.html`<br>元利均等・元金均等返済の比較シミュレーション。 | 🟢 Live |
 | **[💪 PFCバランス計算機](https://derac-begin.github.io/nisa-simulator/pfc.html)** | `pfc.html`<br>ダイエット・増量向けの主要栄養素(PFC)計算ツール。 | 🟢 Live |
 | **[📅 AI Shift Scheduler](https://derac-begin.github.io/nisa-simulator/shift_scheduler.html)** | `shift_scheduler.html`<br>スタッフの希望を反映するシフト自動作成ツール。 | 🟢 Live |
+| **[💰 Margin Architect](https://derac-begin.github.io/nisa-simulator/margin_architect.html)** | `margin_architect.html`<br>利益防衛ラインを可視化する価格戦略シミュレーター。 | 🟢 Live |
 
 ---
 

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-B2ootaw-.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-CxL0S8W7.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-D9fedIX3.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-BTCkDNvf.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-DU3aDxX5.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-CLVRCuM9.ttf" as="font" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((_entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>margin architect</title>
+    <script type="module" crossorigin src="./assets/index-CGfe1Tpd.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-BW0IMuFq.js">
+    <link rel="modulepreload" crossorigin href="./assets/hotkeys-uKX61F1_.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-BLUna9fQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-Cl9k9ZmS.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-DzliDDTm.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-C8wT63Va.js">
+    <link rel="modulepreload" crossorigin href="./assets/_Uint8Array-BGESiCQL.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CrRUCOBw.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-D0MtrJOx.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-C1rgT0yh.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-BGmjiNul.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-DeeZ7FnK.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-DN_bIXfG.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-DAnNhy3O.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-COkmyg1v.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-DuYGqRtX.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-C9fstfnp.js">
+    <link rel="modulepreload" crossorigin href="./assets/Combination-D1TsGrBC.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-9PZrU2e0.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CBrDuocE.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-CW2xpJ57.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-CrAQug3q.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-D0g5GnIs.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CvjcEpZC.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-Bzf3rpev.js">
+    <link rel="modulepreload" crossorigin href="./assets/_getTag-BWqNuuwU.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseIsEqual-Cz9Tt_-E.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-DlWF5OMa.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-C6yE60hi.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFor-Duhs3RiJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-BBX6ug-N.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-Cg4WLWh2.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-CJJIceVn.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-Bkp4R3bQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-DzyBMRsy.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-babG4OBR.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-ClFZlR7U.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-B3BENoUa.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-C0HaHO6a.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BGkTcW3U.js">
+    <link rel="modulepreload" crossorigin href="./assets/toString-DlRqgfqz.js">
+    <link rel="modulepreload" crossorigin href="./assets/_hasUnicode-zBEpxwYe.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-CmDXEyIC.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-EAuSVK-5.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-DfP1CWaW.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-CTiSlR1m.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-BmAOeMOK.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-DDa-hVe3.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CAcX026F.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DKNOF5xd.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CI6_zMIl.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BVf1IY4_.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Cq_4nPfh.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CVj-_Iiz.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-HGZzCB0y.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-RKnr9SNh.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BuhT82Xx.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-0ac7Aukl.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-5JckKRQn.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-Bj40p_Np.js">
+    <link rel="modulepreload" crossorigin href="./assets/_arrayReduce-bZBYsK-u.js">
+    <link rel="modulepreload" crossorigin href="./assets/type-BdyvjzTI.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseProperty-DuoFhI7N.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-6sUe0ZdD.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-BbFlGgjv.js">
+    <link rel="modulepreload" crossorigin href="./assets/toInteger-CDcO32Gx.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-CaVvnK_o.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-CwSdzVhm.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-D_SkyFDn.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-Drf1manw.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-Czc5z_04.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-RldLPyJs.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-k5KxevGr.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-DUEuLcT2.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-em3gna-v.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers-C9_R_vlY.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-DD7JA3RM.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-BAYdLMF_.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-D8ks3oPN.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-C2LPFxyv.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-CaEtLL8p.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-q6QlC2aZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-BoUpLV2S.js">
+    <link rel="modulepreload" crossorigin href="./assets/multi-map-fjX9ImVF.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-BEdExd6A.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-CqEd11Di.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-BP4_BZLr.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-DNmjkr65.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-CR_zEq5o.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-kFdt1US2.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-Orp0blpZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-DRhpWiOq.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-gBVL4NN-.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-B69c-352.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-C1czjtp7.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-CEEVxHsX.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-D18AHojc.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-jpEDlD0M.js">
+    <link rel="modulepreload" crossorigin href="./assets/katex-AwOI3EvM.js">
+    <link rel="modulepreload" crossorigin href="./assets/marked.esm-CHnOtnr3.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-OGVTOU66-CjNLT2C3.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-C_xfLXiO.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DOFFh6Ii.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-Qt3ng7cb.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-DtnzNVk-.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-BZ_OFvV4.js">
+    <link rel="modulepreload" crossorigin href="./assets/mode-BFwdGSZ7.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-N-2faAGj.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-BzGWfPTJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/table--_20dwBZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/tabs-Ctk4D03n.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-BJJJOr9W.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-CU-WWxnz.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-DU5Qb8a8.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-B9CrBoaO.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-DhMN8sxe.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-DhzaK-Y1.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-CdsE1R40.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-CITws1-y.js">
+    <link rel="modulepreload" crossorigin href="./assets/maps-s2pQkyf5.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-B9D0JO9U.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-lG8j6oqk.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-CV0QXb5P.js">
+    <link rel="modulepreload" crossorigin href="./assets/range-sshwVRcP.js">
+    <link rel="modulepreload" crossorigin href="./assets/capitalize-DQeWKRGx.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-BLx7B_us.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-BLd1jTNA.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-BnFXtaZZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/play-BJDBXApx.js">
+    <link rel="modulepreload" crossorigin href="./assets/chat-components-6dWNbFjV.js">
+    <link rel="modulepreload" crossorigin href="./assets/isEmpty-DIxUV1UR.js">
+    <link rel="modulepreload" crossorigin href="./assets/circle-check-big-OIMTUpe6.js">
+    <link rel="modulepreload" crossorigin href="./assets/chat-display-Cfg38gMM.js">
+    <link rel="modulepreload" crossorigin href="./assets/ai-model-dropdown-DZ7evAGU.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-D0Pei-OA.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeleteCell-GHwc6J4l.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-D4lB4En9.js">
+    <link rel="modulepreload" crossorigin href="./assets/process-output-4w8xDO0j.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-Dg_vNTSs.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-CboCOq4o.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-B3JckBtM.js">
+    <link rel="modulepreload" crossorigin href="./assets/add-cell-with-ai-Dx5UA23s.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-D42sFB6d.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-DxXFdbn8.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-qp_XZeSS.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-9nPwQyJZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-C9iBa4rX.js">
+    <link rel="modulepreload" crossorigin href="./assets/toggle-G1t0cQyf.js">
+    <link rel="modulepreload" crossorigin href="./assets/globals-D3SeIm1j.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-CXQVxivL.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-DN0TMY36.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-CyLJYAfP.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-6FYvpjrm.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-BqxQegSf.js">
+    <link rel="modulepreload" crossorigin href="./assets/utilities.esm-FYD46c3d.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-p0aHdM2W.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAddCell-CVfRv5mq.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-D9zAYqG9.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-CHesBJpY.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-DjP4vjBQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-video-camera-CZUg-nFA.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-VzFAm7Cv.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-qwandMoh.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-D2hGxqGj.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-DbW1_PHb.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-C-lF7BNB.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-DEraWoX5.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-DDKGFzpC.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-5kuXz69O.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-gzLRYatP.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-B42u_5hF.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-C638SUfx.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-FiXEquL2.js">
+    <link rel="modulepreload" crossorigin href="./assets/VisuallyHidden-BodIky8L.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-DydgU7lx.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFlatten-CLPh0yMf.js">
+    <link rel="modulepreload" crossorigin href="./assets/flatten-Buk63LQO.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-DeQioq0G.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-MBUyxNtK.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-DobaYJPt.js">
+    <link rel="modulepreload" crossorigin href="./assets/globe-CY9im410.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-Din9uFKE.js">
+    <link rel="modulepreload" crossorigin href="./assets/settings-MTlHVxz3.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-leQTJTJJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-CbD0f2J6.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-B0Sy2M4C.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-jmgGt1lS.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-B7vuddcd.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-BQNCH-dG.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    <marimo-code hidden="">import%20marimo%0A%0A__generated_with%20%3D%20%220.19.0%22%0Aapp%20%3D%20marimo.App(width%3D%22full%22)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20import%20matplotlib.pyplot%20as%20plt%0A%20%20%20%20import%20numpy%20as%20np%0A%20%20%20%20import%20math%0A%20%20%20%20from%20decimal%20import%20Decimal%2C%20ROUND_HALF_UP%0A%20%20%20%20return%20Decimal%2C%20ROUND_HALF_UP%2C%20mo%2C%20np%2C%20plt%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20%23%20---%20Sidebar%3A%20Global%20Settings%20---%0A%20%20%20%20tax_rate_input%20%3D%20mo.ui.number(%0A%20%20%20%20%20%20%20%20value%3D10%2C%20%0A%20%20%20%20%20%20%20%20label%3D%22%E6%B6%88%E8%B2%BB%E7%A8%8E%E7%8E%87%20(%25)%22%2C%20%0A%20%20%20%20%20%20%20%20step%3D1%2C%20%0A%20%20%20%20%20%20%20%20full_width%3DTrue%0A%20%20%20%20)%0A%0A%20%20%20%20fee_rate_input%20%3D%20mo.ui.slider(%0A%20%20%20%20%20%20%20%20start%3D0%2C%20%0A%20%20%20%20%20%20%20%20stop%3D10%2C%20%0A%20%20%20%20%20%20%20%20value%3D3.24%2C%20%0A%20%20%20%20%20%20%20%20label%3D%22%E6%B1%BA%E6%B8%88%E6%89%8B%E6%95%B0%E6%96%99%20(%25)%22%2C%20%0A%20%20%20%20%20%20%20%20step%3D0.01%2C%20%0A%20%20%20%20%20%20%20%20full_width%3DTrue%0A%20%20%20%20)%0A%0A%20%20%20%20sidebar%20%3D%20mo.sidebar(%0A%20%20%20%20%20%20%20%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.md(%22%23%23%20%E2%9A%99%EF%B8%8F%20%E3%82%A2%E3%83%97%E3%83%AA%E5%85%B1%E9%80%9A%E8%A8%AD%E5%AE%9A%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.md(%22%E5%BA%97%E8%88%97%E3%81%AE%E5%9F%BA%E7%A4%8E%E6%95%B0%E5%80%A4%E3%82%92%E5%85%A5%E5%8A%9B%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20tax_rate_input%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20fee_rate_input%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.md(%22---%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.md(%22**Margin%20Architect%20v2.1**%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.md(%22Audited%20by%20The%20CFO%20(QA%20Passed)%22)%0A%20%20%20%20%20%20%20%20%5D)%0A%20%20%20%20)%0A%20%20%20%20return%20fee_rate_input%2C%20sidebar%2C%20tax_rate_input%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20%23%20---%20Tab%201%3A%20%E5%80%A4%E4%B8%8A%E3%81%92%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC%20(The%20Safety%20Zone)%20---%0A%0A%20%20%20%20%23%201.%20Input%20UI%0A%20%20%20%20t1_p_curr%20%3D%20mo.ui.number(value%3D1000%2C%20label%3D%22%E7%8F%BE%E5%9C%A8%E3%81%AE%E5%AE%A2%E5%8D%98%E4%BE%A1%20(%E7%A8%8E%E8%BE%BC)%22%2C%20step%3D10%2C%20full_width%3DTrue)%0A%20%20%20%20t1_v_curr%20%3D%20mo.ui.number(value%3D1000%2C%20label%3D%22%E7%8F%BE%E5%9C%A8%E3%81%AE%E6%9C%88%E9%96%93%E5%AE%A2%E6%95%B0%20(%E4%BA%BA)%22%2C%20step%3D10%2C%20full_width%3DTrue)%0A%20%20%20%20t1_r_cost%20%3D%20mo.ui.slider(start%3D10%2C%20stop%3D90%2C%20value%3D30%2C%20label%3D%22%E5%8E%9F%E4%BE%A1%E7%8E%87%20(%25)%22%2C%20step%3D0.5%2C%20full_width%3DTrue)%0A%20%20%20%20t1_p_up%20%3D%20mo.ui.slider(start%3D0%2C%20stop%3D500%2C%20value%3D50%2C%20label%3D%22%E5%80%A4%E4%B8%8A%E3%81%92%E9%A1%8D%20(%E7%A8%8E%E8%BE%BC%20%2B%E5%86%86)%22%2C%20step%3D10%2C%20full_width%3DTrue)%0A%20%20%20%20return%20t1_p_curr%2C%20t1_p_up%2C%20t1_r_cost%2C%20t1_v_curr%0A%0A%0A%40app.cell%0Adef%20_(%0A%20%20%20%20Decimal%2C%0A%20%20%20%20fee_rate_input%2C%0A%20%20%20%20mo%2C%0A%20%20%20%20np%2C%0A%20%20%20%20plt%2C%0A%20%20%20%20t1_p_curr%2C%0A%20%20%20%20t1_p_up%2C%0A%20%20%20%20t1_r_cost%2C%0A%20%20%20%20t1_v_curr%2C%0A%20%20%20%20tax_rate_input%2C%0A)%3A%0A%20%20%20%20%23%20---%20Tab%201%3A%20Logic%20%26%20Visualization%20---%0A%0A%20%20%20%20%23%202.%20Logic%20(Strict%20Decimal%20Implementation%20%26%20Validation)%0A%20%20%20%20def%20calculate_churn_limit(p_curr_inc%2C%20p_up_inc%2C%20v_curr%2C%20r_cost_percent%2C%20tax_rate_percent%2C%20fee_rate_percent)%3A%0A%20%20%20%20%20%20%20%20%23%20Guard%20against%20negative%20values%0A%20%20%20%20%20%20%20%20p_curr%20%3D%20Decimal(str(max(0%2C%20p_curr_inc)))%0A%20%20%20%20%20%20%20%20p_up%20%3D%20Decimal(str(max(0%2C%20p_up_inc)))%0A%20%20%20%20%20%20%20%20r_cost%20%3D%20Decimal(str(max(0%2C%20r_cost_percent)))%20%2F%20Decimal('100')%0A%20%20%20%20%20%20%20%20tax_rate%20%3D%20Decimal(str(max(0%2C%20tax_rate_percent)))%20%2F%20Decimal('100')%0A%20%20%20%20%20%20%20%20fee_rate%20%3D%20Decimal(str(max(0%2C%20fee_rate_percent)))%20%2F%20Decimal('100')%0A%0A%20%20%20%20%20%20%20%20tax_mult%20%3D%20Decimal('1')%20%2B%20tax_rate%0A%0A%20%20%20%20%20%20%20%20%23%201.%20Net%20Price%20Conversion%0A%20%20%20%20%20%20%20%20p_net_curr%20%3D%20p_curr%20%2F%20tax_mult%0A%20%20%20%20%20%20%20%20p_net_new%20%3D%20(p_curr%20%2B%20p_up)%20%2F%20tax_mult%0A%0A%20%20%20%20%20%20%20%20%23%202.%20Unit%20Margin%20Calculation%0A%20%20%20%20%20%20%20%20margin_curr%20%3D%20p_net_curr%20-%20(p_net_curr%20*%20r_cost)%20-%20(p_curr%20*%20fee_rate)%0A%20%20%20%20%20%20%20%20margin_new%20%3D%20p_net_new%20-%20(p_net_curr%20*%20r_cost)%20-%20((p_curr%20%2B%20p_up)%20*%20fee_rate)%0A%0A%20%20%20%20%20%20%20%20%23%203.%20Break-even%20Churn%20Rate%20(x)%0A%20%20%20%20%20%20%20%20if%20margin_new%20%3C%3D%20Decimal('0')%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20float(0)%2C%20float(margin_curr)%2C%20float(margin_new)%0A%0A%20%20%20%20%20%20%20%20x%20%3D%20Decimal('1')%20-%20(margin_curr%20%2F%20margin_new)%0A%0A%20%20%20%20%20%20%20%20%23%20Ensure%20x%20is%20not%20negative%0A%20%20%20%20%20%20%20%20x_safe%20%3D%20max(Decimal('0')%2C%20x)%0A%20%20%20%20%20%20%20%20return%20float(x_safe)%2C%20float(margin_curr)%2C%20float(margin_new)%0A%0A%20%20%20%20%23%20Calculation%20Execution%20with%20UX%20Spinner%0A%20%20%20%20with%20mo.status.spinner(%22%E5%88%A9%E7%9B%8A%E9%98%B2%E8%A1%9B%E3%83%A9%E3%82%A4%E3%83%B3%E3%82%92%E8%A8%88%E7%AE%97%E4%B8%AD...%22)%3A%0A%20%20%20%20%20%20%20%20churn_limit%2C%20m_curr%2C%20m_new%20%3D%20calculate_churn_limit(%0A%20%20%20%20%20%20%20%20%20%20%20%20t1_p_curr.value%2C%20%0A%20%20%20%20%20%20%20%20%20%20%20%20t1_p_up.value%2C%20%0A%20%20%20%20%20%20%20%20%20%20%20%20t1_v_curr.value%2C%20%0A%20%20%20%20%20%20%20%20%20%20%20%20t1_r_cost.value%2C%20%0A%20%20%20%20%20%20%20%20%20%20%20%20tax_rate_input.value%2C%20%0A%20%20%20%20%20%20%20%20%20%20%20%20fee_rate_input.value%0A%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20%20%20%20%20%23%203.%20Visualization%20(Matplotlib)%0A%20%20%20%20%20%20%20%20def%20plot_safety_zone(c_limit%2C%20margin_c%2C%20margin_n%2C%20v_curr_input)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%20---%20%F0%9F%94%BD%20%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E8%A8%AD%E5%AE%9A%20(WASM%20Safe)%20%F0%9F%94%BD%20---%0A%20%20%20%20%20%20%20%20%20%20%20%20import%20matplotlib.font_manager%20as%20fm%0A%20%20%20%20%20%20%20%20%20%20%20%20import%20os%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%20%E6%B1%8E%E7%94%A8%E7%9A%84%E3%81%AA%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E3%81%AE%E3%83%91%E3%82%B9%E3%82%92%E6%8E%A2%E3%81%99%EF%BC%88WASM%E7%92%B0%E5%A2%83%E3%81%AA%E3%81%A9%EF%BC%89%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%20%E3%82%82%E3%81%97%E7%92%B0%E5%A2%83%E3%81%AB%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E3%81%8C%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%80%81%E8%B1%86%E8%85%90%E3%81%AB%E3%81%AA%E3%82%8B%E3%81%AE%E3%82%92%E9%98%B2%E3%81%90%E3%81%9F%E3%82%81%E8%8B%B1%E8%AA%9E%E8%A1%A8%E8%A8%98%E3%81%AB%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%83%90%E3%83%83%E3%82%AF%E3%81%99%E3%82%8B%E6%89%8B%E3%82%82%E3%81%82%E3%82%8B%E3%81%8C%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%20%E3%81%93%E3%81%93%E3%81%A7%E3%81%AFMarimo%2FPyodide%E7%92%B0%E5%A2%83%E3%81%A7%E6%9C%89%E5%8A%B9%E3%81%AA%20'msgothic'%20%E3%82%84%20'IPAGothic'%20%E3%82%92%E6%8C%87%E5%AE%9A%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%20%E2%80%BB%E6%9C%AC%E6%9D%A5%E3%81%AF%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%97%E3%81%A6%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B%E3%81%AE%E3%81%8C%E7%A2%BA%E5%AE%9F%E3%81%A0%E3%81%8C%E3%80%81%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%20%E7%B0%A1%E6%98%93%E7%9A%84%E3%81%AB%20rcParams%20%E3%81%A7%20'sans-serif'%20%E7%B3%BB%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E3%82%92%E5%84%AA%E5%85%88%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B%0A%20%20%20%20%20%20%20%20%20%20%20%20plt.rcParams%5B'font.family'%5D%20%3D%20'sans-serif'%0A%20%20%20%20%20%20%20%20%20%20%20%20plt.rcParams%5B'font.sans-serif'%5D%20%3D%20%5B'Hiragino%20Maru%20Gothic%20Pro'%2C%20'Yu%20Gothic'%2C%20'Meirio'%2C%20'Takao'%2C%20'IPAexGothic'%2C%20'IPAPGothic'%2C%20'VL%20PGothic'%2C%20'Noto%20Sans%20CJK%20JP'%5D%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%20---------------------------------------------%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20v_curr%20%3D%20float(max(0%2C%20v_curr_input))%0A%20%20%20%20%20%20%20%20%20%20%20%20fig%2C%20ax%20%3D%20plt.subplots(figsize%3D(6%2C%204))%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20x%20%3D%20np.linspace(0%2C%200.30%2C%20100)%0A%20%20%20%20%20%20%20%20%20%20%20%20profit_curr%20%3D%20margin_c%20*%20v_curr%0A%20%20%20%20%20%20%20%20%20%20%20%20profit_new%20%3D%20margin_n%20*%20v_curr%20*%20(1%20-%20x)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20ax.plot(x%20*%20100%2C%20%5Bprofit_curr%5D%20*%20len(x)%2C%20'k--'%2C%20label%3D'%E7%8F%BE%E5%9C%A8%E3%81%AE%E5%96%B6%E6%A5%AD%E5%88%A9%E7%9B%8A%20(%E5%9F%BA%E6%BA%96)')%0A%20%20%20%20%20%20%20%20%20%20%20%20ax.plot(x%20*%20100%2C%20profit_new%2C%20'b-'%2C%20label%3D'%E5%80%A4%E4%B8%8A%E3%81%92%E5%BE%8C%E3%81%AE%E5%96%B6%E6%A5%AD%E5%88%A9%E7%9B%8A')%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20ax.fill_between(x%20*%20100%2C%20profit_curr%2C%20profit_new%2C%20where%3D(profit_new%20%3E%3D%20profit_curr)%2C%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20color%3D'green'%2C%20alpha%3D0.2%2C%20label%3D'%E5%88%A9%E7%9B%8A%E5%A2%97%E5%8A%A0%E3%82%BE%E3%83%BC%E3%83%B3%20(Safety%20Zone)')%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20ax.fill_between(x%20*%20100%2C%20profit_curr%2C%20profit_new%2C%20where%3D(profit_new%20%3C%20profit_curr)%2C%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20color%3D'red'%2C%20alpha%3D0.1%2C%20label%3D'%E5%88%A9%E7%9B%8A%E6%B8%9B%E5%B0%91%E3%82%BE%E3%83%BC%E3%83%B3')%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20limit_percent%20%3D%20c_limit%20*%20100%0A%20%20%20%20%20%20%20%20%20%20%20%20if%200%20%3C%3D%20limit_percent%20%3C%3D%2030%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20ax.axvline(x%3Dlimit_percent%2C%20color%3D'r'%2C%20linestyle%3D'%3A'%2C%20label%3Df'%E6%90%8D%E7%9B%8A%E5%88%86%E5%B2%90%E5%AE%A2%E9%9B%A2%E3%82%8C%E7%8E%87%3A%20%7Blimit_percent%3A.1f%7D%25')%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20ax.set_title(%22%E5%88%A9%E7%9B%8A%E3%81%AE%E9%98%B2%E8%A1%9B%E3%83%A9%E3%82%A4%E3%83%B3%E5%88%86%E6%9E%90%22%2C%20fontsize%3D10)%0A%20%20%20%20%20%20%20%20%20%20%20%20ax.set_xlabel(%22%E5%AE%A2%E9%9B%A2%E3%82%8C%E7%8E%87%20(%25)%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20ax.set_ylabel(%22%E5%96%B6%E6%A5%AD%E5%88%A9%E7%9B%8A%20(%E5%86%86)%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20ax.grid(True%2C%20linestyle%3D'--'%2C%20alpha%3D0.6)%0A%20%20%20%20%20%20%20%20%20%20%20%20ax.legend(loc%3D'lower%20left'%2C%20fontsize%3D'small')%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20fig%0A%0A%20%20%20%20%20%20%20%20chart_output%20%3D%20plot_safety_zone(churn_limit%2C%20m_curr%2C%20m_new%2C%20t1_v_curr.value)%0A%0A%20%20%20%20%23%20Layout%20Construction%20(Mobile%20Safe%20Wrap)%0A%20%20%20%20tab1_content%20%3D%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20mo.md(%22%23%23%23%20%F0%9F%9F%A2%20%E5%80%A4%E4%B8%8A%E3%81%92%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC%22)%2C%0A%20%20%20%20%20%20%20%20mo.md(%22%E5%80%A4%E4%B8%8A%E3%81%92%E3%82%92%E3%81%97%E3%81%A6%E3%82%82%E3%80%8C%E5%88%A9%E7%9B%8A%E7%B7%8F%E9%A1%8D%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%89%E3%81%AA%E3%81%84%E5%AE%A2%E9%9B%A2%E3%82%8C%E3%81%AE%E9%99%90%E7%95%8C%E3%83%A9%E3%82%A4%E3%83%B3%E3%82%92%E7%AE%97%E5%87%BA%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%22)%2C%0A%20%20%20%20%20%20%20%20mo.hstack(%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.vstack(%5Bt1_p_curr%2C%20t1_v_curr%5D)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.vstack(%5Bt1_r_cost%2C%20t1_p_up%5D)%0A%20%20%20%20%20%20%20%20%5D%2C%20gap%3D2%2C%20wrap%3DTrue)%2C%0A%20%20%20%20%20%20%20%20mo.md(%22---%22)%2C%0A%20%20%20%20%20%20%20%20mo.hstack(%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.stat(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22%E7%8F%BE%E5%9C%A8%E3%81%AE%E4%B8%80%E4%BA%BA%E5%BD%93%E3%81%9F%E3%82%8A%E5%88%A9%E7%9B%8A%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20value%3Df%22%7Bint(m_curr)%7D%E5%86%86%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20caption%3D%22%E7%A8%8E%E6%8A%9C%E3%83%BB%E6%89%8B%E6%95%B0%E6%96%99%E5%BC%95%E5%BE%8C%22%0A%20%20%20%20%20%20%20%20%20%20%20%20)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20mo.stat(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22%E5%80%A4%E4%B8%8A%E3%81%92%E5%BE%8C%E3%81%AE%E4%B8%80%E4%BA%BA%E5%BD%93%E3%81%9F%E3%82%8A%E5%88%A9%E7%9B%8A%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20value%3Df%22%7Bint(m_new)%7D%E5%86%86%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20caption%3Df%22%2B%7Bint(m_new%20-%20m_curr)%7D%E5%86%86%20UP%22%0A%20%20%20%20%20%20%20%20%20%20%20%20)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20mo.stat(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22%E8%A8%B1%E5%AE%B9%E3%81%A7%E3%81%8D%E3%82%8B%E5%AE%A2%E9%9B%A2%E3%82%8C%E7%8E%87%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20value%3Df%22%7Bchurn_limit%20*%20100%3A.1f%7D%25%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20caption%3D%22%E3%81%93%E3%82%8C%E4%BB%A5%E4%B8%8A%E6%B8%9B%E3%82%8B%E3%81%A8%E8%B5%A4%E5%AD%97%22%0A%20%20%20%20%20%20%20%20%20%20%20%20)%2C%0A%20%20%20%20%20%20%20%20%5D%2C%20gap%3D2%2C%20wrap%3DTrue%2C%20justify%3D%22center%22)%2C%0A%20%20%20%20%20%20%20%20chart_output%0A%20%20%20%20%5D)%0A%20%20%20%20return%20(tab1_content%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20%23%20---%20Tab%202%3A%20%E9%81%A9%E6%AD%A3%E4%BE%A1%E6%A0%BC%E3%83%A1%E3%83%BC%E3%82%AB%E3%83%BC%20(Target%20Price)%20---%0A%20%20%20%20%23%20---%20Tab%202%3A%20Input%20UI%20---%0A%20%20%20%20t2_cost_amount%20%3D%20mo.ui.number(value%3D300%2C%20label%3D%22%E5%8E%9F%E4%BE%A1%E9%A1%8D%20(%E5%86%86)%22%2C%20step%3D10%2C%20full_width%3DTrue)%0A%20%20%20%20t2_target_rate%20%3D%20mo.ui.slider(start%3D10%2C%20stop%3D90%2C%20value%3D30%2C%20label%3D%22%E7%9B%AE%E6%A8%99%E5%8E%9F%E4%BE%A1%E7%8E%87%20(%25)%22%2C%20step%3D1%2C%20full_width%3DTrue)%0A%20%20%20%20return%20t2_cost_amount%2C%20t2_target_rate%0A%0A%0A%40app.cell%0Adef%20_(%0A%20%20%20%20Decimal%2C%0A%20%20%20%20ROUND_HALF_UP%2C%0A%20%20%20%20mo%2C%0A%20%20%20%20t2_cost_amount%2C%0A%20%20%20%20t2_target_rate%2C%0A%20%20%20%20tax_rate_input%2C%0A)%3A%0A%20%20%20%20%23%20---%20Tab%202%3A%20Logic%20---%0A%0A%20%20%20%20%23%202.%20Logic%20(Strict%20Decimal%20Implementation%20%26%20Validation)%0A%20%20%20%20def%20calculate_target_price(cost%2C%20target_rate_percent%2C%20tax_rate_percent)%3A%0A%20%20%20%20%20%20%20%20c%20%3D%20Decimal(str(max(0%2C%20cost)))%0A%20%20%20%20%20%20%20%20t_rate%20%3D%20Decimal(str(max(0%2C%20target_rate_percent)))%20%2F%20Decimal('100')%0A%20%20%20%20%20%20%20%20tax_pct%20%3D%20Decimal(str(max(0%2C%20tax_rate_percent)))%20%2F%20Decimal('100')%0A%0A%20%20%20%20%20%20%20%20if%20t_rate%20%3C%3D%20Decimal('0')%3A%20%0A%20%20%20%20%20%20%20%20%20%20%20%20return%200%0A%0A%20%20%20%20%20%20%20%20tax_mult%20%3D%20Decimal('1')%20%2B%20tax_pct%0A%0A%20%20%20%20%20%20%20%20net_price%20%3D%20c%20%2F%20t_rate%0A%20%20%20%20%20%20%20%20gross_price%20%3D%20net_price%20*%20tax_mult%0A%0A%20%20%20%20%20%20%20%20%23%20%E5%8E%B3%E5%AF%86%E3%81%AA%E5%9B%9B%E6%8D%A8%E4%BA%94%E5%85%A5%0A%20%20%20%20%20%20%20%20return%20int(gross_price.quantize(Decimal('1')%2C%20rounding%3DROUND_HALF_UP))%0A%0A%20%20%20%20%23%20Calculation%20Execution%20with%20UX%20Spinner%0A%20%20%20%20with%20mo.status.spinner(%22%E9%81%A9%E6%AD%A3%E4%BE%A1%E6%A0%BC%E3%82%92%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E4%B8%AD...%22)%3A%0A%20%20%20%20%20%20%20%20calc_price%20%3D%20calculate_target_price(t2_cost_amount.value%2C%20t2_target_rate.value%2C%20tax_rate_input.value)%0A%20%20%20%20%20%20%20%20p_matsu%20%3D%20calculate_target_price(t2_cost_amount.value%2C%2025%2C%20tax_rate_input.value)%0A%20%20%20%20%20%20%20%20p_take%20%3D%20calculate_target_price(t2_cost_amount.value%2C%2030%2C%20tax_rate_input.value)%0A%20%20%20%20%20%20%20%20p_ume%20%3D%20calculate_target_price(t2_cost_amount.value%2C%2035%2C%20tax_rate_input.value)%0A%0A%20%20%20%20%23%20Layout%20Construction%20(Mobile%20Safe%20Wrap)%0A%20%20%20%20tab2_content%20%3D%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20mo.md(%22%23%23%23%20%F0%9F%94%B5%20%E9%81%A9%E6%AD%A3%E4%BE%A1%E6%A0%BC%E3%83%A1%E3%83%BC%E3%82%AB%E3%83%BC%22)%2C%0A%20%20%20%20%20%20%20%20mo.md(%22%E5%8E%9F%E4%BE%A1%E9%A1%8D%E3%81%8B%E3%82%89%E3%80%81%E7%9B%AE%E6%A8%99%E5%8E%9F%E4%BE%A1%E7%8E%87%E3%82%92%E9%81%94%E6%88%90%E3%81%99%E3%82%8B%E3%81%9F%E3%82%81%E3%81%AE%E3%80%8C%E7%A8%8E%E8%BE%BC%E5%A3%B2%E4%BE%A1%E3%80%8D%E3%82%92%E9%80%86%E7%AE%97%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%22)%2C%0A%20%20%20%20%20%20%20%20mo.hstack(%5Bt2_cost_amount%2C%20t2_target_rate%5D%2C%20gap%3D2%2C%20wrap%3DTrue)%2C%0A%20%20%20%20%20%20%20%20mo.md(%22%23%23%23%23%20%F0%9F%8E%AF%20%E6%8E%A8%E5%A5%A8%E8%A8%AD%E5%AE%9A%E4%BE%A1%E6%A0%BC%20(%E7%A8%8E%E8%BE%BC)%22)%2C%0A%20%20%20%20%20%20%20%20mo.callout(%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.md(f%22%23%20%7Bcalc_price%3A%2C%7D%20%E5%86%86%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20kind%3D%22info%22%0A%20%20%20%20%20%20%20%20)%2C%0A%20%20%20%20%20%20%20%20mo.md(%22%23%23%23%23%20%F0%9F%93%8A%20%E5%8E%9F%E4%BE%A1%E7%8E%87%E5%88%A5%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%20(%E6%9D%BE%E3%83%BB%E7%AB%B9%E3%83%BB%E6%A2%85)%22)%2C%0A%20%20%20%20%20%20%20%20mo.hstack(%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.stat(label%3D%22%E6%9D%BE%20(%E5%8E%9F%E4%BE%A125%25)%22%2C%20value%3Df%22%7Bp_matsu%3A%2C%7D%E5%86%86%22%2C%20caption%3D%22%E9%AB%98%E4%BB%98%E5%8A%A0%E4%BE%A1%E5%80%A4%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.stat(label%3D%22%E7%AB%B9%20(%E5%8E%9F%E4%BE%A130%25)%22%2C%20value%3Df%22%7Bp_take%3A%2C%7D%E5%86%86%22%2C%20caption%3D%22%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B9%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.stat(label%3D%22%E6%A2%85%20(%E5%8E%9F%E4%BE%A135%25)%22%2C%20value%3Df%22%7Bp_ume%3A%2C%7D%E5%86%86%22%2C%20caption%3D%22%E9%9B%86%E5%AE%A2%E9%87%8D%E8%A6%96%22)%2C%0A%20%20%20%20%20%20%20%20%5D%2C%20gap%3D1%2C%20wrap%3DTrue%2C%20justify%3D%22center%22)%0A%20%20%20%20%5D)%0A%20%20%20%20return%20(tab2_content%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20%23%20---%20Tab%203%3A%20%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%82%A4%E3%83%A0%E6%90%8D%E7%9B%8A%E5%88%86%E5%B2%90%E7%82%B9%20(Daily%20BEP)%20---%0A%0A%20%20%20%20%23%201.%20Input%20UI%0A%20%20%20%20t3_fixed_cost%20%3D%20mo.ui.number(value%3D500000%2C%20label%3D%22%E6%9C%88%E9%96%93%E5%9B%BA%E5%AE%9A%E8%B2%BB%20(%E5%86%86)%22%2C%20step%3D10000%2C%20full_width%3DTrue)%0A%20%20%20%20t3_days%20%3D%20mo.ui.slider(start%3D1%2C%20stop%3D31%2C%20value%3D25%2C%20label%3D%22%E6%9C%88%E9%96%93%E5%96%B6%E6%A5%AD%E6%97%A5%E6%95%B0%20(%E6%97%A5)%22%2C%20step%3D1%2C%20full_width%3DTrue)%0A%20%20%20%20t3_avg_spend%20%3D%20mo.ui.number(value%3D1200%2C%20label%3D%22%E5%B9%B3%E5%9D%87%E5%AE%A2%E5%8D%98%E4%BE%A1%20(%E7%A8%8E%E8%BE%BC)%22%2C%20step%3D10%2C%20full_width%3DTrue)%0A%20%20%20%20t3_avg_cost_rate%20%3D%20mo.ui.slider(start%3D10%2C%20stop%3D90%2C%20value%3D32%2C%20label%3D%22%E5%B9%B3%E5%9D%87%E5%8E%9F%E4%BE%A1%E7%8E%87%20(%25)%22%2C%20step%3D0.5%2C%20full_width%3DTrue)%0A%20%20%20%20return%20t3_avg_cost_rate%2C%20t3_avg_spend%2C%20t3_days%2C%20t3_fixed_cost%0A%0A%0A%40app.cell%0Adef%20_(%0A%20%20%20%20Decimal%2C%0A%20%20%20%20ROUND_HALF_UP%2C%0A%20%20%20%20fee_rate_input%2C%0A%20%20%20%20mo%2C%0A%20%20%20%20t3_avg_cost_rate%2C%0A%20%20%20%20t3_avg_spend%2C%0A%20%20%20%20t3_days%2C%0A%20%20%20%20t3_fixed_cost%2C%0A%20%20%20%20tab1_content%2C%0A%20%20%20%20tab2_content%2C%0A)%3A%0A%0A%20%20%20%20%23%202.%20Logic%20(Strict%20Decimal%20Implementation%20%26%20Validation)%0A%20%20%20%20def%20calculate_daily_bep(fixed_cost%2C%20days%2C%20avg_spend%2C%20avg_cost_rate_pct%2C%20fee_rate_pct)%3A%0A%20%20%20%20%20%20%20%20fc%20%3D%20Decimal(str(max(0%2C%20fixed_cost)))%0A%20%20%20%20%20%20%20%20d%20%3D%20Decimal(str(max(1%2C%20days)))%20%23%200%E9%99%A4%E7%AE%97%E9%98%B2%E6%AD%A2%E3%81%AE%E3%81%9F%E3%82%81%E6%9C%80%E5%B0%8F%E5%80%A41%0A%20%20%20%20%20%20%20%20spend%20%3D%20Decimal(str(max(0%2C%20avg_spend)))%0A%20%20%20%20%20%20%20%20r_cost%20%3D%20Decimal(str(max(0%2C%20avg_cost_rate_pct)))%20%2F%20Decimal('100')%0A%20%20%20%20%20%20%20%20r_fee%20%3D%20Decimal(str(max(0%2C%20fee_rate_pct)))%20%2F%20Decimal('100')%0A%0A%20%20%20%20%20%20%20%20denom%20%3D%20Decimal('1')%20-%20r_cost%20-%20r_fee%0A%20%20%20%20%20%20%20%20if%20denom%20%3C%3D%20Decimal('0')%3A%20%0A%20%20%20%20%20%20%20%20%20%20%20%20return%200%2C%200%2C%200%0A%0A%20%20%20%20%20%20%20%20req_sales_month%20%3D%20fc%20%2F%20denom%0A%20%20%20%20%20%20%20%20daily_target_sales%20%3D%20req_sales_month%20%2F%20d%0A%0A%20%20%20%20%20%20%20%20if%20spend%20%3C%3D%20Decimal('0')%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20daily_target_customers%20%3D%20Decimal('0')%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20daily_target_customers%20%3D%20daily_target_sales%20%2F%20spend%0A%0A%20%20%20%20%20%20%20%20%23%20%E5%8E%B3%E5%AF%86%E3%81%AA%E5%9B%9B%E6%8D%A8%E4%BA%94%E5%85%A5%0A%20%20%20%20%20%20%20%20return%20(%0A%20%20%20%20%20%20%20%20%20%20%20%20int(req_sales_month.quantize(Decimal('1')%2C%20rounding%3DROUND_HALF_UP))%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20int(daily_target_sales.quantize(Decimal('1')%2C%20rounding%3DROUND_HALF_UP))%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20int(daily_target_customers.quantize(Decimal('1')%2C%20rounding%3DROUND_HALF_UP))%0A%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20%23%20Calculation%20Execution%20with%20UX%20Spinner%0A%20%20%20%20with%20mo.status.spinner(%22%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%82%A4%E3%83%A0%E6%90%8D%E7%9B%8A%E5%88%86%E5%B2%90%E7%82%B9%E3%82%92%E8%A8%88%E7%AE%97%E4%B8%AD...%22)%3A%0A%20%20%20%20%20%20%20%20req_month%2C%20daily_sales%2C%20daily_customers%20%3D%20calculate_daily_bep(%0A%20%20%20%20%20%20%20%20%20%20%20%20t3_fixed_cost.value%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20t3_days.value%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20t3_avg_spend.value%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20t3_avg_cost_rate.value%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20fee_rate_input.value%0A%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20%23%20Layout%20Construction%20(Mobile%20Safe%20Wrap)%0A%20%20%20%20tab3_content%20%3D%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20mo.md(%22%23%23%23%20%F0%9F%9F%A0%20%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%82%A4%E3%83%A0%E6%90%8D%E7%9B%8A%E5%88%86%E5%B2%90%E7%82%B9%22)%2C%0A%20%20%20%20%20%20%20%20mo.md(%22%E5%9B%BA%E5%AE%9A%E8%B2%BB%E3%82%92%E5%9B%9E%E5%8F%8E%E3%81%99%E3%82%8B%E3%81%9F%E3%82%81%E3%81%AB%E3%80%81%E4%BB%8A%E6%97%A5%E4%B8%80%E6%97%A5%E3%81%A7%E6%9C%80%E4%BD%8E%E9%99%90%E5%BF%85%E8%A6%81%E3%81%AA%E5%A3%B2%E4%B8%8A%E3%81%A8%E5%AE%A2%E6%95%B0%E3%82%92%E8%A8%88%E7%AE%97%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%22)%2C%0A%20%20%20%20%20%20%20%20mo.hstack(%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.vstack(%5Bt3_fixed_cost%2C%20t3_days%5D)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.vstack(%5Bt3_avg_spend%2C%20t3_avg_cost_rate%5D)%0A%20%20%20%20%20%20%20%20%5D%2C%20gap%3D2%2C%20wrap%3DTrue)%2C%0A%20%20%20%20%20%20%20%20mo.md(%22---%22)%2C%0A%20%20%20%20%20%20%20%20mo.md(%22%23%23%23%23%20%F0%9F%93%85%20%E4%BB%8A%E6%97%A5%E3%81%AE%E7%9B%AE%E6%A8%99%E3%83%A9%E3%82%A4%E3%83%B3%22)%2C%0A%20%20%20%20%20%20%20%20mo.hstack(%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.stat(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22%E7%9B%AE%E6%A8%99%E6%9D%A5%E5%BA%97%E5%AE%A2%E6%95%B0%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20value%3Df%22%7Bdaily_customers%3A%2C%7D%20%E4%BA%BA%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20caption%3D%22Today's%20Target%22%0A%20%20%20%20%20%20%20%20%20%20%20%20)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.stat(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22%E7%9B%AE%E6%A8%99%E6%97%A5%E8%B2%A9%20(%E7%A8%8E%E8%BE%BC)%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20value%3Df%22%C2%A5%20%7Bdaily_sales%3A%2C%7D%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20caption%3D%22Minimum%20Sales%22%0A%20%20%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20%5D%2C%20gap%3D2%2C%20wrap%3DTrue%2C%20justify%3D%22center%22)%2C%0A%20%20%20%20%20%20%20%20mo.callout(%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.md(f%22%E2%80%BB%E6%9C%88%E9%96%93%E5%BF%85%E8%A6%81%E6%90%8D%E7%9B%8A%E5%88%86%E5%B2%90%E7%82%B9%E5%A3%B2%E4%B8%8A%3A%20%C2%A5%20%7Breq_month%3A%2C%7D%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20kind%3D%22neutral%22%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20%5D)%0A%0A%20%20%20%20%23%20---%20Main%20Area%20Assembly%20---%0A%20%20%20%20main_tabs%20%3D%20mo.ui.tabs(%7B%0A%20%20%20%20%20%20%20%20%22%F0%9F%93%88%20%E5%80%A4%E4%B8%8A%E3%81%92%22%3A%20tab1_content%2C%0A%20%20%20%20%20%20%20%20%22%F0%9F%8F%B7%EF%B8%8F%20%E5%80%A4%E4%BB%98%E3%81%91%22%3A%20tab2_content%2C%0A%20%20%20%20%20%20%20%20%22%E2%9A%96%EF%B8%8F%20%E5%88%86%E5%B2%90%E7%82%B9%22%3A%20tab3_content%0A%20%20%20%20%7D)%0A%0A%20%20%20%20return%20(main_tabs%2C)%0A%0A%0A%40app.cell%0Adef%20_(main_tabs%2C%20sidebar)%3A%0A%20%20%20%20%23%20Application%20Layout%0A%20%20%20%20sidebar%20%0A%20%20%20%20main_tabs%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a portal for the data editor to render in -->
+    <div id="portal" data-testid="glide-portal" style="position: fixed; left: 0; top: 0; z-index: 9999"></div>
+    <script data-marimo="true">
+      window.__MARIMO_MOUNT_CONFIG__ = {
+            "filename": "notebook.py",
+            "mode": "read",
+            "version": "0.19.0",
+            "serverToken": "unused",
+            "config": {"ai": {"models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "pip"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "full"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        };
+    </script>
+  </body>
+</html>
