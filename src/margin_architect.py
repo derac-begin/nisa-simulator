@@ -4,46 +4,59 @@ __generated_with = "0.19.0"
 app = marimo.App(width="full")
 
 @app.cell
-def _(mo, plt):
-    # 🛠️ WASM Font Patcher (By The Architect)
-    # 日本語フォント(Noto Sans JP)をGoogle Fontsから動的にDLして適用する
+def _(mo):
+    import matplotlib.pyplot as plt
     import matplotlib.font_manager as fm
     import os
 
-    # フォントの保存先とURL定義
-    font_path = "NotoSansJP-Regular.ttf"
-    font_url = "https://github.com/google/fonts/raw/main/ofl/notosansjp/NotoSansJP-Regular.ttf"
+    # ---------------------------------------------------------
+    # 🛠️ WASM (Pyodide) 日本語フォント解決パッチ (v3.0 Final)
+    # ---------------------------------------------------------
+    def setup_japanese_font():
+        # Google Fonts (Noto Sans JP) の URL
+        FONT_URL = "https://github.com/google/fonts/raw/main/ofl/notosansjp/NotoSansJP-Regular.ttf"
+        FONT_FILE = "NotoSansJP-Regular.ttf"
 
-    # まだフォントを持っていない場合のみ実行
-    if not os.path.exists(font_path):
-        try:
-            # Pyodide（WASM環境）判定
+        # すでにダウンロード済みならスキップ (リロード対策)
+        if os.path.exists(FONT_FILE):
+            return
+
+        # WASM環境判定 & ダウンロード
+        import sys
+        if "pyodide" in sys.modules:
             import pyodide.http
+            print(f"📥 Downloading font from {FONT_URL}...")
+            # 同期的にダウンロードしてファイルに書き込む
+            content = pyodide.http.open_url(FONT_URL).read()
+            with open(FONT_FILE, "wb") as f:
+                f.write(content)
+        else:
+            # ローカル環境用（念の為）
+            # import urllib.request
+            # urllib.request.urlretrieve(FONT_URL, FONT_FILE)
+            pass
+
+    # UIにロード状況を表示しながら実行
+    with mo.status.spinner("日本語フォントをセットアップ中..."):
+        setup_japanese_font()
+
+        # ここが重要: ファイルパスからフォントを追加し、その「正式名称」を取得する
+        font_path = "NotoSansJP-Regular.ttf"
+        if os.path.exists(font_path):
+            fm.fontManager.addfont(font_path) # フォントマネージャに追加
             
-            # ユーザーにDL中であることを伝える
-            with mo.status.spinner("日本語フォントをダウンロード中... (初回のみ)"):
-                # 同期的にフォントを取得して保存
-                content = pyodide.http.open_url(font_url)
-                with open(font_path, "wb") as f:
-                    f.write(content.read())
-                
-            # フォントマネージャに追加して設定
-            fm.fontManager.addfont(font_path)
-            plt.rcParams['font.family'] = 'Noto Sans JP'
-                
-        except ImportError:
-            # ローカル環境(Windows等)用のフォールバック
-            # Pyodideがない場合は、OSの標準フォントを探しに行く
-            print("Running in Local Environment (Not WASM)")
-            plt.rcParams['font.family'] = ['Meirio', 'Yu Gothic', 'sans-serif']
+            # 追加したフォントのプロパティを直接取得
+            prop = fm.FontProperties(fname=font_path)
+            font_name = prop.get_name() # 内部的な正式名称 (例: 'Noto Sans JP')
+            
+            # 全体のデフォルトフォントとして強制設定
+            plt.rcParams['font.family'] = font_name
+            print(f"✅ Font loaded: {font_name}")
+        else:
+            print("⚠️ Font file not found. Fallback to default.")
 
-    else:
-        # 2回目以降（またはDL済み）はファイルを読み込むだけ
-        fm.fontManager.addfont(font_path)
-        plt.rcParams['font.family'] = 'Noto Sans JP'
-        
-    return
-
+    return fm, os, plt, setup_japanese_font
+    
 @app.cell
 def _():
     import marimo as mo
@@ -143,20 +156,6 @@ def _(Decimal, fee_rate_input, mo, np, plt, t1_p_curr, t1_p_up, t1_r_cost, t1_v_
 
         # 3. Visualization (Matplotlib)
         def plot_safety_zone(c_limit, margin_c, margin_n, v_curr_input):
-            # --- 🔽 日本語フォント設定 (WASM Safe) 🔽 ---
-            import matplotlib.font_manager as fm
-            import os
-
-            # 汎用的な日本語フォントのパスを探す（WASM環境など）
-            # もし環境にフォントがない場合、豆腐になるのを防ぐため英語表記にフォールバックする手もあるが
-            # ここではMarimo/Pyodide環境で有効な 'msgothic' や 'IPAGothic' を指定
-            
-            # ※本来はフォントファイルをダウンロードして設定するのが確実だが、
-            # 簡易的に rcParams で 'sans-serif' 系の日本語フォントを優先指定する
-            plt.rcParams['font.family'] = 'sans-serif'
-            plt.rcParams['font.sans-serif'] = ['Hiragino Maru Gothic Pro', 'Yu Gothic', 'Meirio', 'Takao', 'IPAexGothic', 'IPAPGothic', 'VL PGothic', 'Noto Sans CJK JP']
-            
-            # ---------------------------------------------
 
             v_curr = float(max(0, v_curr_input))
             fig, ax = plt.subplots(figsize=(6, 4))
