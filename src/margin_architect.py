@@ -7,77 +7,13 @@ app = marimo.App(width="full")
 def _():
     import marimo as mo
     import numpy as np
+    import pandas as pd # AltairのためにPandasが必要
+    import altair as alt # Matplotlibの代わりにAltairを使用
     import math
     from decimal import Decimal, ROUND_HALF_UP
-    return Decimal, ROUND_HALF_UP, math, mo, np
-
-@app.cell
-async def _(mo):
-    import matplotlib.pyplot as plt
-    import matplotlib.font_manager as fm
-    import os
-    import js # ブラウザのJavaScript機能にアクセスする魔法のモジュール
-
-    # ---------------------------------------------------------
-    # 🛠️ WASM (Pyodide) 日本語フォント解決パッチ (v5.0 JS-Fetch)
-    # ---------------------------------------------------------
     
-    # IPAexゴシック (CDN)
-    FONT_URL = "https://cdn.jsdelivr.net/gh/masaru-b-cl/setup_jp_fonts@master/fonts/IPAexGothic.ttf"
-    FONT_FILE = "IPAexGothic.ttf"
-
-    with mo.status.spinner("ブラウザの機能を使ってフォントをダウンロード中..."):
-        
-        # 1. ファイルが存在しない、または壊れている(小さい)場合に再取得
-        need_download = False
-        if not os.path.exists(FONT_FILE):
-            need_download = True
-        elif os.path.getsize(FONT_FILE) < 1000: # 1KB以下なら壊れているとみなす
-            print("⚠️ 壊れたファイルを検知。削除して再取得します。")
-            os.remove(FONT_FILE)
-            need_download = True
-
-        if need_download:
-            try:
-                print(f"📡 Fetching via JS: {FONT_URL}...")
-                
-                # JavaScriptの fetch を Pythonから直接叩く (最強の回避策)
-                response = await js.fetch(FONT_URL)
-                
-                if not response.ok:
-                    raise Exception(f"HTTP Error: {response.status}")
-                
-                # JSの ArrayBuffer を取得
-                array_buffer = await response.arrayBuffer()
-                
-                # JSのバッファを Pythonの bytes に変換
-                # to_py() で memoryview が返る -> tobytes() でバイト列へ
-                byte_data = array_buffer.to_py().tobytes()
-                
-                with open(FONT_FILE, "wb") as f:
-                    f.write(byte_data)
-                    
-                print(f"💾 Saved {len(byte_data)} bytes to virtual FS.")
-                
-            except Exception as e:
-                print(f"❌ JS Fetch failed: {e}")
-
-        # 2. フォントの登録
-        if os.path.exists(FONT_FILE) and os.path.getsize(FONT_FILE) > 1000:
-            try:
-                fm.fontManager.addfont(FONT_FILE)
-                prop = fm.FontProperties(fname=FONT_FILE)
-                font_name = prop.get_name()
-                
-                # 強制適用
-                plt.rcParams['font.family'] = font_name
-                print(f"✅ Font loaded successfully: {font_name}")
-            except Exception as e:
-                print(f"⚠️ Registration error: {e}")
-        else:
-            print("❌ Font file is missing or corrupt.")
-
-    return fm, js, os, plt
+    # 以前の plt (Matplotlib) は削除
+    return Decimal, ROUND_HALF_UP, alt, math, mo, np, pd
 
 @app.cell
 def _(mo):
@@ -105,17 +41,15 @@ def _(mo):
             tax_rate_input,
             fee_rate_input,
             mo.md("---"),
-            mo.md("**Margin Architect v2.1**"),
-            mo.md("Audited by The CFO (QA Passed)")
+            mo.md("**Margin Architect v3.0**"),
+            mo.md("Powered by Altair (No-Tofu)")
         ])
     )
     return fee_rate_input, sidebar, tax_rate_input
 
 @app.cell
 def _(mo):
-    # --- Tab 1: 値上げシミュレーター (The Safety Zone) ---
-
-    # 1. Input UI
+    # --- Tab 1: Input UI ---
     t1_p_curr = mo.ui.number(value=1000, label="現在の客単価 (税込)", step=10, full_width=True)
     t1_v_curr = mo.ui.number(value=1000, label="現在の月間客数 (人)", step=10, full_width=True)
     t1_r_cost = mo.ui.slider(start=10, stop=90, value=30, label="原価率 (%)", step=0.5, full_width=True)
@@ -124,10 +58,22 @@ def _(mo):
     return t1_p_curr, t1_p_up, t1_r_cost, t1_v_curr
 
 @app.cell
-def _(Decimal, fee_rate_input, mo, np, plt, t1_p_curr, t1_p_up, t1_r_cost, t1_v_curr, tax_rate_input):
-    # --- Tab 1: Logic & Visualization (Direct Font Injection Fix) ---
+def _(
+    Decimal,
+    alt,
+    fee_rate_input,
+    mo,
+    np,
+    pd,
+    t1_p_curr,
+    t1_p_up,
+    t1_r_cost,
+    t1_v_curr,
+    tax_rate_input,
+):
+    # --- Tab 1: Logic & Visualization (Altair Ver.) ---
     
-    # 2. Logic
+    # 2. Logic (計算ロジックは変更なし)
     def calculate_churn_limit(p_curr_inc, p_up_inc, v_curr, r_cost_percent, tax_rate_percent, fee_rate_percent):
         p_curr = Decimal(str(max(0, p_curr_inc)))
         p_up = Decimal(str(max(0, p_up_inc)))
@@ -160,59 +106,68 @@ def _(Decimal, fee_rate_input, mo, np, plt, t1_p_curr, t1_p_up, t1_r_cost, t1_v_
             fee_rate_input.value
         )
 
-        # 3. Visualization (Matplotlib with Explicit Font Injection)
-        def plot_safety_zone(c_limit, margin_c, margin_n, v_curr_input):
-            import matplotlib.font_manager as fm
-            import os
-            
-            # --- 🛡️ 最後の砦: フォント直接指定ロジック ---
-            # JS Fetcher がダウンロードしたはずのファイルを指名手配する
-            font_path = "IPAexGothic.ttf"
-            fp = None
-            
-            if os.path.exists(font_path):
-                # このパスのフォントプロパティを作成
-                fp = fm.FontProperties(fname=font_path)
-            else:
-                # 万が一ない場合はデフォルト(豆腐)になるがエラーは出さない
-                print("⚠️ Warning: Font file missing in plot function.")
+        # 3. Visualization (Altair: Browser-Native Rendering)
+        # Matplotlibを捨て、データフレームを作成してAltairで描画する
+        
+        v_curr_val = float(max(0, t1_v_curr.value))
+        
+        # データ作成: 0%〜30%の客離れ率ごとの利益推移
+        x_vals = np.linspace(0, 0.30, 100)
+        profit_curr_vals = [float(m_curr * v_curr_val)] * len(x_vals)
+        profit_new_vals = [float(m_new * v_curr_val * (1 - x)) for x in x_vals]
+        
+        # DataFrame化
+        df_chart = pd.DataFrame({
+            'churn_rate': x_vals,
+            'current_profit': profit_curr_vals,
+            'new_profit': profit_new_vals
+        })
+        
+        # Base Chart
+        base = alt.Chart(df_chart).encode(
+            x=alt.X('churn_rate', axis=alt.Axis(format='%', title='客離れ率')),
+        )
+        
+        # Line 1: 現在の利益 (点線)
+        line_curr = base.mark_line(strokeDash=[5, 5], color='gray').encode(
+            y=alt.Y('current_profit', title='営業利益 (円)'),
+            tooltip=[alt.Tooltip('current_profit', format=',.0f', title='現在の利益')]
+        )
+        
+        # Line 2: 新しい利益 (実線・青)
+        line_new = base.mark_line(color='blue').encode(
+            y='new_profit',
+            tooltip=[alt.Tooltip('churn_rate', format='.1%', title='客離れ率'), 
+                     alt.Tooltip('new_profit', format=',.0f', title='新利益')]
+        )
+        
+        # Area: 利益が増えるゾーン (Green)
+        # Altairで fill_between を表現するのは少し工夫がいるが、今回はシンプルに
+        # 「新利益」のラインの下を薄く塗る表現にする（交差塗り分けは複雑なため）
+        area_new = base.mark_area(opacity=0.1, color='blue').encode(
+            y='new_profit'
+        )
+        
+        # Rule: 損益分岐点 (赤線)
+        rule = alt.Chart(pd.DataFrame({'x': [churn_limit]})).mark_rule(color='red', strokeDash=[2,2]).encode(
+            x='x'
+        )
+        
+        # Text: 分岐点のラベル
+        text = alt.Chart(pd.DataFrame({'x': [churn_limit], 'y': [float(m_curr * v_curr_val)], 'label': [f'分岐点: {churn_limit:.1%}']})).mark_text(
+            align='left', dx=5, dy=-10, color='red'
+        ).encode(
+            x='x', y='y', text='label'
+        )
 
-            # -------------------------------------------
-
-            v_curr = float(max(0, v_curr_input))
-            fig, ax = plt.subplots(figsize=(6, 4))
-            
-            x = np.linspace(0, 0.30, 100)
-            profit_curr = margin_c * v_curr
-            profit_new = margin_n * v_curr * (1 - x)
-
-            ax.plot(x * 100, [profit_curr] * len(x), 'k--', label='現在の営業利益 (基準)')
-            ax.plot(x * 100, profit_new, 'b-', label='値上げ後の営業利益')
-
-            ax.fill_between(x * 100, profit_curr, profit_new, where=(profit_new >= profit_curr), 
-                            color='green', alpha=0.2, label='利益増加ゾーン (Safety Zone)')
-            
-            ax.fill_between(x * 100, profit_curr, profit_new, where=(profit_new < profit_curr), 
-                            color='red', alpha=0.1, label='利益減少ゾーン')
-
-            limit_percent = c_limit * 100
-            if 0 <= limit_percent <= 30:
-                ax.axvline(x=limit_percent, color='r', linestyle=':', label=f'損益分岐客離れ率: {limit_percent:.1f}%')
-
-            # 🔥 ここでフォントプロパティ(fp)を直接渡す！
-            # fp が None の場合はデフォルトフォントが使われる
-            ax.set_title("利益の防衛ライン分析", fontsize=10, fontproperties=fp)
-            ax.set_xlabel("客離れ率 (%)", fontproperties=fp)
-            ax.set_ylabel("営業利益 (円)", fontproperties=fp)
-            
-            ax.grid(True, linestyle='--', alpha=0.6)
-            
-            # 凡例(Legend)だけ引数名が 'prop' なので注意
-            ax.legend(loc='lower left', fontsize='small', prop=fp)
-            
-            return fig
-
-        chart_output = plot_safety_zone(churn_limit, m_curr, m_new, t1_v_curr.value)
+        # Combine
+        final_chart = (area_new + line_curr + line_new + rule + text).properties(
+            title="利益の防衛ライン分析",
+            width="container",
+            height=300
+        )
+        
+        chart_output = mo.ui.altair_chart(final_chart)
 
     # Layout
     tab1_content = mo.vstack([
@@ -248,13 +203,12 @@ def _(Decimal, fee_rate_input, mo, np, plt, t1_p_curr, t1_p_up, t1_r_cost, t1_v_
         churn_limit,
         m_curr,
         m_new,
-        plot_safety_zone,
         tab1_content,
+        v_curr_val,
     )
 
 @app.cell
 def _(mo):
-    # --- Tab 2: 適正価格メーカー (Target Price) ---
     # --- Tab 2: Input UI ---
     t2_cost_amount = mo.ui.number(value=300, label="原価額 (円)", step=10, full_width=True)
     t2_target_rate = mo.ui.slider(start=10, stop=90, value=30, label="目標原価率 (%)", step=1, full_width=True)
@@ -263,8 +217,6 @@ def _(mo):
 @app.cell
 def _(Decimal, ROUND_HALF_UP, fee_rate_input, mo, t2_cost_amount, t2_target_rate, tax_rate_input):
     # --- Tab 2: Logic ---
-
-    # 2. Logic (Strict Decimal Implementation & Validation)
     def calculate_target_price(cost, target_rate_percent, tax_rate_percent):
         c = Decimal(str(max(0, cost)))
         t_rate = Decimal(str(max(0, target_rate_percent))) / Decimal('100')
@@ -278,17 +230,14 @@ def _(Decimal, ROUND_HALF_UP, fee_rate_input, mo, t2_cost_amount, t2_target_rate
         net_price = c / t_rate
         gross_price = net_price * tax_mult
         
-        # 厳密な四捨五入
         return int(gross_price.quantize(Decimal('1'), rounding=ROUND_HALF_UP))
 
-    # Calculation Execution with UX Spinner
     with mo.status.spinner("適正価格をシミュレーション中..."):
         calc_price = calculate_target_price(t2_cost_amount.value, t2_target_rate.value, tax_rate_input.value)
         p_matsu = calculate_target_price(t2_cost_amount.value, 25, tax_rate_input.value)
         p_take = calculate_target_price(t2_cost_amount.value, 30, tax_rate_input.value)
         p_ume = calculate_target_price(t2_cost_amount.value, 35, tax_rate_input.value)
 
-    # Layout Construction (Mobile Safe Wrap)
     tab2_content = mo.vstack([
         mo.md("### 🔵 適正価格メーカー"),
         mo.md("原価額から、目標原価率を達成するための「税込売価」を逆算します。"),
@@ -315,10 +264,8 @@ def _(Decimal, ROUND_HALF_UP, fee_rate_input, mo, t2_cost_amount, t2_target_rate
     )
 
 @app.cell
-def _(Decimal, ROUND_HALF_UP, fee_rate_input, mo, tab1_content, tab2_content, tax_rate_input):
-    # --- Tab 3: リアルタイム損益分岐点 (Daily BEP) ---
-
-    # 1. Input UI
+def _(mo):
+    # --- Tab 3: Input UI ---
     t3_fixed_cost = mo.ui.number(value=500000, label="月間固定費 (円)", step=10000, full_width=True)
     t3_days = mo.ui.slider(start=1, stop=31, value=25, label="月間営業日数 (日)", step=1, full_width=True)
     t3_avg_spend = mo.ui.number(value=1200, label="平均客単価 (税込)", step=10, full_width=True)
@@ -327,11 +274,10 @@ def _(Decimal, ROUND_HALF_UP, fee_rate_input, mo, tab1_content, tab2_content, ta
 
 @app.cell
 def _(Decimal, ROUND_HALF_UP, fee_rate_input, mo, t3_avg_cost_rate, t3_avg_spend, t3_days, t3_fixed_cost, tab1_content, tab2_content, tax_rate_input):
-
-    # 2. Logic (Strict Decimal Implementation & Validation)
+    # --- Tab 3: Logic ---
     def calculate_daily_bep(fixed_cost, days, avg_spend, avg_cost_rate_pct, fee_rate_pct):
         fc = Decimal(str(max(0, fixed_cost)))
-        d = Decimal(str(max(1, days))) # 0除算防止のため最小値1
+        d = Decimal(str(max(1, days)))
         spend = Decimal(str(max(0, avg_spend)))
         r_cost = Decimal(str(max(0, avg_cost_rate_pct))) / Decimal('100')
         r_fee = Decimal(str(max(0, fee_rate_pct))) / Decimal('100')
@@ -348,14 +294,12 @@ def _(Decimal, ROUND_HALF_UP, fee_rate_input, mo, t3_avg_cost_rate, t3_avg_spend
         else:
             daily_target_customers = daily_target_sales / spend
             
-        # 厳密な四捨五入
         return (
             int(req_sales_month.quantize(Decimal('1'), rounding=ROUND_HALF_UP)),
             int(daily_target_sales.quantize(Decimal('1'), rounding=ROUND_HALF_UP)),
             int(daily_target_customers.quantize(Decimal('1'), rounding=ROUND_HALF_UP))
         )
 
-    # Calculation Execution with UX Spinner
     with mo.status.spinner("リアルタイム損益分岐点を計算中..."):
         req_month, daily_sales, daily_customers = calculate_daily_bep(
             t3_fixed_cost.value,
@@ -365,7 +309,6 @@ def _(Decimal, ROUND_HALF_UP, fee_rate_input, mo, t3_avg_cost_rate, t3_avg_spend
             fee_rate_input.value
         )
 
-    # Layout Construction (Mobile Safe Wrap)
     tab3_content = mo.vstack([
         mo.md("### 🟠 リアルタイム損益分岐点"),
         mo.md("固定費を回収するために、今日一日で最低限必要な売上と客数を計算します。"),
@@ -393,7 +336,6 @@ def _(Decimal, ROUND_HALF_UP, fee_rate_input, mo, t3_avg_cost_rate, t3_avg_spend
         )
     ])
 
-    # --- Main Area Assembly ---
     main_tabs = mo.ui.tabs({
         "📈 値上げ": tab1_content,
         "🏷️ 値付け": tab2_content,
@@ -411,7 +353,6 @@ def _(Decimal, ROUND_HALF_UP, fee_rate_input, mo, t3_avg_cost_rate, t3_avg_spend
 
 @app.cell
 def _(main_tabs, sidebar):
-    # Application Layout
     sidebar 
     main_tabs
     return
