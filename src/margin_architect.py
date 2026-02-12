@@ -18,11 +18,12 @@ def _(mo):
     import os
 
     # ---------------------------------------------------------
-    # 🛠️ WASM (Pyodide) 日本語フォント解決パッチ (v3.0 Final)
+    # 🛠️ WASM (Pyodide) 日本語フォント解決パッチ (v3.1 Final)
     # ---------------------------------------------------------
     def setup_japanese_font():
-        # Google Fonts (Noto Sans JP) の URL
-        FONT_URL = "https://github.com/google/fonts/raw/main/ofl/notosansjp/NotoSansJP-Regular.ttf"
+        # 【修正】GitHub Raw はCORSで弾かれるため、jsDelivr (CDN) を経由する
+        # これにより "NetworkError" を回避できます
+        FONT_URL = "https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/notosansjp/NotoSansJP-Regular.ttf"
         FONT_FILE = "NotoSansJP-Regular.ttf"
 
         # すでにダウンロード済みならスキップ (リロード対策)
