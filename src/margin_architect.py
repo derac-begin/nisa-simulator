@@ -4,6 +4,15 @@ __generated_with = "0.19.0"
 app = marimo.App(width="full")
 
 @app.cell
+def _():
+    import marimo as mo
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import math
+    from decimal import Decimal, ROUND_HALF_UP
+    return Decimal, ROUND_HALF_UP, math, mo, np, plt
+
+@app.cell
 def _(mo):
     import matplotlib.pyplot as plt
     import matplotlib.font_manager as fm
@@ -56,15 +65,6 @@ def _(mo):
             print("⚠️ Font file not found. Fallback to default.")
 
     return fm, os, plt, setup_japanese_font
-    
-@app.cell
-def _():
-    import marimo as mo
-    import matplotlib.pyplot as plt
-    import numpy as np
-    import math
-    from decimal import Decimal, ROUND_HALF_UP
-    return Decimal, ROUND_HALF_UP, math, mo, np, plt
 
 @app.cell
 def _(mo):
