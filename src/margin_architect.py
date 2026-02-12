@@ -16,50 +16,63 @@ def _(mo):
     import matplotlib.pyplot as plt
     import matplotlib.font_manager as fm
     import os
+    import sys
 
     # ---------------------------------------------------------
-    # 🛠️ WASM (Pyodide) 日本語フォント解決パッチ (v3.2 urllib Fix)
+    # 🛠️ WASM (Pyodide) 日本語フォント解決パッチ (v4.0 Final Stable)
     # ---------------------------------------------------------
     def setup_japanese_font():
-        # CORS回避のため jsDelivr (CDN) を使用
-        FONT_URL = "https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/notosansjp/NotoSansJP-Regular.ttf"
-        FONT_FILE = "NotoSansJP-Regular.ttf"
+        # 【変更】Noto Sans JP ではなく、実績のある "IPAexGothic" を使用
+        # 安定したリポジトリから jsDelivr 経由で取得
+        FONT_URL = "https://cdn.jsdelivr.net/gh/masaru-b-cl/setup_jp_fonts@master/fonts/IPAexGothic.ttf"
+        FONT_FILE = "IPAexGothic.ttf"
 
-        # すでにダウンロード済みならスキップ (リロード対策)
+        # すでにダウンロード済みならスキップ
         if os.path.exists(FONT_FILE):
-            return
+            # ファイルサイズが小さすぎる（エラーページの可能性）場合は削除して再DL
+            if os.path.getsize(FONT_FILE) < 1000:
+                os.remove(FONT_FILE)
+            else:
+                return
 
         # ダウンロード処理
-        # Pyodide環境でも標準の urllib がパッチされており、最も安定して動作します
-        import sys
         if "pyodide" in sys.modules:
             import urllib.request
-            print(f"📥 Downloading font via CDN (urllib): {FONT_URL}...")
+            print(f"📥 Downloading font (IPAexGothic): {FONT_URL}...")
             
             try:
-                # urlretrieve は ダウンロード -> 保存 を一発で行い、
-                # バイナリ/テキストの扱いも適切に処理してくれます
                 urllib.request.urlretrieve(FONT_URL, FONT_FILE)
+                
+                # ダウンロード後の検証
+                if not os.path.exists(FONT_FILE) or os.path.getsize(FONT_FILE) < 1000:
+                    print("❌ Error: Downloaded file is too small (likely HTML error page).")
+                    if os.path.exists(FONT_FILE): os.remove(FONT_FILE)
+                    return
+                    
             except Exception as e:
                 print(f"❌ Download failed: {e}")
                 return
 
     # UIにロード状況を表示しながら実行
-    with mo.status.spinner("日本語フォントをセットアップ中..."):
+    with mo.status.spinner("日本語フォント(IPAexGothic)を準備中..."):
         setup_japanese_font()
 
-        font_path = "NotoSansJP-Regular.ttf"
+        font_path = "IPAexGothic.ttf"
         if os.path.exists(font_path):
-            fm.fontManager.addfont(font_path)
-            prop = fm.FontProperties(fname=font_path)
-            font_name = prop.get_name()
-            
-            plt.rcParams['font.family'] = font_name
-            print(f"✅ Font loaded: {font_name}")
+            try:
+                fm.fontManager.addfont(font_path)
+                prop = fm.FontProperties(fname=font_path)
+                font_name = prop.get_name()
+                
+                # フォントを強制適用
+                plt.rcParams['font.family'] = font_name
+                print(f"✅ Font loaded successfully: {font_name}")
+            except Exception as e:
+                print(f"⚠️ Font add failed: {e}")
         else:
-            print("⚠️ Font setup skipped or failed. Using default.")
+            print("⚠️ Font file not found. Fallback to default.")
 
-    return fm, os, plt, setup_japanese_font
+    return fm, os, plt, setup_japanese_font, sys
 
 @app.cell
 def _(mo):
