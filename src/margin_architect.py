@@ -4,6 +4,47 @@ __generated_with = "0.19.0"
 app = marimo.App(width="full")
 
 @app.cell
+def _(mo, plt):
+    # 🛠️ WASM Font Patcher (By The Architect)
+    # 日本語フォント(Noto Sans JP)をGoogle Fontsから動的にDLして適用する
+    import matplotlib.font_manager as fm
+    import os
+
+    # フォントの保存先とURL定義
+    font_path = "NotoSansJP-Regular.ttf"
+    font_url = "https://github.com/google/fonts/raw/main/ofl/notosansjp/NotoSansJP-Regular.ttf"
+
+    # まだフォントを持っていない場合のみ実行
+    if not os.path.exists(font_path):
+        try:
+            # Pyodide（WASM環境）判定
+            import pyodide.http
+            
+            # ユーザーにDL中であることを伝える
+            with mo.status.spinner("日本語フォントをダウンロード中... (初回のみ)"):
+                # 同期的にフォントを取得して保存
+                content = pyodide.http.open_url(font_url)
+                with open(font_path, "wb") as f:
+                    f.write(content.read())
+                
+            # フォントマネージャに追加して設定
+            fm.fontManager.addfont(font_path)
+            plt.rcParams['font.family'] = 'Noto Sans JP'
+                
+        except ImportError:
+            # ローカル環境(Windows等)用のフォールバック
+            # Pyodideがない場合は、OSの標準フォントを探しに行く
+            print("Running in Local Environment (Not WASM)")
+            plt.rcParams['font.family'] = ['Meirio', 'Yu Gothic', 'sans-serif']
+
+    else:
+        # 2回目以降（またはDL済み）はファイルを読み込むだけ
+        fm.fontManager.addfont(font_path)
+        plt.rcParams['font.family'] = 'Noto Sans JP'
+        
+    return
+
+@app.cell
 def _():
     import marimo as mo
     import matplotlib.pyplot as plt
