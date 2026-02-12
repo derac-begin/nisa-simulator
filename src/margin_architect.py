@@ -6,11 +6,10 @@ app = marimo.App(width="full")
 @app.cell
 def _():
     import marimo as mo
-    import matplotlib.pyplot as plt
     import numpy as np
     import math
     from decimal import Decimal, ROUND_HALF_UP
-    return Decimal, ROUND_HALF_UP, math, mo, np, plt
+    return Decimal, ROUND_HALF_UP, math, mo, np
 
 @app.cell
 def _(mo):
