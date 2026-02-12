@@ -125,11 +125,10 @@ def _(mo):
 
 @app.cell
 def _(Decimal, fee_rate_input, mo, np, plt, t1_p_curr, t1_p_up, t1_r_cost, t1_v_curr, tax_rate_input):
-    # --- Tab 1: Logic & Visualization ---
-
-    # 2. Logic (Strict Decimal Implementation & Validation)
+    # --- Tab 1: Logic & Visualization (Direct Font Injection Fix) ---
+    
+    # 2. Logic
     def calculate_churn_limit(p_curr_inc, p_up_inc, v_curr, r_cost_percent, tax_rate_percent, fee_rate_percent):
-        # Guard against negative values
         p_curr = Decimal(str(max(0, p_curr_inc)))
         p_up = Decimal(str(max(0, p_up_inc)))
         r_cost = Decimal(str(max(0, r_cost_percent))) / Decimal('100')
@@ -137,26 +136,20 @@ def _(Decimal, fee_rate_input, mo, np, plt, t1_p_curr, t1_p_up, t1_r_cost, t1_v_
         fee_rate = Decimal(str(max(0, fee_rate_percent))) / Decimal('100')
 
         tax_mult = Decimal('1') + tax_rate
-
-        # 1. Net Price Conversion
         p_net_curr = p_curr / tax_mult
         p_net_new = (p_curr + p_up) / tax_mult
         
-        # 2. Unit Margin Calculation
         margin_curr = p_net_curr - (p_net_curr * r_cost) - (p_curr * fee_rate)
         margin_new = p_net_new - (p_net_curr * r_cost) - ((p_curr + p_up) * fee_rate)
 
-        # 3. Break-even Churn Rate (x)
         if margin_new <= Decimal('0'):
             return float(0), float(margin_curr), float(margin_new)
         
         x = Decimal('1') - (margin_curr / margin_new)
-        
-        # Ensure x is not negative
         x_safe = max(Decimal('0'), x)
         return float(x_safe), float(margin_curr), float(margin_new)
 
-    # Calculation Execution with UX Spinner
+    # Calculation Execution
     with mo.status.spinner("利益防衛ラインを計算中..."):
         churn_limit, m_curr, m_new = calculate_churn_limit(
             t1_p_curr.value, 
@@ -167,8 +160,24 @@ def _(Decimal, fee_rate_input, mo, np, plt, t1_p_curr, t1_p_up, t1_r_cost, t1_v_
             fee_rate_input.value
         )
 
-        # 3. Visualization (Matplotlib)
+        # 3. Visualization (Matplotlib with Explicit Font Injection)
         def plot_safety_zone(c_limit, margin_c, margin_n, v_curr_input):
+            import matplotlib.font_manager as fm
+            import os
+            
+            # --- 🛡️ 最後の砦: フォント直接指定ロジック ---
+            # JS Fetcher がダウンロードしたはずのファイルを指名手配する
+            font_path = "IPAexGothic.ttf"
+            fp = None
+            
+            if os.path.exists(font_path):
+                # このパスのフォントプロパティを作成
+                fp = fm.FontProperties(fname=font_path)
+            else:
+                # 万が一ない場合はデフォルト(豆腐)になるがエラーは出さない
+                print("⚠️ Warning: Font file missing in plot function.")
+
+            # -------------------------------------------
 
             v_curr = float(max(0, v_curr_input))
             fig, ax = plt.subplots(figsize=(6, 4))
@@ -190,17 +199,22 @@ def _(Decimal, fee_rate_input, mo, np, plt, t1_p_curr, t1_p_up, t1_r_cost, t1_v_
             if 0 <= limit_percent <= 30:
                 ax.axvline(x=limit_percent, color='r', linestyle=':', label=f'損益分岐客離れ率: {limit_percent:.1f}%')
 
-            ax.set_title("利益の防衛ライン分析", fontsize=10)
-            ax.set_xlabel("客離れ率 (%)")
-            ax.set_ylabel("営業利益 (円)")
+            # 🔥 ここでフォントプロパティ(fp)を直接渡す！
+            # fp が None の場合はデフォルトフォントが使われる
+            ax.set_title("利益の防衛ライン分析", fontsize=10, fontproperties=fp)
+            ax.set_xlabel("客離れ率 (%)", fontproperties=fp)
+            ax.set_ylabel("営業利益 (円)", fontproperties=fp)
+            
             ax.grid(True, linestyle='--', alpha=0.6)
-            ax.legend(loc='lower left', fontsize='small')
+            
+            # 凡例(Legend)だけ引数名が 'prop' なので注意
+            ax.legend(loc='lower left', fontsize='small', prop=fp)
             
             return fig
 
         chart_output = plot_safety_zone(churn_limit, m_curr, m_new, t1_v_curr.value)
 
-    # Layout Construction (Mobile Safe Wrap)
+    # Layout
     tab1_content = mo.vstack([
         mo.md("### 🟢 値上げシミュレーター"),
         mo.md("値上げをしても「利益総額」が減らない客離れの限界ラインを算出します。"),
