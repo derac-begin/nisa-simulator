@@ -18,7 +18,7 @@ async def _():
 @app.cell
 def _(mo):
     # スマホ最適化CSS（レスポンシブ対応）の注入
-    mo.md("""
+    mobile_css = mo.md("""
     <style>
     /* 画面の横揺れ・はみ出しを防止 */
     body, html, .marimo {
@@ -28,13 +28,14 @@ def _(mo):
     }
 
     /* 長いテキストやCallout（ヒント枠）の折り返しを強制 */
-    p, span, div, blockquote, .marimo-callout {
+    p, span, div, blockquote, .marimo-callout, strong, b, h1, h2, h3, h4, h5, h6 {
+        white-space: normal !important;
         overflow-wrap: break-word !important;
         word-wrap: break-word !important;
         max-width: 100% !important;
     }
 
-    /* ボタン内のテキストを折り返し、高さを自動調整（スマホで押しやすく） */
+    /* ボタン内のテキストを折り返し、高さを自動調整 */
     button {
         white-space: normal !important;
         height: auto !important;
@@ -52,7 +53,7 @@ def _(mo):
     }
     </style>
     """)
-    return
+    return mobile_css,
 
 
 @app.cell
