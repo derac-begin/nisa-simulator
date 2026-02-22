@@ -4,13 +4,17 @@ __generated_with = "0.19.0"
 app = marimo.App(width="medium")
 
 
-# ============================================================
-# セル 1: ライブラリのインポート
-# 【Quality Gate チェック済み】
-#   - requests は一切使用しない (WASM制約)
-#   - io.BytesIO / zipfile でインメモリ処理 (ローカルFS禁止)
-#   - segno は Pure Python QR ライブラリ (WASM安定)
-# ============================================================
+@app.cell
+async def _():
+    try:
+        import micropip
+        await micropip.install("segno")
+    except ImportError:
+        # ローカル環境（PC）で実行した場合は、すでにインストールされているためスキップ
+        pass
+    return
+
+
 @app.cell
 def _imports():
     import marimo as mo
@@ -22,10 +26,6 @@ def _imports():
     return base64, csv, io, mo, segno, zipfile
 
 
-# ============================================================
-# セル 2: ロジック関数の定義
-# 【UIとロジックの完全分離 — Reactive Loop 防止】
-# ============================================================
 @app.cell
 def _logic(base64, csv, io, segno, zipfile):
 
@@ -100,14 +100,9 @@ def _logic(base64, csv, io, segno, zipfile):
         """ZIP バイト列をブラウザダウンロード用の data URI に変換する。"""
         b64 = base64.b64encode(zip_bytes).decode("ascii")
         return f"data:application/zip;base64,{b64}"
-
     return build_zip, generate_qr_png_bytes, parse_csv, zip_to_data_uri
 
 
-# ============================================================
-# セル 3: 単体テスト — parse_csv
-# 【Quality Gate 要件: assert 文による動的検証】
-# ============================================================
 @app.cell
 def _test_parse_csv(parse_csv):
     # テスト1: 2列 CSV（ラベル＋URL）
@@ -138,10 +133,6 @@ def _test_parse_csv(parse_csv):
     return
 
 
-# ============================================================
-# セル 4: 単体テスト — generate_qr_png_bytes / build_zip
-# 【Quality Gate 要件: assert 文による動的検証】
-# ============================================================
 @app.cell
 def _test_generate_and_zip(build_zip, generate_qr_png_bytes, io, zipfile):
     # テスト5: QRコード PNG バイト列が PNG ヘッダーで始まる
@@ -169,10 +160,6 @@ def _test_generate_and_zip(build_zip, generate_qr_png_bytes, io, zipfile):
     return
 
 
-# ============================================================
-# セル 5: UIの定義 — ファイルアップロード & 実行ボタン
-# 【UIとロジックを分離 — Reactive Loop を防ぐ構造】
-# ============================================================
 @app.cell
 def _ui(mo):
     # ヘッダー
@@ -208,16 +195,18 @@ def _ui(mo):
         csv_uploader,
         run_button,
     ])
-
     return csv_uploader, run_button
 
 
-# ============================================================
-# セル 6: 結果表示 — ボタン押下時のみ処理を実行
-# 【Reactive Loop 防止: run_button.value が True の時のみ実行】
-# ============================================================
 @app.cell
-def _result(build_zip, csv_uploader, mo, parse_csv, run_button, zip_to_data_uri):
+def _result(
+    build_zip,
+    csv_uploader,
+    mo,
+    parse_csv,
+    run_button,
+    zip_to_data_uri,
+):
     # ボタンが押されていない場合は何も表示しない
     mo.stop(not run_button.value)
 
@@ -266,7 +255,7 @@ def _result(build_zip, csv_uploader, mo, parse_csv, run_button, zip_to_data_uri)
                 )
 
     result_area
-    return (result_area,)
+    return
 
 
 if __name__ == "__main__":

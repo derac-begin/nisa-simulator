@@ -17,7 +17,7 @@
 | **[💪 PFCバランス計算機](https://derac-begin.github.io/nisa-simulator/pfc.html)** | `pfc.html`<br>ダイエット・増量向けの主要栄養素(PFC)計算ツール。 | 🟢 Live |
 | **[📅 AI Shift Scheduler](https://derac-begin.github.io/nisa-simulator/shift_scheduler.html)** | `shift_scheduler.html`<br>スタッフの希望を反映するシフト自動作成ツール。 | 🟢 Live |
 | **[💰 Margin Architect](https://derac-begin.github.io/nisa-simulator/margin_architect.html)** | `margin_architect.html`<br>利益防衛ラインを可視化する価格戦略シミュレーター。 | 🟢 Live |
-
+| **[🛡️ Secure QR Batch Maker (QRコード一括生成くん)](https://derac-begin.github.io/nisa-simulator/qr_batch.html)** | `qr_batch.html`<br>CSVファイルを読み込み、複数のQRコードを瞬時に一括生成してZIPファイルとしてダウンロードできるユーティリティアプリ。 | 🟢 Live |
 ---
 
 ## 🛠️ Tech Stack
