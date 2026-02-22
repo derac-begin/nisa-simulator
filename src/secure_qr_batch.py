@@ -16,6 +16,46 @@ async def _():
 
 
 @app.cell
+def _(mo):
+    # スマホ最適化CSS（レスポンシブ対応）の注入
+    mo.md("""
+    <style>
+    /* 画面の横揺れ・はみ出しを防止 */
+    body, html, .marimo {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 長いテキストやCallout（ヒント枠）の折り返しを強制 */
+    p, span, div, blockquote, .marimo-callout {
+        overflow-wrap: break-word !important;
+        word-wrap: break-word !important;
+        max-width: 100% !important;
+    }
+
+    /* ボタン内のテキストを折り返し、高さを自動調整（スマホで押しやすく） */
+    button {
+        white-space: normal !important;
+        height: auto !important;
+        min-height: 44px !important;
+        line-height: 1.4 !important;
+        padding: 10px !important;
+    }
+
+    /* テーブル（CSVプレビュー）が横に長い場合はスクロールさせる */
+    table {
+        display: block !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        max-width: 100% !important;
+    }
+    </style>
+    """)
+    return
+
+
+@app.cell
 def _imports():
     import marimo as mo
     import csv
