@@ -82,7 +82,10 @@ def _mobile_css(mo):
     }
 
     /* 全子要素: overflow-wrap: anywhere が最も強力（スペースなし文字列にも効く） */
-    *, *::before, *::after {
+    /* ここで svg / path / img は除外: ボタン内部アイコンのレイアウト破壊を防ぐ */
+    *:not(svg):not(path):not(img):not(use):not(symbol),
+    *:not(svg):not(path):not(img):not(use):not(symbol)::before,
+    *:not(svg):not(path):not(img):not(use):not(symbol)::after {
         overflow-wrap: anywhere !important;
         word-break: break-word !important;
         white-space: normal !important;
@@ -343,8 +346,9 @@ def _ui(mobile_css, mo):
     )
 
     # QR生成実行ボタン
+    # ラベルは短く保つ（長すぎると ▶ アイコンが枠外にはみ出す）
     run_button = mo.ui.run_button(
-        label="② QRコードを一括生成して ZIP ダウンロード ▶",
+        label="② QR一括生成 → ZIP ダウンロード",
         full_width=True,
     )
 
