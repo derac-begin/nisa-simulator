@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-B2ootaw-.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-CxL0S8W7.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-D9fedIX3.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-BTCkDNvf.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-DU3aDxX5.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-CLVRCuM9.ttf" as="font" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((_entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>secure qr batch</title>
+    <script type="module" crossorigin src="./assets/index-CGfe1Tpd.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-BW0IMuFq.js">
+    <link rel="modulepreload" crossorigin href="./assets/hotkeys-uKX61F1_.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-BLUna9fQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-Cl9k9ZmS.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-DzliDDTm.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-C8wT63Va.js">
+    <link rel="modulepreload" crossorigin href="./assets/_Uint8Array-BGESiCQL.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CrRUCOBw.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-D0MtrJOx.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-C1rgT0yh.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-BGmjiNul.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-DeeZ7FnK.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-DN_bIXfG.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-DAnNhy3O.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-COkmyg1v.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-DuYGqRtX.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-C9fstfnp.js">
+    <link rel="modulepreload" crossorigin href="./assets/Combination-D1TsGrBC.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-9PZrU2e0.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CBrDuocE.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-CW2xpJ57.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-CrAQug3q.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-D0g5GnIs.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CvjcEpZC.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-Bzf3rpev.js">
+    <link rel="modulepreload" crossorigin href="./assets/_getTag-BWqNuuwU.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseIsEqual-Cz9Tt_-E.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-DlWF5OMa.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-C6yE60hi.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFor-Duhs3RiJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-BBX6ug-N.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-Cg4WLWh2.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-CJJIceVn.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-Bkp4R3bQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-DzyBMRsy.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-babG4OBR.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-ClFZlR7U.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-B3BENoUa.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-C0HaHO6a.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BGkTcW3U.js">
+    <link rel="modulepreload" crossorigin href="./assets/toString-DlRqgfqz.js">
+    <link rel="modulepreload" crossorigin href="./assets/_hasUnicode-zBEpxwYe.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-CmDXEyIC.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-EAuSVK-5.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-DfP1CWaW.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-CTiSlR1m.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-BmAOeMOK.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-DDa-hVe3.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CAcX026F.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DKNOF5xd.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CI6_zMIl.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BVf1IY4_.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Cq_4nPfh.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CVj-_Iiz.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-HGZzCB0y.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-RKnr9SNh.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BuhT82Xx.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-0ac7Aukl.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-5JckKRQn.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-Bj40p_Np.js">
+    <link rel="modulepreload" crossorigin href="./assets/_arrayReduce-bZBYsK-u.js">
+    <link rel="modulepreload" crossorigin href="./assets/type-BdyvjzTI.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseProperty-DuoFhI7N.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-6sUe0ZdD.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-BbFlGgjv.js">
+    <link rel="modulepreload" crossorigin href="./assets/toInteger-CDcO32Gx.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-CaVvnK_o.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-CwSdzVhm.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-D_SkyFDn.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-Drf1manw.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-Czc5z_04.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-RldLPyJs.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-k5KxevGr.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-DUEuLcT2.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-em3gna-v.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers-C9_R_vlY.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-DD7JA3RM.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-BAYdLMF_.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-D8ks3oPN.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-C2LPFxyv.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-CaEtLL8p.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-q6QlC2aZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-BoUpLV2S.js">
+    <link rel="modulepreload" crossorigin href="./assets/multi-map-fjX9ImVF.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-BEdExd6A.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-CqEd11Di.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-BP4_BZLr.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-DNmjkr65.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-CR_zEq5o.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-kFdt1US2.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-Orp0blpZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-DRhpWiOq.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-gBVL4NN-.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-B69c-352.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-C1czjtp7.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-CEEVxHsX.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-D18AHojc.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-jpEDlD0M.js">
+    <link rel="modulepreload" crossorigin href="./assets/katex-AwOI3EvM.js">
+    <link rel="modulepreload" crossorigin href="./assets/marked.esm-CHnOtnr3.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-OGVTOU66-CjNLT2C3.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-C_xfLXiO.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DOFFh6Ii.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-Qt3ng7cb.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-DtnzNVk-.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-BZ_OFvV4.js">
+    <link rel="modulepreload" crossorigin href="./assets/mode-BFwdGSZ7.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-N-2faAGj.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-BzGWfPTJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/table--_20dwBZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/tabs-Ctk4D03n.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-BJJJOr9W.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-CU-WWxnz.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-DU5Qb8a8.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-B9CrBoaO.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-DhMN8sxe.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-DhzaK-Y1.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-CdsE1R40.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-CITws1-y.js">
+    <link rel="modulepreload" crossorigin href="./assets/maps-s2pQkyf5.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-B9D0JO9U.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-lG8j6oqk.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-CV0QXb5P.js">
+    <link rel="modulepreload" crossorigin href="./assets/range-sshwVRcP.js">
+    <link rel="modulepreload" crossorigin href="./assets/capitalize-DQeWKRGx.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-BLx7B_us.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-BLd1jTNA.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-BnFXtaZZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/play-BJDBXApx.js">
+    <link rel="modulepreload" crossorigin href="./assets/chat-components-6dWNbFjV.js">
+    <link rel="modulepreload" crossorigin href="./assets/isEmpty-DIxUV1UR.js">
+    <link rel="modulepreload" crossorigin href="./assets/circle-check-big-OIMTUpe6.js">
+    <link rel="modulepreload" crossorigin href="./assets/chat-display-Cfg38gMM.js">
+    <link rel="modulepreload" crossorigin href="./assets/ai-model-dropdown-DZ7evAGU.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-D0Pei-OA.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeleteCell-GHwc6J4l.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-D4lB4En9.js">
+    <link rel="modulepreload" crossorigin href="./assets/process-output-4w8xDO0j.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-Dg_vNTSs.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-CboCOq4o.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-B3JckBtM.js">
+    <link rel="modulepreload" crossorigin href="./assets/add-cell-with-ai-Dx5UA23s.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-D42sFB6d.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-DxXFdbn8.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-qp_XZeSS.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-9nPwQyJZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-C9iBa4rX.js">
+    <link rel="modulepreload" crossorigin href="./assets/toggle-G1t0cQyf.js">
+    <link rel="modulepreload" crossorigin href="./assets/globals-D3SeIm1j.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-CXQVxivL.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-DN0TMY36.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-CyLJYAfP.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-6FYvpjrm.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-BqxQegSf.js">
+    <link rel="modulepreload" crossorigin href="./assets/utilities.esm-FYD46c3d.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-p0aHdM2W.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAddCell-CVfRv5mq.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-D9zAYqG9.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-CHesBJpY.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-DjP4vjBQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-video-camera-CZUg-nFA.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-VzFAm7Cv.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-qwandMoh.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-D2hGxqGj.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-DbW1_PHb.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-C-lF7BNB.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-DEraWoX5.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-DDKGFzpC.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-5kuXz69O.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-gzLRYatP.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-B42u_5hF.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-C638SUfx.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-FiXEquL2.js">
+    <link rel="modulepreload" crossorigin href="./assets/VisuallyHidden-BodIky8L.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-DydgU7lx.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFlatten-CLPh0yMf.js">
+    <link rel="modulepreload" crossorigin href="./assets/flatten-Buk63LQO.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-DeQioq0G.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-MBUyxNtK.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-DobaYJPt.js">
+    <link rel="modulepreload" crossorigin href="./assets/globe-CY9im410.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-Din9uFKE.js">
+    <link rel="modulepreload" crossorigin href="./assets/settings-MTlHVxz3.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-leQTJTJJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-CbD0f2J6.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-B0Sy2M4C.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-jmgGt1lS.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-B7vuddcd.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-BQNCH-dG.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    <marimo-code hidden="">import%20marimo%0A%0A__generated_with%20%3D%20%220.19.0%22%0Aapp%20%3D%20marimo.App(width%3D%22medium%22)%0A%0A%0A%40app.cell%0Adef%20_imports()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20import%20csv%0A%20%20%20%20import%20io%0A%20%20%20%20import%20zipfile%0A%20%20%20%20import%20base64%0A%20%20%20%20import%20segno%0A%20%20%20%20return%20base64%2C%20csv%2C%20io%2C%20mo%2C%20segno%2C%20zipfile%0A%0A%0A%40app.cell%0Adef%20_logic(base64%2C%20csv%2C%20io%2C%20segno%2C%20zipfile)%3A%0A%0A%20%20%20%20def%20parse_csv(file_bytes%3A%20bytes)%20-%3E%20list%5Bdict%5Bstr%2C%20str%5D%5D%3A%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20CSV%E3%83%90%E3%82%A4%E3%83%88%E5%88%97%E3%82%92%E8%A7%A3%E6%9E%90%E3%81%97%E3%81%A6%E3%80%81%E8%BE%9E%E6%9B%B8%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88%E3%82%92%E8%BF%94%E3%81%99%E3%80%82%0A%20%20%20%20%20%20%20%201%E5%88%97%E7%9B%AE%E3%82%92%E3%83%A9%E3%83%99%E3%83%AB%EF%BC%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%90%8D%E7%94%A8%EF%BC%89%E3%80%812%E5%88%97%E7%9B%AE%E3%82%92QR%E3%82%B3%E3%83%BC%E3%83%89%E5%8C%96%E3%81%99%E3%82%8BURL%E3%81%A8%E3%81%97%E3%81%A6%E6%89%B1%E3%81%86%E3%80%82%0A%20%20%20%20%20%20%20%20-%201%E5%88%97%E3%81%A0%E3%81%91%E3%81%AECSV%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AF%E3%80%81%E3%81%9D%E3%81%AE%E5%88%97%E3%82%92URL%E3%81%A8%E3%81%97%E3%81%A6%E4%BD%BF%E7%94%A8%E3%81%97%E3%80%81%E8%A1%8C%E7%95%AA%E5%8F%B7%E3%82%92%E3%83%A9%E3%83%99%E3%83%AB%E3%81%A8%E3%81%99%E3%82%8B%E3%80%82%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20text%20%3D%20file_bytes.decode(%22utf-8-sig%22)%20%20%23%20BOM%E4%BB%98%E3%81%8DUTF-8%E3%81%AB%E3%82%82%E5%AF%BE%E5%BF%9C%0A%20%20%20%20%20%20%20%20reader%20%3D%20csv.DictReader(io.StringIO(text))%0A%20%20%20%20%20%20%20%20rows%3A%20list%5Bdict%5Bstr%2C%20str%5D%5D%20%3D%20%5B%5D%0A%20%20%20%20%20%20%20%20headers%20%3D%20reader.fieldnames%20or%20%5B%5D%0A%0A%20%20%20%20%20%20%20%20for%20i%2C%20row%20in%20enumerate(reader)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20len(headers)%20%3E%3D%202%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%20%3D%20str(row%5Bheaders%5B0%5D%5D).strip()%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20url%20%20%20%3D%20str(row%5Bheaders%5B1%5D%5D).strip()%0A%20%20%20%20%20%20%20%20%20%20%20%20elif%20len(headers)%20%3D%3D%201%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%20%3D%20f%22row_%7Bi%20%2B%201%3A04d%7D%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20url%20%20%20%3D%20str(row%5Bheaders%5B0%5D%5D).strip()%0A%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20continue%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20url%3A%20%20%23%20%E7%A9%BA%E8%A1%8C%E3%81%AF%E3%82%B9%E3%82%AD%E3%83%83%E3%83%97%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20rows.append(%7B%22label%22%3A%20label%2C%20%22url%22%3A%20url%7D)%0A%0A%20%20%20%20%20%20%20%20return%20rows%0A%0A%0A%20%20%20%20def%20generate_qr_png_bytes(url%3A%20str%2C%20scale%3A%20int%20%3D%205)%20-%3E%20bytes%3A%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20%E6%8C%87%E5%AE%9A%E3%81%95%E3%82%8C%E3%81%9FURL%E3%81%AEQR%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92PNG%E5%BD%A2%E5%BC%8F%E3%81%AE%E3%83%90%E3%82%A4%E3%83%88%E5%88%97%E3%81%A8%E3%81%97%E3%81%A6%E8%BF%94%E3%81%99%E3%80%82%0A%20%20%20%20%20%20%20%20segno%20%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%97%E3%80%81%E3%82%A4%E3%83%B3%E3%83%A1%E3%83%A2%E3%83%AA%20(io.BytesIO)%20%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99%E3%80%82%0A%20%20%20%20%20%20%20%20%E5%A4%96%E9%83%A8%E9%80%9A%E4%BF%A1%E3%81%AF%E4%B8%80%E5%88%87%E8%A1%8C%E3%82%8F%E3%81%AA%E3%81%84%E3%80%82%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20buf%20%3D%20io.BytesIO()%0A%20%20%20%20%20%20%20%20qr%20%3D%20segno.make_qr(url)%0A%20%20%20%20%20%20%20%20qr.save(buf%2C%20kind%3D%22png%22%2C%20scale%3Dscale%2C%20border%3D2)%0A%20%20%20%20%20%20%20%20buf.seek(0)%0A%20%20%20%20%20%20%20%20return%20buf.read()%0A%0A%0A%20%20%20%20def%20build_zip(rows%3A%20list%5Bdict%5Bstr%2C%20str%5D%5D)%20-%3E%20bytes%3A%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20QR%E3%82%B3%E3%83%BC%E3%83%89PNG%E3%82%92%E4%B8%80%E6%8B%AC%E7%94%9F%E6%88%90%E3%81%97%E3%80%81%E3%82%A4%E3%83%B3%E3%83%A1%E3%83%A2%E3%83%AAZIP%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%81%97%E3%81%A6%E8%BF%94%E3%81%99%E3%80%82%0A%20%20%20%20%20%20%20%20%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%81%B8%E3%81%AE%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%81%BF%E3%81%AF%E8%A1%8C%E3%82%8F%E3%81%AA%E3%81%84%E3%80%82%0A%20%20%20%20%20%20%20%20%E9%87%8D%E8%A4%87%E3%83%A9%E3%83%99%E3%83%AB%E3%81%AF%E9%80%A3%E7%95%AA%E3%82%B5%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF%E3%82%B9%E3%81%A7%E4%B8%80%E6%84%8F%E6%80%A7%E3%82%92%E4%BF%9D%E8%A8%BC%E3%81%99%E3%82%8B%E3%80%82%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20zip_buf%20%3D%20io.BytesIO()%0A%20%20%20%20%20%20%20%20used_names%3A%20dict%5Bstr%2C%20int%5D%20%3D%20%7B%7D%0A%0A%20%20%20%20%20%20%20%20with%20zipfile.ZipFile(zip_buf%2C%20mode%3D%22w%22%2C%20compression%3Dzipfile.ZIP_DEFLATED)%20as%20zf%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20for%20row%20in%20rows%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%90%8D%E3%81%AE%E9%87%8D%E8%A4%87%E3%82%92%E9%81%BF%E3%81%91%E3%82%8B%E3%81%9F%E3%82%81%E9%80%A3%E7%95%AA%E3%82%92%E4%BB%98%E4%B8%8E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20base_name%20%3D%20row%5B%22label%22%5D.replace(%22%2F%22%2C%20%22_%22).replace(%22%5C%5C%22%2C%20%22_%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20base_name%20in%20used_names%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20used_names%5Bbase_name%5D%20%2B%3D%201%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20file_name%20%3D%20f%22%7Bbase_name%7D_%7Bused_names%5Bbase_name%5D%3A03d%7D.png%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20used_names%5Bbase_name%5D%20%3D%200%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20file_name%20%3D%20f%22%7Bbase_name%7D.png%22%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20png_bytes%20%3D%20generate_qr_png_bytes(row%5B%22url%22%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20zf.writestr(file_name%2C%20png_bytes)%0A%0A%20%20%20%20%20%20%20%20zip_buf.seek(0)%0A%20%20%20%20%20%20%20%20return%20zip_buf.read()%0A%0A%0A%20%20%20%20def%20zip_to_data_uri(zip_bytes%3A%20bytes)%20-%3E%20str%3A%0A%20%20%20%20%20%20%20%20%22%22%22ZIP%20%E3%83%90%E3%82%A4%E3%83%88%E5%88%97%E3%82%92%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E7%94%A8%E3%81%AE%20data%20URI%20%E3%81%AB%E5%A4%89%E6%8F%9B%E3%81%99%E3%82%8B%E3%80%82%22%22%22%0A%20%20%20%20%20%20%20%20b64%20%3D%20base64.b64encode(zip_bytes).decode(%22ascii%22)%0A%20%20%20%20%20%20%20%20return%20f%22data%3Aapplication%2Fzip%3Bbase64%2C%7Bb64%7D%22%0A%20%20%20%20return%20build_zip%2C%20generate_qr_png_bytes%2C%20parse_csv%2C%20zip_to_data_uri%0A%0A%0A%40app.cell%0Adef%20_test_parse_csv(parse_csv)%3A%0A%20%20%20%20%23%20%E3%83%86%E3%82%B9%E3%83%881%3A%202%E5%88%97%20CSV%EF%BC%88%E3%83%A9%E3%83%99%E3%83%AB%EF%BC%8BURL%EF%BC%89%0A%20%20%20%20_csv_2col%20%3D%20%22name%2Curl%5Cn%E5%BA%97%E8%88%97A%2Chttps%3A%2F%2Fexample.com%2Fa%5Cn%E5%BA%97%E8%88%97B%2Chttps%3A%2F%2Fexample.com%2Fb%5Cn%22.encode(%22utf-8%22)%0A%20%20%20%20_result_2col%20%3D%20parse_csv(_csv_2col)%0A%20%20%20%20assert%20len(_result_2col)%20%3D%3D%202%2C%20f%222%E5%88%97CSV%3A%20%E8%A1%8C%E6%95%B0%E3%81%8C2%E3%81%A7%E3%81%82%E3%82%8B%E3%81%B9%E3%81%8D%E3%80%82%E5%AE%9F%E9%9A%9B%3A%20%7Blen(_result_2col)%7D%22%0A%20%20%20%20assert%20_result_2col%5B0%5D%5B%22label%22%5D%20%3D%3D%20%22%E5%BA%97%E8%88%97A%22%2C%20%221%E8%A1%8C%E7%9B%AE%E3%81%AE%E3%83%A9%E3%83%99%E3%83%AB%E3%81%8C%E6%AD%A3%E3%81%97%E3%81%8F%E3%81%AA%E3%81%84%22%0A%20%20%20%20assert%20_result_2col%5B0%5D%5B%22url%22%5D%20%3D%3D%20%22https%3A%2F%2Fexample.com%2Fa%22%2C%20%221%E8%A1%8C%E7%9B%AE%E3%81%AEURL%E3%81%8C%E6%AD%A3%E3%81%97%E3%81%8F%E3%81%AA%E3%81%84%22%0A%20%20%20%20assert%20_result_2col%5B1%5D%5B%22label%22%5D%20%3D%3D%20%22%E5%BA%97%E8%88%97B%22%2C%20%222%E8%A1%8C%E7%9B%AE%E3%81%AE%E3%83%A9%E3%83%99%E3%83%AB%E3%81%8C%E6%AD%A3%E3%81%97%E3%81%8F%E3%81%AA%E3%81%84%22%0A%0A%20%20%20%20%23%20%E3%83%86%E3%82%B9%E3%83%882%3A%201%E5%88%97%20CSV%EF%BC%88URL%20%E3%81%AE%E3%81%BF%EF%BC%89%0A%20%20%20%20_csv_1col%20%3D%20%22url%5Cnhttps%3A%2F%2Fexample.com%2Fc%5Cnhttps%3A%2F%2Fexample.com%2Fd%5Cn%22.encode(%22utf-8%22)%0A%20%20%20%20_result_1col%20%3D%20parse_csv(_csv_1col)%0A%20%20%20%20assert%20len(_result_1col)%20%3D%3D%202%2C%20f%221%E5%88%97CSV%3A%20%E8%A1%8C%E6%95%B0%E3%81%8C2%E3%81%A7%E3%81%82%E3%82%8B%E3%81%B9%E3%81%8D%E3%80%82%E5%AE%9F%E9%9A%9B%3A%20%7Blen(_result_1col)%7D%22%0A%20%20%20%20assert%20_result_1col%5B0%5D%5B%22label%22%5D%20%3D%3D%20%22row_0001%22%2C%20%221%E5%88%97CSV%E3%81%AE%E3%83%A9%E3%83%99%E3%83%AB%E3%81%8C%E9%80%A3%E7%95%AA%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%22%0A%0A%20%20%20%20%23%20%E3%83%86%E3%82%B9%E3%83%883%3A%20%E7%A9%BA%E8%A1%8C%E3%81%AF%E3%82%B9%E3%82%AD%E3%83%83%E3%83%97%E3%81%95%E3%82%8C%E3%82%8B%0A%20%20%20%20_csv_empty%20%3D%20%22name%2Curl%5Cn%E6%9C%89%E5%8A%B9%E8%A1%8C%2Chttps%3A%2F%2Fexample.com%2Fvalid%5Cn%2C%2C%5Cn%22.encode(%22utf-8%22)%0A%20%20%20%20_result_empty%20%3D%20parse_csv(_csv_empty)%0A%20%20%20%20assert%20len(_result_empty)%20%3D%3D%201%2C%20f%22%E7%A9%BA%E8%A1%8C%E3%82%B9%E3%82%AD%E3%83%83%E3%83%97%3A%20%E6%9C%89%E5%8A%B9%E8%A1%8C%E3%81%8C1%E4%BB%B6%E3%81%AE%E3%81%AF%E3%81%9A%E3%80%82%E5%AE%9F%E9%9A%9B%3A%20%7Blen(_result_empty)%7D%22%0A%0A%20%20%20%20%23%20%E3%83%86%E3%82%B9%E3%83%884%3A%20BOM%E4%BB%98%E3%81%8D%20UTF-8%20%E3%82%82%E6%AD%A3%E5%B8%B8%E3%81%AB%E8%A7%A3%E6%9E%90%E3%81%A7%E3%81%8D%E3%82%8B%0A%20%20%20%20_bom_csv%20%3D%20%22%5Cufeffname%2Curl%5CnBOM%E5%BA%97%E8%88%97%2Chttps%3A%2F%2Fbom.example.com%2F%5Cn%22.encode(%22utf-8-sig%22)%0A%20%20%20%20_result_bom%20%3D%20parse_csv(_bom_csv)%0A%20%20%20%20assert%20len(_result_bom)%20%3D%3D%201%2C%20%22BOM%E4%BB%98%E3%81%8DCSV%E3%81%8C%E6%AD%A3%E5%B8%B8%E3%81%AB%E8%A7%A3%E6%9E%90%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%22%0A%0A%20%20%20%20print(%22%E2%9C%85%20parse_csv%3A%20%E5%85%A8%E3%83%86%E3%82%B9%E3%83%88%E9%80%9A%E9%81%8E%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_test_generate_and_zip(build_zip%2C%20generate_qr_png_bytes%2C%20io%2C%20zipfile)%3A%0A%20%20%20%20%23%20%E3%83%86%E3%82%B9%E3%83%885%3A%20QR%E3%82%B3%E3%83%BC%E3%83%89%20PNG%20%E3%83%90%E3%82%A4%E3%83%88%E5%88%97%E3%81%8C%20PNG%20%E3%83%98%E3%83%83%E3%83%80%E3%83%BC%E3%81%A7%E5%A7%8B%E3%81%BE%E3%82%8B%0A%20%20%20%20_png%20%3D%20generate_qr_png_bytes(%22https%3A%2F%2Fexample.com%2Ftest%22)%0A%20%20%20%20_PNG_HEADER%20%3D%20b%22%5Cx89PNG%5Cr%5Cn%5Cx1a%5Cn%22%0A%20%20%20%20assert%20_png%5B%3A8%5D%20%3D%3D%20_PNG_HEADER%2C%20%22QR%E3%82%B3%E3%83%BC%E3%83%89%E3%81%8C%E6%9C%89%E5%8A%B9%E3%81%AAPNG%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84%22%0A%20%20%20%20assert%20len(_png)%20%3E%20100%2C%20%22PNG%E3%83%90%E3%82%A4%E3%83%88%E5%88%97%E3%81%8C%E7%95%B0%E5%B8%B8%E3%81%AB%E7%9F%AD%E3%81%84%22%0A%0A%20%20%20%20%23%20%E3%83%86%E3%82%B9%E3%83%886%3A%20ZIP%E3%81%8C%E6%AD%A3%E5%B8%B8%E3%81%AB%E7%94%9F%E6%88%90%E3%81%95%E3%82%8C%E3%80%81%E6%8C%87%E5%AE%9A%E4%BB%B6%E6%95%B0%E3%81%AE%E3%82%A8%E3%83%B3%E3%83%88%E3%83%AA%E3%81%8C%E5%90%AB%E3%81%BE%E3%82%8C%E3%82%8B%0A%20%20%20%20_test_rows%20%3D%20%5B%0A%20%20%20%20%20%20%20%20%7B%22label%22%3A%20%22%E5%BA%97%E8%88%97A%22%2C%20%22url%22%3A%20%22https%3A%2F%2Fexample.com%2Fa%22%7D%2C%0A%20%20%20%20%20%20%20%20%7B%22label%22%3A%20%22%E5%BA%97%E8%88%97B%22%2C%20%22url%22%3A%20%22https%3A%2F%2Fexample.com%2Fb%22%7D%2C%0A%20%20%20%20%20%20%20%20%7B%22label%22%3A%20%22%E5%BA%97%E8%88%97A%22%2C%20%22url%22%3A%20%22https%3A%2F%2Fexample.com%2Fa_dup%22%7D%2C%20%20%23%20%E9%87%8D%E8%A4%87%E3%83%A9%E3%83%99%E3%83%AB%E3%81%AE%E3%83%86%E3%82%B9%E3%83%88%0A%20%20%20%20%5D%0A%20%20%20%20_zip_bytes%20%3D%20build_zip(_test_rows)%0A%20%20%20%20_zf%20%3D%20zipfile.ZipFile(io.BytesIO(_zip_bytes))%0A%20%20%20%20_names%20%3D%20_zf.namelist()%0A%20%20%20%20assert%20len(_names)%20%3D%3D%203%2C%20f%22ZIP%E3%82%A8%E3%83%B3%E3%83%88%E3%83%AA%E3%81%8C3%E4%BB%B6%E3%81%A7%E3%81%82%E3%82%8B%E3%81%B9%E3%81%8D%E3%80%82%E5%AE%9F%E9%9A%9B%3A%20%7Blen(_names)%7D%22%0A%20%20%20%20%23%20%E9%87%8D%E8%A4%87%E3%83%A9%E3%83%99%E3%83%AB%E3%81%8C%E9%80%A3%E7%95%AA%E3%82%B5%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF%E3%82%B9%E3%81%A7%E5%8C%BA%E5%88%A5%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%0A%20%20%20%20assert%20%22%E5%BA%97%E8%88%97A.png%22%20in%20_names%2C%20%221%E4%BB%B6%E7%9B%AE%E3%81%AE%E3%83%A9%E3%83%99%E3%83%AB%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8C%E5%AD%98%E5%9C%A8%E3%81%97%E3%81%AA%E3%81%84%22%0A%20%20%20%20assert%20%22%E5%BA%97%E8%88%97A_001.png%22%20in%20_names%2C%20%22%E9%87%8D%E8%A4%87%E3%83%A9%E3%83%99%E3%83%AB%E3%81%AB%E9%80%A3%E7%95%AA%E3%81%8C%E4%BB%98%E4%B8%8E%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%22%0A%20%20%20%20assert%20%22%E5%BA%97%E8%88%97B.png%22%20in%20_names%2C%20%22%E5%BA%97%E8%88%97B%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8C%E5%AD%98%E5%9C%A8%E3%81%97%E3%81%AA%E3%81%84%22%0A%0A%20%20%20%20print(%22%E2%9C%85%20generate_qr_png_bytes%20%2F%20build_zip%3A%20%E5%85%A8%E3%83%86%E3%82%B9%E3%83%88%E9%80%9A%E9%81%8E%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_ui(mo)%3A%0A%20%20%20%20%23%20%E3%83%98%E3%83%83%E3%83%80%E3%83%BC%0A%20%20%20%20_header%20%3D%20mo.md(%22%22%22%0A%20%20%20%20%23%20%F0%9F%94%92%20Secure%20QR%20Batch%20Maker%0A%20%20%20%20**%E5%AE%8C%E5%85%A8%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E5%87%A6%E7%90%86%20%E2%80%94%20%E3%81%82%E3%81%AA%E3%81%9F%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AF%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AB%E4%B8%80%E5%88%87%E9%80%81%E4%BF%A1%E3%81%95%E3%82%8C%E3%81%BE%E3%81%9B%E3%82%93**%0A%0A%20%20%20%20---%0A%20%20%20%20%23%23%23%20%F0%9F%93%8B%20CSV%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88%0A%20%20%20%20%7C%20%E5%88%971%EF%BC%88%E3%83%A9%E3%83%99%E3%83%AB%EF%BC%89%20%7C%20%E5%88%972%EF%BC%88QR%E5%8C%96%E3%81%99%E3%82%8BURL%EF%BC%89%20%7C%0A%20%20%20%20%7C---%7C---%7C%0A%20%20%20%20%7C%20%E5%BA%97%E8%88%97A%20%7C%20https%3A%2F%2Fexample.com%2FA%20%7C%0A%20%20%20%20%7C%20%E5%BA%97%E8%88%97B%20%7C%20https%3A%2F%2Fexample.com%2FB%20%7C%0A%0A%20%20%20%20%3E%20**%E3%83%92%E3%83%B3%E3%83%88%3A**%20%E3%83%98%E3%83%83%E3%83%80%E3%83%BC%E8%A1%8C%E3%81%AF%E8%87%AA%E5%8B%95%E7%9A%84%E3%81%AB%E3%82%B9%E3%82%AD%E3%83%83%E3%83%97%E3%81%95%E3%82%8C%E3%81%BE%E3%81%99%E3%80%82%0A%20%20%20%20%3E%20%E5%88%97%E3%81%8C1%E5%88%97%E3%81%A0%E3%81%91%E3%81%AE%E5%A0%B4%E5%90%88%E3%80%81%E3%81%9D%E3%81%AE%E5%88%97%E3%82%92URL%E3%81%A8%E3%81%97%E3%81%A6%E4%BD%BF%E7%94%A8%E3%81%97%E3%80%81%E8%A1%8C%E7%95%AA%E5%8F%B7%E3%82%92%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%90%8D%E3%81%A8%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%20%20%20%20%22%22%22)%0A%0A%20%20%20%20%23%20CSV%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%E3%82%A6%E3%82%A3%E3%82%B8%E3%82%A7%E3%83%83%E3%83%88%0A%20%20%20%20csv_uploader%20%3D%20mo.ui.file(%0A%20%20%20%20%20%20%20%20filetypes%3D%5B%22.csv%22%5D%2C%0A%20%20%20%20%20%20%20%20label%3D%22%E2%91%A0%20CSV%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E9%81%B8%E6%8A%9E%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%22%2C%0A%20%20%20%20)%0A%0A%20%20%20%20%23%20QR%E7%94%9F%E6%88%90%E5%AE%9F%E8%A1%8C%E3%83%9C%E3%82%BF%E3%83%B3%0A%20%20%20%20run_button%20%3D%20mo.ui.run_button(%0A%20%20%20%20%20%20%20%20label%3D%22%E2%91%A1%20QR%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E4%B8%80%E6%8B%AC%E7%94%9F%E6%88%90%E3%81%97%E3%81%A6ZIP%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%20%E2%96%B6%22%2C%0A%20%20%20%20%20%20%20%20full_width%3DTrue%2C%0A%20%20%20%20)%0A%0A%20%20%20%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20_header%2C%0A%20%20%20%20%20%20%20%20csv_uploader%2C%0A%20%20%20%20%20%20%20%20run_button%2C%0A%20%20%20%20%5D)%0A%20%20%20%20return%20csv_uploader%2C%20run_button%0A%0A%0A%40app.cell%0Adef%20_result(%0A%20%20%20%20build_zip%2C%0A%20%20%20%20csv_uploader%2C%0A%20%20%20%20mo%2C%0A%20%20%20%20parse_csv%2C%0A%20%20%20%20run_button%2C%0A%20%20%20%20zip_to_data_uri%2C%0A)%3A%0A%20%20%20%20%23%20%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%8C%E6%8A%BC%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AF%E4%BD%95%E3%82%82%E8%A1%A8%E7%A4%BA%E3%81%97%E3%81%AA%E3%81%84%0A%20%20%20%20mo.stop(not%20run_button.value)%0A%0A%20%20%20%20%23%20%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8C%E6%9C%AA%E9%81%B8%E6%8A%9E%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AF%E3%82%A8%E3%83%A9%E3%83%BC%E8%A1%A8%E7%A4%BA%0A%20%20%20%20if%20not%20csv_uploader.value%20or%20len(csv_uploader.value)%20%3D%3D%200%3A%0A%20%20%20%20%20%20%20%20result_area%20%3D%20mo.callout(%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.md(%22%E2%9A%A0%EF%B8%8F%20**CSV%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8C%E9%81%B8%E6%8A%9E%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%81%BE%E3%81%9B%E3%82%93%E3%80%82**%20%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%E3%81%97%E3%81%A6%E3%81%8B%E3%82%89%E5%AE%9F%E8%A1%8C%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20kind%3D%22warn%22%2C%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%23%20---%20%E3%83%A1%E3%82%A4%E3%83%B3%E5%87%A6%E7%90%86%20---%0A%20%20%20%20%20%20%20%20_file_data%20%3D%20csv_uploader.value%5B0%5D%0A%20%20%20%20%20%20%20%20_file_bytes%3A%20bytes%20%3D%20_file_data.contents%0A%0A%20%20%20%20%20%20%20%20with%20mo.status.spinner(title%3D%22QR%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E7%94%9F%E6%88%90%E4%B8%AD%E2%80%A6%22)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20try%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20CSV%E8%A7%A3%E6%9E%90%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_rows%20%3D%20parse_csv(_file_bytes)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20len(_rows)%20%3D%3D%200%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20result_area%20%3D%20mo.callout(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mo.md(%22%E2%9A%A0%EF%B8%8F%20**%E6%9C%89%E5%8A%B9%E3%81%AA%E3%83%87%E3%83%BC%E3%82%BF%E8%A1%8C%E3%81%8C%E8%A6%8B%E3%81%A4%E3%81%8B%E3%82%8A%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82**%20CSV%E3%81%AE%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20kind%3D%22warn%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20QR%E4%B8%80%E6%8B%AC%E7%94%9F%E6%88%90%20%26%20ZIP%E5%8C%96%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_zip_bytes%20%3D%20build_zip(_rows)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_data_uri%20%20%3D%20zip_to_data_uri(_zip_bytes)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_zip_size_kb%20%3D%20len(_zip_bytes)%20%2F%201024%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%83%AA%E3%83%B3%E3%82%AF%E3%82%92%E7%94%9F%E6%88%90%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_download_link%20%3D%20f'%3Ca%20href%3D%22%7B_data_uri%7D%22%20download%3D%22qr_codes.zip%22%20style%3D%22display%3Ainline-block%3Bpadding%3A12px%2024px%3Bbackground%3A%232563eb%3Bcolor%3A%23fff%3Bborder-radius%3A8px%3Btext-decoration%3Anone%3Bfont-weight%3Abold%3Bfont-size%3A1rem%3B%22%3E%F0%9F%93%A6%20ZIP%20%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%20(%7B_zip_size_kb%3A.1f%7D%20KB)%3C%2Fa%3E'%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20result_area%20%3D%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mo.callout(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mo.md(f%22%E2%9C%85%20**%7Blen(_rows)%7D%20%E4%BB%B6**%E3%81%AEQR%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20kind%3D%22success%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mo.Html(_download_link)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5D)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20except%20Exception%20as%20e%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20result_area%20%3D%20mo.callout(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mo.md(f%22%E2%9D%8C%20**%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E7%99%BA%E7%94%9F%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%3A**%20%60%7Be%7D%60%5Cn%5CnCSV%E3%81%AE%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%EF%BC%88UTF-8%EF%BC%89%E3%82%84%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20kind%3D%22danger%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20result_area%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a portal for the data editor to render in -->
+    <div id="portal" data-testid="glide-portal" style="position: fixed; left: 0; top: 0; z-index: 9999"></div>
+    <script data-marimo="true">
+      window.__MARIMO_MOUNT_CONFIG__ = {
+            "filename": "notebook.py",
+            "mode": "read",
+            "version": "0.19.0",
+            "serverToken": "unused",
+            "config": {"ai": {"models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "pip"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "medium"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        };
+    </script>
+  </body>
+</html>
