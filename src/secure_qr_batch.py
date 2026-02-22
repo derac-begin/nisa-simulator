@@ -252,25 +252,74 @@ def _test_generate_and_zip(build_zip, generate_qr_png_bytes, io, zipfile):
 @app.cell
 def _ui(mobile_css, mo):
     # CSS 注入セルを依存関係に取り込み（セル2を先に評価させる）
-    # mobile_css は _ プレフィックスなしの公開変数のため、セル間参照が可能
     _ = mobile_css
 
-    # ヘッダー (Layer 2: .style() で折り返しを強制)
-    _header = mo.md("""
-    # 🔒 Secure QR Batch Maker
-    **完全ブラウザ処理 — あなたのデータはサーバーに一切送信されません**
+    # ========================================================
+    # 【根本修正】mo.md() → mo.Html() に完全置き換え
+    #
+    # 失敗の詳細:
+    #   mo.md() はマークダウンを HTML に変換するが、
+    #   <strong>, <blockquote> などのインライン・ブロック要素に
+    #   overflow-wrap が CSS カスケードで届かない。
+    #   .style() はラッパー div にしか適用されないため、
+    #   内部の <strong> や <blockquote> の横幅制御ができない。
+    #
+    # 解決策:
+    #   mo.Html() で全要素を直接記述し、各タグに style 属性を
+    #   直接埋め込むことで Shadow DOM / CSS カスケードの影響を完全に回避。
+    #   blockquote は mo.callout() で代替（これは .style() が内部まで届く）。
+    # ========================================================
 
-    ---
-    ### 📋 CSVフォーマット
-    | 列1（ラベル） | 列2（QR化するURL） |
-    |---|---|
-    | 店舗A | https://example.com/A |
-    | 店舗B | https://example.com/B |
+    # 共通インラインスタイル（全要素に適用する折り返しルール）
+    _S = (
+        "overflow-wrap:anywhere;"
+        "word-break:break-word;"
+        "white-space:normal;"
+        "max-width:100%;"
+        "box-sizing:border-box;"
+    )
 
-    > **ヒント:** ヘッダー行は自動的にスキップされます。
-    > 列が1列だけの場合、その列をURLとして使用し、行番号をファイル名とします。
-    """).style({
-        # Layer 2: marimo コンポーネントに直接 inline style を注入する
+    # ヘッダーを mo.Html() で直接構築し、各タグに style を打ち込む
+    _header = mo.Html(f"""
+    <div style="width:100%;max-width:100%;overflow-x:hidden;box-sizing:border-box;">
+      <h1 style="{_S}font-size:clamp(1.4rem,5vw,2rem);margin:0 0 8px;">
+        🔒 Secure QR Batch Maker
+      </h1>
+      <p style="{_S}font-weight:bold;margin:0 0 12px;">
+        完全ブラウザ処理 — あなたのデータはサーバーに一切送信されません
+      </p>
+      <hr style="margin:12px 0;"/>
+      <h3 style="{_S}margin:8px 0;">📋 CSVフォーマット</h3>
+      <table style="width:100%;border-collapse:collapse;table-layout:fixed;{_S}">
+        <thead>
+          <tr>
+            <th style="text-align:left;padding:6px 8px;border:1px solid #ccc;{_S}">列1（ラベル）</th>
+            <th style="text-align:left;padding:6px 8px;border:1px solid #ccc;{_S}">列2（QRコード化するURL）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:6px 8px;border:1px solid #ccc;{_S}">店舗A</td>
+            <td style="padding:6px 8px;border:1px solid #ccc;{_S}">https://example.com/A</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 8px;border:1px solid #ccc;{_S}">店舗B</td>
+            <td style="padding:6px 8px;border:1px solid #ccc;{_S}">https://example.com/B</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    """)
+
+    # ヒント: blockquote の代わりに mo.callout() を使用
+    # mo.callout() は .style() が内部テキストまで正しく届く
+    _hint = mo.callout(
+        mo.md(
+            "**ヒント:** ヘッダー行は自動的にスキップされます。"
+            "列が1列だけの場合、その列をURLとして使用し、行番号をファイル名とします。"
+        ),
+        kind="info",
+    ).style({
         "overflow-wrap": "anywhere",
         "word-break": "break-word",
         "white-space": "normal",
@@ -278,20 +327,20 @@ def _ui(mobile_css, mo):
         "box-sizing": "border-box",
     })
 
-    # CSVアップロードウィジェット (Layer 2: .style() 適用)
+    # CSVアップロードウィジェット
     csv_uploader = mo.ui.file(
         filetypes=[".csv"],
         label="① CSVファイルを選択してください",
     )
 
-    # QR生成実行ボタン (Layer 2: .style() で高さを auto に、折り返しを許可)
+    # QR生成実行ボタン
     run_button = mo.ui.run_button(
         label="② QRコードを一括生成して ZIP ダウンロード ▶",
         full_width=True,
     )
 
     mo.vstack(
-        [_header, csv_uploader, run_button],
+        [_header, _hint, csv_uploader, run_button],
         gap=1,
     ).style({
         "max-width": "100%",
