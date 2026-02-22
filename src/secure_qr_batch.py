@@ -61,7 +61,9 @@ def _mobile_css(mo):
     # Layer 1: mo.Html() 経由でホストドキュメント側にグローバルCSSを注入。
     # mo.md() と異なり mo.Html() はサニタイズされないため <style> タグが生き残る。
     # !important + 高詳細度セレクタで marimo 自身の Tailwind CSS を上書きする。
-    _css = mo.Html("""
+    # 【重要】marimo では _ プレフィックスの変数はセルプライベート扱いになり
+    # 他のセルから参照できない。mobile_css（プレフィックスなし）で公開変数として返す。
+    mobile_css = mo.Html("""
     <style>
     /* ===== モバイル折り返し修正 (Secure QR Batch Maker) ===== */
     /* overflow-wrap: anywhere は word-break の最上位互換 — 強制折り返し */
@@ -92,7 +94,7 @@ def _mobile_css(mo):
     }
     </style>
     """)
-    return (_css,)
+    return (mobile_css,)
 
 
 # ============================================================
@@ -248,9 +250,10 @@ def _test_generate_and_zip(build_zip, generate_qr_png_bytes, io, zipfile):
 # Shadow DOM のコンポーネントに直接スタイルを適用できる唯一の手段。
 # ============================================================
 @app.cell
-def _ui(_css, mo):
+def _ui(mobile_css, mo):
     # CSS 注入セルを依存関係に取り込み（セル2を先に評価させる）
-    _ = _css
+    # mobile_css は _ プレフィックスなしの公開変数のため、セル間参照が可能
+    _ = mobile_css
 
     # ヘッダー (Layer 2: .style() で折り返しを強制)
     _header = mo.md("""
