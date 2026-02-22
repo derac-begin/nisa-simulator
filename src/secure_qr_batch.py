@@ -1,7 +1,7 @@
 import marimo
 
 __generated_with = "0.19.0"
-app = marimo.App(width="medium")
+app = marimo.App(width="full")
 
 
 @app.cell
@@ -66,31 +66,40 @@ def _mobile_css(mo):
     mobile_css = mo.Html("""
     <style>
     /* ===== モバイル折り返し修正 (Secure QR Batch Maker) ===== */
-    /* overflow-wrap: anywhere は word-break の最上位互換 — 強制折り返し */
-    html, body, #root, .marimo, [data-testid], article, section, div, p, span, li, td, th, label, button {
-        overflow-wrap: anywhere !important;
-        word-break: break-word !important;
-        white-space: normal !important;
-        max-width: 100% !important;
-    }
-    /* 横スクロール抑止 */
+
+    /* 【最重要】ルートコンテナを viewport 幅に厳密に収める */
+    /* marimo.App(width="full") と組み合わせて固定幅コンテナを上書き */
     html, body {
+        max-width: 100vw !important;
         overflow-x: hidden !important;
         box-sizing: border-box !important;
     }
-    /* marimo callout / markdown 要素 */
-    .marimo-callout, .marimo-md, .marimo-text {
-        overflow-wrap: anywhere !important;
-        word-break: break-word !important;
-        white-space: normal !important;
+    /* marimo が生成する最上位ラッパー div を 100vw に制限 */
+    body > div, body > div > div, #root, #root > div, #root > div > div {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
     }
-    /* ボタン要素 */
-    button, [role="button"], .marimo-button {
-        white-space: normal !important;
-        word-break: break-word !important;
+
+    /* 全子要素: overflow-wrap: anywhere が最も強力（スペースなし文字列にも効く） */
+    *, *::before, *::after {
         overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+        white-space: normal !important;
+        box-sizing: border-box !important;
+        max-width: 100% !important;
+    }
+
+    /* URL や英数字の連続文字列は break-all で任意位置で強制改行 */
+    a, td, th, code, pre {
+        word-break: break-all !important;
+    }
+
+    /* ボタン: 高さ固定を解除して折り返しを許可 */
+    button, [role="button"] {
         height: auto !important;
-        min-height: 2.5rem;
+        min-height: 2.5rem !important;
+        white-space: normal !important;
     }
     </style>
     """)
