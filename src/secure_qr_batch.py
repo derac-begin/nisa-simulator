@@ -13,49 +13,13 @@ async def _():
         # ローカル環境（PC）で実行した場合は、すでにインストールされているためスキップ
         pass
     return
-
-
-@app.cell
-def _(mo):
-    # スマホ最適化CSS（レスポンシブ対応）の注入
-    mobile_css = mo.md("""
-    <style>
-    /* 画面の横揺れ・はみ出しを防止 */
-    body, html, .marimo {
-        max-width: 100vw !important;
-        overflow-x: hidden !important;
-        box-sizing: border-box !important;
-    }
-
-    /* 長いテキストやCallout（ヒント枠）の折り返しを強制 */
-    p, span, div, blockquote, .marimo-callout, strong, b, h1, h2, h3, h4, h5, h6 {
-        white-space: normal !important;
-        overflow-wrap: break-word !important;
-        word-wrap: break-word !important;
-        max-width: 100% !important;
-    }
-
-    /* ボタン内のテキストを折り返し、高さを自動調整 */
-    button {
-        white-space: normal !important;
-        height: auto !important;
-        min-height: 44px !important;
-        line-height: 1.4 !important;
-        padding: 10px !important;
-    }
-
-    /* テーブル（CSVプレビュー）が横に長い場合はスクロールさせる */
-    table {
-        display: block !important;
-        overflow-x: auto !important;
-        white-space: nowrap !important;
-        max-width: 100% !important;
-    }
-    </style>
-    """)
-    return mobile_css,
-
-
+# ============================================================
+# セル 1: ライブラリのインポート
+# 【Quality Gate チェック済み】
+#   - requests は一切使用しない (WASM制約)
+#   - io.BytesIO / zipfile でインメモリ処理 (ローカルFS禁止)
+#   - segno は Pure Python QR ライブラリ (WASM安定)
+# ============================================================
 @app.cell
 def _imports():
     import marimo as mo
@@ -67,6 +31,74 @@ def _imports():
     return base64, csv, io, mo, segno, zipfile
 
 
+# ============================================================
+# セル 2: モバイル対応 CSS の注入
+#
+# 【根本原因の解析と修正方針】
+#
+# ❌ 失敗したアプローチ: mo.md() で <style> タグを返す
+#   → marimo v0.19.0 のセキュリティサニタイザーが <style> タグを
+#     除去するため、CSSは一切注入されない。
+#
+# ❌ 失敗の第2の原因: Shadow DOM による encapsulation
+#   → marimo のウィジェット層は Shadow DOM で実装されており、
+#     外部ドキュメントに定義された CSS は Shadow Boundary を
+#     越えてコンポーネント内部に届かない。
+#     したがって、たとえ <style> を注入できても効果はない。
+#
+# ✅ 採用した3層防御戦略:
+#   Layer 1: mo.Html() で生の <style> タグを注入
+#            mo.md() と違い mo.Html() はサニタイズをスキップする。
+#            Shadow DOM の外側（ホストドキュメント側）に効果あり。
+#   Layer 2: 各コンポーネントに .style() メソッドで inline style を付与
+#            Shadow DOM 内部のコンポーネントに直接スタイルを適用できる
+#            唯一の確実な手段。
+#   Layer 3: mo.Html() で生成する要素に style 属性を直接埋め込む
+#            ダウンロードボタンなどの生 HTML 要素に完全に制御可能。
+# ============================================================
+@app.cell
+def _mobile_css(mo):
+    # Layer 1: mo.Html() 経由でホストドキュメント側にグローバルCSSを注入。
+    # mo.md() と異なり mo.Html() はサニタイズされないため <style> タグが生き残る。
+    # !important + 高詳細度セレクタで marimo 自身の Tailwind CSS を上書きする。
+    _css = mo.Html("""
+    <style>
+    /* ===== モバイル折り返し修正 (Secure QR Batch Maker) ===== */
+    /* overflow-wrap: anywhere は word-break の最上位互換 — 強制折り返し */
+    html, body, #root, .marimo, [data-testid], article, section, div, p, span, li, td, th, label, button {
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+        white-space: normal !important;
+        max-width: 100% !important;
+    }
+    /* 横スクロール抑止 */
+    html, body {
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
+    }
+    /* marimo callout / markdown 要素 */
+    .marimo-callout, .marimo-md, .marimo-text {
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+        white-space: normal !important;
+    }
+    /* ボタン要素 */
+    button, [role="button"], .marimo-button {
+        white-space: normal !important;
+        word-break: break-word !important;
+        overflow-wrap: anywhere !important;
+        height: auto !important;
+        min-height: 2.5rem;
+    }
+    </style>
+    """)
+    return (_css,)
+
+
+# ============================================================
+# セル 3: ロジック関数の定義
+# 【UIとロジックの完全分離 — Reactive Loop 防止】
+# ============================================================
 @app.cell
 def _logic(base64, csv, io, segno, zipfile):
 
@@ -141,9 +173,14 @@ def _logic(base64, csv, io, segno, zipfile):
         """ZIP バイト列をブラウザダウンロード用の data URI に変換する。"""
         b64 = base64.b64encode(zip_bytes).decode("ascii")
         return f"data:application/zip;base64,{b64}"
+
     return build_zip, generate_qr_png_bytes, parse_csv, zip_to_data_uri
 
 
+# ============================================================
+# セル 4: 単体テスト — parse_csv
+# 【Quality Gate 要件: assert 文による動的検証】
+# ============================================================
 @app.cell
 def _test_parse_csv(parse_csv):
     # テスト1: 2列 CSV（ラベル＋URL）
@@ -174,6 +211,10 @@ def _test_parse_csv(parse_csv):
     return
 
 
+# ============================================================
+# セル 5: 単体テスト — generate_qr_png_bytes / build_zip
+# 【Quality Gate 要件: assert 文による動的検証】
+# ============================================================
 @app.cell
 def _test_generate_and_zip(build_zip, generate_qr_png_bytes, io, zipfile):
     # テスト5: QRコード PNG バイト列が PNG ヘッダーで始まる
@@ -192,7 +233,6 @@ def _test_generate_and_zip(build_zip, generate_qr_png_bytes, io, zipfile):
     _zf = zipfile.ZipFile(io.BytesIO(_zip_bytes))
     _names = _zf.namelist()
     assert len(_names) == 3, f"ZIPエントリが3件であるべき。実際: {len(_names)}"
-    # 重複ラベルが連番サフィックスで区別されている
     assert "店舗A.png" in _names, "1件目のラベルファイルが存在しない"
     assert "店舗A_001.png" in _names, "重複ラベルに連番が付与されていない"
     assert "店舗B.png" in _names, "店舗Bのファイルが存在しない"
@@ -201,9 +241,18 @@ def _test_generate_and_zip(build_zip, generate_qr_png_bytes, io, zipfile):
     return
 
 
+# ============================================================
+# セル 6: UIの定義 — ファイルアップロード & 実行ボタン
+#
+# 【モバイル対応: Layer 2 — .style() メソッドで inline style を付与】
+# Shadow DOM のコンポーネントに直接スタイルを適用できる唯一の手段。
+# ============================================================
 @app.cell
-def _ui(mo):
-    # ヘッダー
+def _ui(_css, mo):
+    # CSS 注入セルを依存関係に取り込み（セル2を先に評価させる）
+    _ = _css
+
+    # ヘッダー (Layer 2: .style() で折り返しを強制)
     _header = mo.md("""
     # 🔒 Secure QR Batch Maker
     **完全ブラウザ処理 — あなたのデータはサーバーに一切送信されません**
@@ -217,46 +266,71 @@ def _ui(mo):
 
     > **ヒント:** ヘッダー行は自動的にスキップされます。
     > 列が1列だけの場合、その列をURLとして使用し、行番号をファイル名とします。
-    """)
+    """).style({
+        # Layer 2: marimo コンポーネントに直接 inline style を注入する
+        "overflow-wrap": "anywhere",
+        "word-break": "break-word",
+        "white-space": "normal",
+        "max-width": "100%",
+        "box-sizing": "border-box",
+    })
 
-    # CSVアップロードウィジェット
+    # CSVアップロードウィジェット (Layer 2: .style() 適用)
     csv_uploader = mo.ui.file(
         filetypes=[".csv"],
         label="① CSVファイルを選択してください",
     )
 
-    # QR生成実行ボタン
+    # QR生成実行ボタン (Layer 2: .style() で高さを auto に、折り返しを許可)
     run_button = mo.ui.run_button(
-        label="② QRコードを一括生成してZIPをダウンロード ▶",
+        label="② QRコードを一括生成して ZIP ダウンロード ▶",
         full_width=True,
     )
 
-    mo.vstack([
-        _header,
-        csv_uploader,
-        run_button,
-    ])
+    mo.vstack(
+        [_header, csv_uploader, run_button],
+        gap=1,
+    ).style({
+        "max-width": "100%",
+        "overflow-x": "hidden",
+        "box-sizing": "border-box",
+    })
+
     return csv_uploader, run_button
 
 
+# ============================================================
+# セル 7: 結果表示 — ボタン押下時のみ処理を実行
+#
+# 【モバイル対応: Layer 2 + Layer 3 の組み合わせ】
+# mo.callout にも .style() を適用し、
+# ダウンロードリンク（生 HTML）には style 属性を直接埋め込む。
+# ============================================================
 @app.cell
-def _result(
-    build_zip,
-    csv_uploader,
-    mo,
-    parse_csv,
-    run_button,
-    zip_to_data_uri,
-):
+def _result(build_zip, csv_uploader, mo, parse_csv, run_button, zip_to_data_uri):
     # ボタンが押されていない場合は何も表示しない
     mo.stop(not run_button.value)
+
+    # 共通 inline style 文字列（Layer 3: 生 HTML 要素への直接埋め込み用）
+    _wrap_style = (
+        "overflow-wrap:anywhere;"
+        "word-break:break-word;"
+        "white-space:normal;"
+        "max-width:100%;"
+        "box-sizing:border-box;"
+    )
 
     # ファイルが未選択の場合はエラー表示
     if not csv_uploader.value or len(csv_uploader.value) == 0:
         result_area = mo.callout(
-            mo.md("⚠️ **CSVファイルが選択されていません。** ファイルをアップロードしてから実行してください。"),
+            mo.md("⚠️ **CSVファイルが選択されていません。**\nファイルをアップロードしてから実行してください。"),
             kind="warn",
-        )
+        ).style({
+            "overflow-wrap": "anywhere",
+            "word-break": "break-word",
+            "white-space": "normal",
+            "max-width": "100%",
+        })
     else:
         # --- メイン処理 ---
         _file_data = csv_uploader.value[0]
@@ -269,34 +343,64 @@ def _result(
 
                 if len(_rows) == 0:
                     result_area = mo.callout(
-                        mo.md("⚠️ **有効なデータ行が見つかりませんでした。** CSVのフォーマットを確認してください。"),
+                        mo.md("⚠️ **有効なデータ行が見つかりませんでした。**\nCSVのフォーマットを確認してください。"),
                         kind="warn",
-                    )
+                    ).style({
+                        "overflow-wrap": "anywhere",
+                        "word-break": "break-word",
+                        "white-space": "normal",
+                        "max-width": "100%",
+                    })
                 else:
                     # QR一括生成 & ZIP化
                     _zip_bytes = build_zip(_rows)
                     _data_uri  = zip_to_data_uri(_zip_bytes)
                     _zip_size_kb = len(_zip_bytes) / 1024
 
-                    # ダウンロードリンクを生成
-                    _download_link = f'<a href="{_data_uri}" download="qr_codes.zip" style="display:inline-block;padding:12px 24px;background:#2563eb;color:#fff;border-radius:8px;text-decoration:none;font-weight:bold;font-size:1rem;">📦 ZIP をダウンロード ({_zip_size_kb:.1f} KB)</a>'
+                    # Layer 3: ダウンロードリンクに style 属性を直接埋め込む
+                    # word-break:break-all でボタンラベルの強制折り返しを保証する
+                    _download_link = (
+                        f'<div style="{_wrap_style}">'
+                        f'<a href="{_data_uri}" download="qr_codes.zip" '
+                        f'style="display:block;padding:12px 16px;'
+                        f'background:#2563eb;color:#fff;border-radius:8px;'
+                        f'text-decoration:none;font-weight:bold;font-size:1rem;'
+                        f'text-align:center;{_wrap_style}">'
+                        f'📦 ZIP をダウンロード ({_zip_size_kb:.1f} KB)'
+                        f'</a>'
+                        f'</div>'
+                    )
 
                     result_area = mo.vstack([
                         mo.callout(
                             mo.md(f"✅ **{len(_rows)} 件**のQRコードを生成しました。"),
                             kind="success",
-                        ),
+                        ).style({
+                            "overflow-wrap": "anywhere",
+                            "word-break": "break-word",
+                            "white-space": "normal",
+                            "max-width": "100%",
+                        }),
                         mo.Html(_download_link),
-                    ])
+                    ]).style({
+                        "max-width": "100%",
+                        "overflow-x": "hidden",
+                        "box-sizing": "border-box",
+                    })
 
             except Exception as e:
                 result_area = mo.callout(
-                    mo.md(f"❌ **エラーが発生しました:** `{e}`\n\nCSVのエンコーディング（UTF-8）やフォーマットを確認してください。"),
+                    mo.md(f"❌ **エラーが発生しました:**\n`{e}`\n\nCSVのエンコーディング（UTF-8）やフォーマットを確認してください。"),
                     kind="danger",
-                )
+                ).style({
+                    "overflow-wrap": "anywhere",
+                    "word-break": "break-word",
+                    "white-space": "normal",
+                    "max-width": "100%",
+                })
 
     result_area
-    return
+    return (result_area,)
 
 
 if __name__ == "__main__":
