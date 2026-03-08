@@ -56,9 +56,10 @@ def _header(css_html, mo):
 @app.cell
 def _ui_inputs(mo):
     text_input = mo.ui.text_area(placeholder="ここに原稿を貼り付けてください...", label="📝 原稿テキスト入力", rows=10)
-    file_input = mo.ui.file(filetypes=[".txt"], label="📁 .txtファイルアップロード")
-    ng_words_input = mo.ui.text(placeholder="例: 機密,未発表", label="🚫 NGワード（カンマ区切り）", full_width=True)
-    keyword_input = mo.ui.text(placeholder="例: 生成AI,副業", label="🔍 SEOキーワード（カンマ区切り）", full_width=True)
+    # 👇 ラベルを極限まで短縮し、ボタンの崩壊を防ぐ
+    file_input = mo.ui.file(filetypes=[".txt"], label="📁 .txt読込")
+    ng_words_input = mo.ui.text(placeholder="例: 機密,未発表", label="🚫 NGワード", full_width=True)
+    keyword_input = mo.ui.text(placeholder="例: 生成AI,副業", label="🔍 SEOキーワード", full_width=True)
     return file_input, keyword_input, ng_words_input, text_input
 
 
