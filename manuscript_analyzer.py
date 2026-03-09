@@ -21,10 +21,18 @@ def _inject_css(mo):
     body, html, .marimo { max-width: 100vw !important; overflow-x: hidden !important; font-family: 'Noto Sans JP', sans-serif; }
     *:not(svg):not(path):not(img) { max-width: 100% !important; box-sizing: border-box; }
     
-    /* 👇 コントラスト修正：コンテナ内のラベル文字を白抜きにし、入力欄は白背景・黒文字を維持する */
+    /* コンテナ全体のベース文字色（白抜き） */
     .ma-section { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 16px; margin-bottom: 8px; }
     .ma-section, .ma-section span, .ma-section label { color: #e2e8f0 !important; }
-    .ma-section input, .ma-section textarea { color: #0f172a !important; background-color: #ffffff !important; }
+    
+    /* 👇【修正】入力欄のテキストを強制的に「濃いグレー（黒）」にする */
+    input, textarea, [contenteditable="true"] {
+        color: #111827 !important; /* 濃いグレー（視認性最大） */
+        background-color: #ffffff !important;
+        font-weight: 500 !important;
+    }
+    /* プレースホルダー（入力前の薄い文字）を見やすく調整 */
+    input::placeholder, textarea::placeholder { color: #9ca3af !important; }
     
     .ma-badge { display: inline-block; padding: 2px 10px; border-radius: 9999px; font-size: 12px; font-weight: bold; }
     .ma-badge-green  { background: #166534; color: #bbf7d0 !important; }
@@ -32,9 +40,10 @@ def _inject_css(mo):
     .ma-badge-red    { background: #7f1d1d; color: #fecaca !important; }
     .ma-stat-grid { display: flex; flex-wrap: wrap; gap: 8px; }
     .ma-stat-card { background: #0f172a; border: 1px solid #1e3a5f; border-radius: 10px; padding: 12px; text-align: center; flex: 1 1 120px; }
-    .ma-stat-label { color: #64748b !important; font-size: 12px; margin-bottom: 4px; }
+    /* 👇 ここの文字色を明るい色(#cbd5e1)に変更しました */
+    .ma-stat-label { color: #cbd5e1 !important; font-size: 12px; margin-bottom: 4px; }
     .ma-stat-value { color: #38bdf8 !important; font-size: 24px; font-weight: bold; }
-    .ma-stat-unit  { color: #94a3b8 !important; font-size: 11px; }
+    .ma-stat-unit  { color: #cbd5e1 !important; font-size: 11px; }
     .ma-pre-template { background: #0f172a; color: #94a3b8 !important; padding: 12px; border-radius: 8px; font-size: 13px; overflow-x: auto; white-space: pre-wrap; border: 1px solid #1e3a5f; }
     </style>
     """)
@@ -55,9 +64,10 @@ def _header(css_html, mo):
 
 @app.cell
 def _ui_inputs(mo):
-    text_input = mo.ui.text_area(placeholder="ここに原稿を貼り付けてください...", label="📝 原稿テキスト入力", rows=10)
+    # テキストエリアを full_width=True にし、PCでの作業領域を最大化
+    text_input = mo.ui.text_area(placeholder="ここに原稿を貼り付けてください...", label="📝 原稿テキスト入力", rows=10, full_width=True)
     # 👇 ラベルを極限まで短縮し、ボタンの崩壊を防ぐ
-    file_input = mo.ui.file(filetypes=[".txt"], label="📁 .txt読込")
+    file_input = mo.ui.file(filetypes=[".txt"], label="📁 .txtファイル読込")
     ng_words_input = mo.ui.text(placeholder="例: 機密,未発表", label="🚫 NGワード", full_width=True)
     keyword_input = mo.ui.text(placeholder="例: 生成AI,副業", label="🔍 SEOキーワード", full_width=True)
     return file_input, keyword_input, ng_words_input, text_input
@@ -67,8 +77,10 @@ def _ui_inputs(mo):
 def _render_inputs(file_input, keyword_input, mo, ng_words_input, text_input):
     inputs_ui = mo.vstack([
         mo.Html("<div class='ma-section'>"),
-        mo.hstack([file_input, text_input], justify="start"),
-        mo.hstack([ng_words_input, keyword_input], justify="start"),
+        # ボタンとテキストエリアを縦並びに変更
+        mo.vstack([file_input, text_input], gap=1),
+        # 下段はPCでは横並び、スマホでは自動折り返し（wrap=True）
+        mo.hstack([ng_words_input, keyword_input], justify="start", wrap=True),
         mo.Html("</div>")
     ])
     inputs_ui
@@ -157,13 +169,15 @@ def _render_stats(manuscript_pages, manuscript_text, mo, no_space_chars, paragra
     mo.stop(not manuscript_text, mo.Html(""))
     
     stats_ui = mo.vstack([
-        mo.Html("<h3 style='color:#e2e8f0; margin-top:20px;'>📊 基本統計</h3>"),
         mo.Html(f"""
-        <div class="ma-stat-grid">
-            <div class="ma-stat-card"><div class="ma-stat-label">総文字数</div><div class="ma-stat-value">{total_chars:,}</div><div class="ma-stat-unit">文字</div></div>
-            <div class="ma-stat-card"><div class="ma-stat-label">空白除去</div><div class="ma-stat-value">{no_space_chars:,}</div><div class="ma-stat-unit">文字</div></div>
-            <div class="ma-stat-card"><div class="ma-stat-label">段落数</div><div class="ma-stat-value">{paragraph_count:,}</div><div class="ma-stat-unit">段落</div></div>
-            <div class="ma-stat-card"><div class="ma-stat-label">原稿用紙</div><div class="ma-stat-value">{manuscript_pages:.1f}</div><div class="ma-stat-unit">枚（400字）</div></div>
+        <div class="ma-section">
+            <h3 style='color:#38bdf8; margin-top:0; margin-bottom:16px; font-size:1.2rem;'>📊 基本統計</h3>
+            <div class="ma-stat-grid">
+                <div class="ma-stat-card"><div class="ma-stat-label">総文字数</div><div class="ma-stat-value">{total_chars:,}</div><div class="ma-stat-unit">文字</div></div>
+                <div class="ma-stat-card"><div class="ma-stat-label">空白除去</div><div class="ma-stat-value">{no_space_chars:,}</div><div class="ma-stat-unit">文字</div></div>
+                <div class="ma-stat-card"><div class="ma-stat-label">段落数</div><div class="ma-stat-value">{paragraph_count:,}</div><div class="ma-stat-unit">段落</div></div>
+                <div class="ma-stat-card"><div class="ma-stat-label">原稿用紙</div><div class="ma-stat-value">{manuscript_pages:.1f}</div><div class="ma-stat-unit">枚（400字）</div></div>
+            </div>
         </div>
         """)
     ])
@@ -190,9 +204,9 @@ def _render_ng_check(da_de_aru_ratio, desu_masu_ratio, hyoki_yure_found, manuscr
     style_color = "#ef4444" if style_mixed else "#4ade80"
 
     check_ui = mo.vstack([
-        mo.Html("<h3 style='color:#e2e8f0; margin-top:20px;'>🔍 原稿チェック</h3>"),
         mo.Html(f"""
         <div class='ma-section'>
+            <h3 style='color:#38bdf8; margin-top:0; margin-bottom:16px; font-size:1.2rem;'>🔍 原稿チェック</h3>
             <div style='margin-bottom:12px;'><strong>NGワード検知:</strong><br>{ng_html}</div>
             <div style='margin-bottom:12px;'><strong>表記ゆれ検出:</strong><br>{yure_html or "<span style='color:#4ade80;'>✅ なし</span>"}</div>
             <div><strong>文体チェック:</strong> <span style='color:{style_color};'>{style_msg}</span> (ですます: {desu_masu_ratio:.0f}% / だ・である: {da_de_aru_ratio:.0f}%)</div>
@@ -211,7 +225,7 @@ def _render_seo(h1_count, h2_count, h3_count, html, manuscript_text, mo, seo_key
     if seo_keywords_list:
         kw_html = "".join([f"<div style='margin-bottom:4px;'>{s['keyword']}: <span style='color:#38bdf8;'>{s['count']}回 ({s['density']}%)</span></div>" for s in seo_results])
 
-    template = html.escape("# タイトル\\n\\n## 大見出し\\n### 小見出し\\n\\n本文...")
+    template = html.escape("# タイトル\n\n## 大見出し\n### 小見出し\n\n本文...")
 
     seo_ui = mo.vstack([
         mo.Html("<h3 style='color:#e2e8f0; margin-top:20px;'>🌐 SEO / 構造分析</h3>"),
