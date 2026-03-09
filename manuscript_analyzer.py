@@ -25,11 +25,12 @@ def _inject_css(mo):
     .ma-section { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 16px; margin-bottom: 8px; color: #e2e8f0 !important; }
     .ma-section label { color: #e2e8f0 !important; }
 
-    /* 👇【完全修正】textareaだけでなく、marimo内部エディタのクラス(.cm-content, .cm-line)も確実に黒にする */
-    input, textarea, [contenteditable="true"], .cm-content, .cm-line {
-    color: #000000 !important;
-    background-color: #ffffff !important;
-    font-weight: 500 !important;
+    /* 👇【究極修正】エディタ内部の「すべての要素(*やspan)」まで強制的に黒(#000000)にする */
+    input, textarea, [contenteditable="true"], 
+    .cm-editor, .cm-content, .cm-content *, .cm-line, .cm-line *, .cm-line span {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+        font-weight: 500 !important;
     }
     /* プレースホルダー（入力前の薄い文字）を見やすく調整 */
     input::placeholder, textarea::placeholder { color: #9ca3af !important; }
