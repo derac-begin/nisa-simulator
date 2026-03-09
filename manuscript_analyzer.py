@@ -27,7 +27,7 @@ def _inject_css(mo):
     
     /* 👇【修正】入力欄のテキストを強制的に「濃いグレー（黒）」にする */
     input, textarea, [contenteditable="true"] {
-        color: #111827 !important; /* 濃いグレー（視認性最大） */
+        color: #000000 !important; /* 黒（視認性最大） */
         background-color: #ffffff !important;
         font-weight: 500 !important;
     }
@@ -56,7 +56,7 @@ def _header(css_html, mo):
     header_ui = mo.vstack([
         css_html,
         mo.Html("<h1 style='font-size:1.6rem; color:#38bdf8; margin:0;'>絶対秘密保持・ローカル原稿アナライザー</h1>"),
-        mo.Html("<p style='color:#94a3b8; font-size:14px;'>外部サーバーへの通信ゼロ。すべての解析をあなたのブラウザ内だけで完結させます。</p>")
+        mo.Html("<p style='color:#000000; font-size:14px;'>外部サーバーへの通信ゼロ。すべての解析をあなたのブラウザ内だけで完結させます。</p>")
     ])
     header_ui
     return header_ui,
@@ -67,7 +67,7 @@ def _ui_inputs(mo):
     # テキストエリアを full_width=True にし、PCでの作業領域を最大化
     text_input = mo.ui.text_area(placeholder="ここに原稿を貼り付けてください...", label="📝 原稿テキスト入力", rows=10, full_width=True)
     # 👇 ラベルを極限まで短縮し、ボタンの崩壊を防ぐ
-    file_input = mo.ui.file(filetypes=[".txt"], label="📁 .txtファイル読込")
+    file_input = mo.ui.file(filetypes=[".txt"], label="📁 .txt読込")
     ng_words_input = mo.ui.text(placeholder="例: 機密,未発表", label="🚫 NGワード", full_width=True)
     keyword_input = mo.ui.text(placeholder="例: 生成AI,副業", label="🔍 SEOキーワード", full_width=True)
     return file_input, keyword_input, ng_words_input, text_input
@@ -228,7 +228,7 @@ def _render_seo(h1_count, h2_count, h3_count, html, manuscript_text, mo, seo_key
     template = html.escape("# タイトル\n\n## 大見出し\n### 小見出し\n\n本文...")
 
     seo_ui = mo.vstack([
-        mo.Html("<h3 style='color:#e2e8f0; margin-top:20px;'>🌐 SEO / 構造分析</h3>"),
+        mo.Html("<h3 style='color:#000000; margin-top:20px;'>🌐 SEO / 構造分析</h3>"),
         mo.Html(f"""
         <div class='ma-section'>
             <div style='margin-bottom:12px;'><strong>キーワード含有率:</strong><br>{kw_html or "<span style='color:#94a3b8;'>未設定</span>"}</div>
