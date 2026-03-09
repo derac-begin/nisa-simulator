@@ -15,33 +15,107 @@ def _imports():
 
 @app.cell
 def _inject_css(mo):
-    """グローバルCSS注入"""
+    """
+    グローバルCSS注入。
+    【文字色バグ修正】marimoはShadow DOM内でCodeMirrorを実行するため
+    通常のグローバルCSSは貫通しない。以下の4層防衛で対処する：
+      1. color-scheme: light で入力系全体をライトモード強制
+      2. CSS カスタムプロパティ (--cm-*) で CodeMirror テーマを上書き
+      3. :host コンテキストに依存しないユニバーサルセレクタ * で全 span を黒に
+      4. marimo カスタム要素 (marimo-text, marimo-text-area) を直接ターゲット
+    """
     css_html = mo.Html("""
     <style>
-    body, html, .marimo { max-width: 100vw !important; overflow-x: hidden !important; font-family: 'Noto Sans JP', sans-serif; }
-    *:not(svg):not(path):not(img) { max-width: 100% !important; box-sizing: border-box; }
-    
-    /* コンテナのベース文字色（spanへの過剰な強制適用を削除） */
-    .ma-section { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 16px; margin-bottom: 8px; color: #e2e8f0 !important; }
+    /* ── ベースリセット ──────────────────────────────── */
+    body, html, .marimo {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+        font-family: 'Noto Sans JP', sans-serif;
+    }
+    *:not(svg):not(path):not(img) {
+        max-width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* ── コンテナ文字色（ダーク維持） ─────────────────── */
+    .ma-section {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 8px;
+        color: #e2e8f0 !important;
+    }
     .ma-section label { color: #e2e8f0 !important; }
 
-    /* 👇【究極修正】エディタ内部の「すべての要素(*やspan)」まで強制的に黒(#000000)にする */
-    input, textarea, [contenteditable="true"], 
-    .cm-editor, .cm-content, .cm-content *, .cm-line, .cm-line *, .cm-line span {
-        color: #000000 !important;
-        background-color: #ffffff !important;
-        font-weight: 500 !important;
+    /* ── 【層1】color-scheme で入力系をライトモードに強制 ──
+       color-scheme:light を指定すると、ブラウザが input/textarea の
+       デフォルト文字色を #000 に自動設定する。Shadow DOM 内にも継承される。 */
+    input, textarea,
+    .cm-editor, .cm-scroller, .cm-content,
+    marimo-text, marimo-text-area,
+    marimo-slider, marimo-number {
+        color-scheme: light !important;
     }
-    /* プレースホルダー（入力前の薄い文字）を見やすく調整 */
-    input::placeholder, textarea::placeholder { color: #9ca3af !important; }
-    
+
+    /* ── 【層2】ネイティブ input/textarea の直接指定 ──── */
+    input[type="text"],
+    input[type="number"],
+    input[type="search"],
+    textarea {
+        color: #111827 !important;
+        background-color: #ffffff !important;
+        caret-color: #111827 !important;
+    }
+    input::placeholder,
+    textarea::placeholder {
+        color: #9ca3af !important;
+        opacity: 1 !important;
+    }
+
+    /* ── 【層3】CodeMirror セレクタ全網羅 ──────────────
+       marimo の text_area は CodeMirror を使用。
+       Shadow DOM の外側から適用可能な範囲で全セレクタを指定する。
+       !important を全指定し、marimo の dark テーマを強制上書き。  */
+    .cm-editor {
+        color: #111827 !important;
+        background-color: #ffffff !important;
+    }
+    .cm-editor.cm-focused { outline: 2px solid #38bdf8 !important; }
+    .cm-scroller         { background-color: #ffffff !important; }
+    .cm-content          { color: #111827 !important; caret-color: #111827 !important; }
+    .cm-line             { color: #111827 !important; }
+    /* CodeMirror はシンタックスハイライトで多数の <span> を生成する。
+       class が付いた span を全て黒で上書きする。               */
+    .cm-line span,
+    .cm-content span,
+    .cm-editor span,
+    .ͼ1, .ͼ2, .ͼo, .ͼb, .ͼc     { color: #111827 !important; }
+    /* プレースホルダー (.cm-placeholder) は灰色を維持 */
+    .cm-placeholder      { color: #9ca3af !important; }
+    /* カーソル（キャレット） */
+    .cm-cursor,
+    .cm-dropCursor       { border-left-color: #111827 !important; }
+
+    /* ── 【層4】marimo カスタム要素への CSS カスタムプロパティ注入 ──
+       marimo は一部の色を CSS カスタムプロパティで管理している。
+       これを上書きすることで Shadow DOM 内部にも浸透する。         */
+    marimo-text,
+    marimo-text-area {
+        --foreground: #111827 !important;
+        --background: #ffffff !important;
+        --input: #ffffff !important;
+        --ring: #38bdf8 !important;
+        color: #111827 !important;
+    }
+
+    /* ── バッジ・カード・その他 ──────────────────────── */
     .ma-badge { display: inline-block; padding: 2px 10px; border-radius: 9999px; font-size: 12px; font-weight: bold; }
     .ma-badge-green  { background: #166534; color: #bbf7d0 !important; }
     .ma-badge-yellow { background: #854d0e; color: #fef08a !important; }
     .ma-badge-red    { background: #7f1d1d; color: #fecaca !important; }
     .ma-stat-grid { display: flex; flex-wrap: wrap; gap: 8px; }
     .ma-stat-card { background: #0f172a; border: 1px solid #1e3a5f; border-radius: 10px; padding: 12px; text-align: center; flex: 1 1 120px; }
-    /* 👇 ここの文字色を明るい色(#cbd5e1)に変更しました */
     .ma-stat-label { color: #cbd5e1 !important; font-size: 12px; margin-bottom: 4px; }
     .ma-stat-value { color: #38bdf8 !important; font-size: 24px; font-weight: bold; }
     .ma-stat-unit  { color: #cbd5e1 !important; font-size: 11px; }
@@ -57,7 +131,7 @@ def _header(css_html, mo):
     header_ui = mo.vstack([
         css_html,
         mo.Html("<h1 style='font-size:1.6rem; color:#38bdf8; margin:0;'>絶対秘密保持・ローカル原稿アナライザー</h1>"),
-        mo.Html("<p style='color:#000000; font-size:14px;'>外部サーバーへの通信ゼロ。すべての解析をあなたのブラウザ内だけで完結させます。</p>")
+        mo.Html("<p style='color:#94a3b8; font-size:14px;'>外部サーバーへの通信ゼロ。すべての解析をあなたのブラウザ内だけで完結させます。</p>")
     ])
     header_ui
     return header_ui,
@@ -67,7 +141,7 @@ def _header(css_html, mo):
 def _ui_inputs(mo):
     # テキストエリアを full_width=True にし、PCでの作業領域を最大化
     text_input = mo.ui.text_area(placeholder="ここに原稿を貼り付けてください...", label="📝 原稿テキスト入力", rows=10, full_width=True)
-    # 👇 ラベルを極限まで短縮し、ボタンの崩壊を防ぐ
+    # ラベルを極限まで短縮し、ボタンの崩壊を防ぐ
     file_input = mo.ui.file(filetypes=[".txt"], label="📁 .txt読込")
     ng_words_input = mo.ui.text(placeholder="例: 機密,未発表", label="🚫 NGワード", full_width=True)
     keyword_input = mo.ui.text(placeholder="例: 生成AI,副業", label="🔍 SEOキーワード", full_width=True)
@@ -76,12 +150,19 @@ def _ui_inputs(mo):
 
 @app.cell
 def _render_inputs(file_input, keyword_input, mo, ng_words_input, text_input):
+    """
+    入力UIのレイアウト。
+    【バグ修正】mo.hstack() の wrap=True は v0.19.0 に存在しないパラメータ。
+    モバイル折り返しは CSS Grid（auto-fit）で実現する。
+    """
     inputs_ui = mo.vstack([
         mo.Html("<div class='ma-section'>"),
-        # ボタンとテキストエリアを縦並びに変更
         mo.vstack([file_input, text_input], gap=1),
-        # 下段はPCでは横並び、スマホでは自動折り返し（wrap=True）
-        mo.hstack([ng_words_input, keyword_input], justify="start", wrap=True),
+        # 【修正】wrap=True を削除 → CSS Grid で折り返し対応
+        mo.Html('<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:8px; margin-top:8px;">'),
+        ng_words_input,
+        keyword_input,
+        mo.Html("</div>"),
         mo.Html("</div>")
     ])
     inputs_ui
