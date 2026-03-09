@@ -21,15 +21,15 @@ def _inject_css(mo):
     body, html, .marimo { max-width: 100vw !important; overflow-x: hidden !important; font-family: 'Noto Sans JP', sans-serif; }
     *:not(svg):not(path):not(img) { max-width: 100% !important; box-sizing: border-box; }
     
-    /* コンテナ全体のベース文字色（白抜き） */
-    .ma-section { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 16px; margin-bottom: 8px; }
-    .ma-section, .ma-section span, .ma-section label { color: #e2e8f0 !important; }
-    
-    /* 👇【修正】入力欄のテキストを強制的に「濃いグレー（黒）」にする */
-    input, textarea, [contenteditable="true"] {
-        color: #000000 !important; /* 黒（視認性最大） */
-        background-color: #ffffff !important;
-        font-weight: 500 !important;
+    /* コンテナのベース文字色（spanへの過剰な強制適用を削除） */
+    .ma-section { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 16px; margin-bottom: 8px; color: #e2e8f0 !important; }
+    .ma-section label { color: #e2e8f0 !important; }
+
+    /* 👇【完全修正】textareaだけでなく、marimo内部エディタのクラス(.cm-content, .cm-line)も確実に黒にする */
+    input, textarea, [contenteditable="true"], .cm-content, .cm-line {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+    font-weight: 500 !important;
     }
     /* プレースホルダー（入力前の薄い文字）を見やすく調整 */
     input::placeholder, textarea::placeholder { color: #9ca3af !important; }
