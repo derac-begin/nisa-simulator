@@ -99,14 +99,33 @@ def _inject_css(mo):
 
     /* ── 【層4】marimo カスタム要素への CSS カスタムプロパティ注入 ──
        marimo は一部の色を CSS カスタムプロパティで管理している。
-       これを上書きすることで Shadow DOM 内部にも浸透する。         */
+       これを上書きすることで Shadow DOM 内部にも浸透する。
+       【重要】color の直接指定はラベルへの継承を引き起こすため禁止。
+       文字色制御は層2（native input/textarea）と層3（CodeMirror）に委ねる。 */
     marimo-text,
     marimo-text-area {
         --foreground: #111827 !important;
         --background: #ffffff !important;
         --input: #ffffff !important;
         --ring: #38bdf8 !important;
-        color: #111827 !important;
+        /* color プロパティは指定しない（ラベルへの継承を防ぐ） */
+    }
+
+    /* ── 【層5】ラベル文字色の明示的な回復 ──────────────────
+       marimo のコンポーネントラベルは Shadow DOM 外の通常 DOM に
+       レンダリングされるため、ここで安全に上書き可能。
+       層4の color-scheme: light の影響でラベルが黒化するのを防ぐ。 */
+    marimo-text label,
+    marimo-text > label,
+    marimo-text > div > label,
+    marimo-text-area label,
+    marimo-text-area > label,
+    marimo-text-area > div > label,
+    marimo-file label,
+    marimo-file > label,
+    [data-testid="label"],
+    .marimo label {
+        color: #e2e8f0 !important;
     }
 
     /* ── バッジ・カード・その他 ──────────────────────── */
