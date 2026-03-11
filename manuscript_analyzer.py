@@ -97,36 +97,38 @@ def _inject_css(mo):
     .cm-cursor,
     .cm-dropCursor       { border-left-color: #111827 !important; }
 
-    /* ── 【層4】marimo カスタム要素への CSS カスタムプロパティ注入 ──
-       marimo は一部の色を CSS カスタムプロパティで管理している。
-       これを上書きすることで Shadow DOM 内部にも浸透する。
-       【重要】color の直接指定はラベルへの継承を引き起こすため禁止。
-       文字色制御は層2（native input/textarea）と層3（CodeMirror）に委ねる。 */
+    /* ── 【層4】marimo カスタム要素 — 入力テキストを黒に固定 ────
+       【確定した設計原則（Shadow DOM 解析結果）】
+         - marimo の mo.ui.text / mo.ui.text_area のラベルと入力欄は
+           同一 Shadow DOM 内にある。外部 CSS の color 継承は
+           Shadow DOM 境界を越えてホスト要素から伝播する。
+         - このため「color を指定」→「ラベルと入力テキスト両方に影響」は不可避。
+         - 【解決策】label= パラメータを削除し、ラベルを Shadow DOM の外に
+           純 HTML として配置（.ma-input-label クラス）。
+           → Shadow DOM 内は「入力テキストのみ」になるため
+             color: #111827 を指定しても副作用ゼロ。                   */
     marimo-text,
-    marimo-text-area {
+    marimo-text-area,
+    marimo-file {
         --foreground: #111827 !important;
         --background: #ffffff !important;
         --input: #ffffff !important;
         --ring: #38bdf8 !important;
-        /* color プロパティは指定しない（ラベルへの継承を防ぐ） */
+        color: #111827 !important;  /* 入力テキストを黒に（ラベルは外部 HTML で管理） */
     }
 
-    /* ── 【層5】ラベル文字色の明示的な回復 ──────────────────
-       marimo のコンポーネントラベルは Shadow DOM 外の通常 DOM に
-       レンダリングされるため、ここで安全に上書き可能。
-       層4の color-scheme: light の影響でラベルが黒化するのを防ぐ。 */
-    marimo-text label,
-    marimo-text > label,
-    marimo-text > div > label,
-    marimo-text-area label,
-    marimo-text-area > label,
-    marimo-text-area > div > label,
-    marimo-file label,
-    marimo-file > label,
-    [data-testid="label"],
-    .marimo label {
-        color: #e2e8f0 !important;
+    /* ── 【層5】外部ラベル（.ma-input-label）の文字色 ──────────
+       _render_inputs で mo.Html() として配置した我々制御のラベル。
+       Shadow DOM の外にあるため確実に白に設定できる。            */
+    .ma-input-label {
+        color: #cbd5e1 !important;
+        font-size: 13px;
+        font-weight: 500;
+        display: block;
+        margin-bottom: 2px;
+        margin-top: 6px;
     }
+
 
     /* ── バッジ・カード・その他 ──────────────────────── */
     .ma-badge { display: inline-block; padding: 2px 10px; border-radius: 9999px; font-size: 12px; font-weight: bold; }
@@ -158,12 +160,17 @@ def _header(css_html, mo):
 
 @app.cell
 def _ui_inputs(mo):
-    # テキストエリアを full_width=True にし、PCでの作業領域を最大化
-    text_input = mo.ui.text_area(placeholder="ここに原稿を貼り付けてください...", label="📝 原稿テキスト入力", rows=10, full_width=True)
-    # ラベルを極限まで短縮し、ボタンの崩壊を防ぐ
-    file_input = mo.ui.file(filetypes=[".txt"], label="📁 .txt読込")
-    ng_words_input = mo.ui.text(placeholder="例: 機密,未発表", label="🚫 NGワード", full_width=True)
-    keyword_input = mo.ui.text(placeholder="例: 生成AI,副業", label="🔍 SEOキーワード", full_width=True)
+    """
+    UIコンポーネント定義。
+    【ラベル色バグ修正】label= パラメータを削除し、ラベルを Shadow DOM の外側
+    （_render_inputs セルの mo.Html）として配置することで、
+    入力テキスト（黒）とラベル（白）を独立して制御可能にする。
+    ※ このセルは .value を参照しないこと（Reactive Loop防止）
+    """
+    text_input = mo.ui.text_area(placeholder="ここに原稿を貼り付けてください...", rows=10, full_width=True)
+    file_input = mo.ui.file(filetypes=[".txt"])
+    ng_words_input = mo.ui.text(placeholder="例: 機密,未発表", full_width=True)
+    keyword_input = mo.ui.text(placeholder="例: 生成AI,副業", full_width=True)
     return file_input, keyword_input, ng_words_input, text_input
 
 
@@ -171,16 +178,27 @@ def _ui_inputs(mo):
 def _render_inputs(file_input, keyword_input, mo, ng_words_input, text_input):
     """
     入力UIのレイアウト。
+    【ラベル色バグ修正】ラベルを Shadow DOM 外の mo.Html() として配置。
+    .ma-input-label クラスで文字色を直接制御（白 #cbd5e1）。
     【バグ修正】mo.hstack() の wrap=True は v0.19.0 に存在しないパラメータ。
     モバイル折り返しは CSS Grid（auto-fit）で実現する。
+    ※ このセルは .value を参照しないこと（Reactive Loop防止）
     """
     inputs_ui = mo.vstack([
         mo.Html("<div class='ma-section'>"),
-        mo.vstack([file_input, text_input], gap=1),
-        # 【修正】wrap=True を削除 → CSS Grid で折り返し対応
+        mo.Html("<span class='ma-input-label'>📁 .txt ファイル読込</span>"),
+        file_input,
+        mo.Html("<span class='ma-input-label'>📝 原稿テキスト入力</span>"),
+        text_input,
         mo.Html('<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:8px; margin-top:8px;">'),
-        ng_words_input,
-        keyword_input,
+        mo.vstack([
+            mo.Html("<span class='ma-input-label'>🚫 NGワード（カンマ区切り）</span>"),
+            ng_words_input,
+        ], gap=0),
+        mo.vstack([
+            mo.Html("<span class='ma-input-label'>🔍 SEOキーワード（カンマ区切り）</span>"),
+            keyword_input,
+        ], gap=0),
         mo.Html("</div>"),
         mo.Html("</div>")
     ])
