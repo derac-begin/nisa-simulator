@@ -20,7 +20,6 @@ def __(mo):
     # ==========================================
     # 1. State Management (状態管理の導入)
     # ==========================================
-    # DOMのvalue同期不良を防ぐため、Python側でクリック回数を直接管理する
     get_clean_clicks, set_clean_clicks = mo.state(0)
     get_dedup_clicks, set_dedup_clicks = mo.state(0)
     return get_clean_clicks, get_dedup_clicks, set_clean_clicks, set_dedup_clicks
@@ -29,9 +28,8 @@ def __(mo):
 @app.cell
 def __(mo, set_clean_clicks, set_dedup_clicks):
     # ==========================================
-    # 2. Static UI Definitions (UX正常化・ラベル適正化)
+    # 2. Static UI Definitions
     # ==========================================
-    # Input要素(file)はラベル分離、Button要素はテキストとしてlabelを復活
     file_upload = mo.ui.file(
         kind="area", 
         filetypes=[".csv", ".xlsx", ".xls"], 
@@ -76,13 +74,12 @@ def __(file_upload, io, pd):
 @app.cell
 def __(df_raw, mo):
     # ==========================================
-    # 4. Mappers Definition (スコープ保護済み・ラベル分離)
+    # 4. Mappers Definition
     # ==========================================
     mappers = None
     if df_raw is not None:
         opts = {"-- 対象なし --": ""}
         opts.update({str(c): str(c) for c in df_raw.columns})
-        # Dropdownは入力要素なのでShadow DOM対策のためlabel引数を削除
         mappers = {
             "name": mo.ui.dropdown(options=opts),
             "phone": mo.ui.dropdown(options=opts),
@@ -95,7 +92,7 @@ def __(df_raw, mo):
 @app.cell
 def __(df_raw, get_clean_clicks, mappers, mo, pd, re, unicodedata):
     # ==========================================
-    # 5. Cleansing Logic (状態トリガー駆動)
+    # 5. Cleansing Logic
     # ==========================================
     df_cleaned = None
     clean_error = None
@@ -140,7 +137,7 @@ def __(df_raw, get_clean_clicks, mappers, mo, pd, re, unicodedata):
 @app.cell
 def __(df_cleaned, mo):
     # ==========================================
-    # 6. Dedup Definition (スコープ保護済み・ラベル分離)
+    # 6. Dedup Definition
     # ==========================================
     dedup_key_dropdown = None
     if df_cleaned is not None:
@@ -153,7 +150,7 @@ def __(df_cleaned, mo):
 @app.cell
 def __(dedup_key_dropdown, df_cleaned, get_dedup_clicks, mo):
     # ==========================================
-    # 7. Dedup Logic (状態トリガー駆動)
+    # 7. Dedup Logic
     # ==========================================
     df_final = None
     dedup_error = None
@@ -191,13 +188,12 @@ def __(
     pd,
 ):
     # ==========================================
-    # 8. Unified Master Layout (レイアウト構築)
+    # 8. Unified Master Layout (モバイル完全対応)
     # ==========================================
     sections = []
     sections.append(mo.md("# 🛡️ Zero-Leak Customer Data Cleanser").callout(kind="info"))
     sections.append(mo.md("### 1. データの読み込み"))
     
-    # 💡 Light DOMへのラベル分離 (モバイル安全な vstack)
     sections.append(mo.vstack([
         mo.Html("<label style='font-weight: bold;'>📄 アップロードするファイルを選択（CSV / Excel）</label>"),
         file_upload
@@ -212,7 +208,6 @@ def __(
             sections.append(mo.md("### 2. クレンジング対象列のマッピング"))
             sections.append(mo.md("読み込んだデータのうち、どの列をクレンジングするか選択してください。"))
             
-            # 💡 Dropdownのラベル分離
             name_ui = mo.vstack([mo.Html("<label style='font-weight: bold;'>氏名 (Name)</label>"), mappers["name"]], gap=1)
             phone_ui = mo.vstack([mo.Html("<label style='font-weight: bold;'>電話番号 (Phone)</label>"), mappers["phone"]], gap=1)
             email_ui = mo.vstack([mo.Html("<label style='font-weight: bold;'>メールアドレス (Email)</label>"), mappers["email"]], gap=1)
@@ -222,7 +217,6 @@ def __(
             sections.append(mo.hstack([email_ui, company_ui], justify="start", gap=2))
             
             sections.append(mo.md("### 3. データクレンジングの実行"))
-            # 💡 ボタンは説明ラベルと横並びにせず、そのまま配置 (モバイル崩れ防止)
             sections.append(clean_btn)
             
         if clean_error:
@@ -237,7 +231,6 @@ def __(
                 dedup_key_dropdown
             ], gap=1)
             
-            # モバイル環境での安全性を考慮し、Dropdownとボタンをvstackで縦積み
             sections.append(mo.vstack([dedup_dropdown_ui, dedup_btn], justify="start", align="start", gap=2))
             
         if dedup_error:
@@ -256,29 +249,52 @@ def __(
             "件数": [orig_count, fin_count]
         })
         
+        # 🚨 Task 1: 棒グラフの完全レスポンシブ化 (width="container")
         bar_chart = alt.Chart(df_chart).mark_bar(opacity=0.8, color="#4CAF50").encode(
             x=alt.X("ステータス:N", title="データ処理段階"),
             y=alt.Y("件数:Q", title="レコード数"),
             tooltip=["ステータス", "件数"]
-        ).properties(width=300, height=250, title="データ削減件数の推移")
+        ).properties(width="container", height=250, title="データ削減件数の推移")
         
         csv_buf = io.StringIO()
         df_final.to_csv(csv_buf, index=False)
         csv_data = csv_buf.getvalue().encode('utf-8-sig')
         
-        # 💡 ダウンロードボタンのlabel復活
+        # 🚨 Task 3: mo.download の文字溢れ修正
         download_btn = mo.download(
             data=csv_data,
             filename="cleansed_data.csv",
-            label="💾 クレンジング済みデータをダウンロード (CSV)",
+            label="💾 クレンジング済みCSVをダウンロード",
             mimetype="text/csv"
         )
         
-        # 💡 SSOT準拠: mo.stat の導入
         stat_orig = mo.stat(label="元レコード数", value=f"{orig_count}件")
         stat_fin = mo.stat(label="最終レコード数", value=f"{fin_count}件", caption=f"重複削除数: {diff}件")
         stats_ui = mo.hstack([stat_orig, stat_fin], justify="start", gap=4)
         
+        # 🚨 Task 2: Light DOM Composition CSS (f-string禁止ルール準拠)
+        responsive_css = mo.Html("""
+        <style>
+        @media (max-width: 600px) {
+            /* グラフとサマリーの横並び(hstack)を縦積み化 */
+            .res-layout-marker + marimo-hstack,
+            .res-layout-marker + div {
+                flex-direction: column !important;
+                align-items: stretch !important;
+            }
+            /* mo.stat の泣き別れを防ぐ縦積み化 */
+            marimo-hstack:has(marimo-stat) {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 12px !important;
+            }
+        }
+        </style>
+        <div class="res-layout-marker" style="display:none;"></div>
+        """)
+        
+        # CSSマーカーを直前に配置し、続くhstackのレイアウトをモバイル時のみ上書き
+        sections.append(responsive_css)
         sections.append(mo.hstack([
             mo.vstack([
                 mo.md("**📉 サマリー**"),
@@ -300,7 +316,7 @@ def __(
 @app.cell
 def __(ui_layout):
     # ==========================================
-    # 9. Render (確実な描画)
+    # 9. Render
     # ==========================================
     ui_layout
     return
