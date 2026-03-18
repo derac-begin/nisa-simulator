@@ -19,6 +19,8 @@
 | **[💰 Margin Architect](https://derac-begin.github.io/nisa-simulator/margin_architect.html)** | `margin_architect.html`<br>利益防衛ラインを可視化する価格戦略シミュレーター。 | 🟢 Live |
 | **[🛡️ Secure QR Batch Maker (QRコード一括生成くん)](https://derac-begin.github.io/nisa-simulator/qr_batch.html)** | `qr_batch.html`<br>CSVファイルを読み込み、複数のQRコードを瞬時に一括生成してZIPファイルとしてダウンロードできるユーティリティアプリ。 | 🟢 Live |
 | **[🔒 Zero-Leak Manuscript Analyzer (絶対秘密保持・ローカル原稿アナライザー)](https://derac-begin.github.io/nisa-simulator/manuscript_analyzer.html)** | `manuscript_analyzer.html`<br>データはブラウザのメモリ上でのみ処理され、機密情報の漏洩リスク0%を保証する完全オフラインの原稿解析アプリ。 | 🟢 Live |
+| **[🧹 Zero-Leak Customer Data Cleanser (絶対秘密保持・顧客データクレンザー)](https://derac-begin.github.io/nisa-simulator/data_cleanser.html)** | `data_cleanser.html`<br>情報漏洩リスク0%。PCから一歩もデータを出さずに、バラバラの顧客リストを一瞬で名寄せ・クレンジングする完全オフラインツール。 | 🟢 Live |
+
 ---
 
 ## 🛠️ Tech Stack
