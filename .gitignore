@@ -1,4 +1,11 @@
-
 .env
-
 .agent/
+__marimo__/
+.venv/
+archive/
+data/
+images/
+STC/
+tools/
+tech_stack/
+.claude/
