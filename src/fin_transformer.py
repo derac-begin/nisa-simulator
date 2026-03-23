@@ -107,17 +107,22 @@ def _(csv_uploader, get_load_clicks, io, mo, pd):
             if len(_file_bytes) > 5 * 1024 * 1024:
                 error_msg = "⚠️ ファイルサイズ制限（5MB）を超えています。"
             else:
+                # 【Data Purity Patch 1】Pandasの勝手なアップキャスト（.0の付与）を封殺
                 try:
-                    df_loaded = pd.read_csv(io.BytesIO(_file_bytes), encoding="utf-8")
+                    df_loaded = pd.read_csv(io.BytesIO(_file_bytes), encoding="utf-8", dtype=str)
                 except UnicodeDecodeError:
                     try:
-                        df_loaded = pd.read_csv(io.BytesIO(_file_bytes), encoding="shift_jis")
+                        df_loaded = pd.read_csv(io.BytesIO(_file_bytes), encoding="shift_jis", dtype=str)
                     except Exception as _e:
                         error_msg = f"読み込み失敗: {str(_e)}"
                 except Exception as _e:
                     error_msg = f"予期せぬエラー: {str(_e)}"
 
                 if df_loaded is not None:
+                    # 【Data Purity Patch 2】欠損値(NaN)を完全な空文字("")へ置換
+                    df_loaded = df_loaded.fillna("")
+                    
+                    # Whitespace Stripping
                     df_loaded.columns = [str(_c).strip() for _c in df_loaded.columns]
                     columns_dict = {str(_c): str(_c) for _c in df_loaded.columns}
 
