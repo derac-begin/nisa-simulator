@@ -9,3 +9,19 @@ STC/
 tools/
 tech_stack/
 .claude/
+
+# --- Antigravity & AI Agent Local Management Files ---
+AI_agent/
+daily_reports/
+docs/
+roles/
+sandbox_tools/
+Directory_tree.md
+Hybrid_directory_structure.md
+SOPv3.3.md
+WASM_Deploy_Standard_Template.md
+global_mission.md
+organization_chart.md
+project_whiteboard.md
+product_spec.json
+logo.png

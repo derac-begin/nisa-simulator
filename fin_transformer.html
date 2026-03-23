@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-B2ootaw-.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-CxL0S8W7.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-D9fedIX3.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-BTCkDNvf.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-DU3aDxX5.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-CLVRCuM9.ttf" as="font" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((_entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>fin transformer</title>
+    <script type="module" crossorigin src="./assets/index-CGfe1Tpd.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-BW0IMuFq.js">
+    <link rel="modulepreload" crossorigin href="./assets/hotkeys-uKX61F1_.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-BLUna9fQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-Cl9k9ZmS.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-DzliDDTm.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-C8wT63Va.js">
+    <link rel="modulepreload" crossorigin href="./assets/_Uint8Array-BGESiCQL.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CrRUCOBw.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-D0MtrJOx.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-C1rgT0yh.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-BGmjiNul.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-DeeZ7FnK.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-DN_bIXfG.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-DAnNhy3O.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-COkmyg1v.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-DuYGqRtX.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-C9fstfnp.js">
+    <link rel="modulepreload" crossorigin href="./assets/Combination-D1TsGrBC.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-9PZrU2e0.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CBrDuocE.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-CW2xpJ57.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-CrAQug3q.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-D0g5GnIs.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CvjcEpZC.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-Bzf3rpev.js">
+    <link rel="modulepreload" crossorigin href="./assets/_getTag-BWqNuuwU.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseIsEqual-Cz9Tt_-E.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-DlWF5OMa.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-C6yE60hi.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFor-Duhs3RiJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-BBX6ug-N.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-Cg4WLWh2.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-CJJIceVn.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-Bkp4R3bQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-DzyBMRsy.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-babG4OBR.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-ClFZlR7U.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-B3BENoUa.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-C0HaHO6a.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BGkTcW3U.js">
+    <link rel="modulepreload" crossorigin href="./assets/toString-DlRqgfqz.js">
+    <link rel="modulepreload" crossorigin href="./assets/_hasUnicode-zBEpxwYe.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-CmDXEyIC.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-EAuSVK-5.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-DfP1CWaW.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-CTiSlR1m.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-BmAOeMOK.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-DDa-hVe3.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CAcX026F.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DKNOF5xd.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CI6_zMIl.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BVf1IY4_.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Cq_4nPfh.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CVj-_Iiz.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-HGZzCB0y.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-RKnr9SNh.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BuhT82Xx.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-0ac7Aukl.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-5JckKRQn.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-Bj40p_Np.js">
+    <link rel="modulepreload" crossorigin href="./assets/_arrayReduce-bZBYsK-u.js">
+    <link rel="modulepreload" crossorigin href="./assets/type-BdyvjzTI.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseProperty-DuoFhI7N.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-6sUe0ZdD.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-BbFlGgjv.js">
+    <link rel="modulepreload" crossorigin href="./assets/toInteger-CDcO32Gx.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-CaVvnK_o.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-CwSdzVhm.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-D_SkyFDn.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-Drf1manw.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-Czc5z_04.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-RldLPyJs.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-k5KxevGr.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-DUEuLcT2.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-em3gna-v.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers-C9_R_vlY.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-DD7JA3RM.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-BAYdLMF_.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-D8ks3oPN.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-C2LPFxyv.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-CaEtLL8p.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-q6QlC2aZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-BoUpLV2S.js">
+    <link rel="modulepreload" crossorigin href="./assets/multi-map-fjX9ImVF.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-BEdExd6A.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-CqEd11Di.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-BP4_BZLr.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-DNmjkr65.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-CR_zEq5o.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-kFdt1US2.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-Orp0blpZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-DRhpWiOq.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-gBVL4NN-.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-B69c-352.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-C1czjtp7.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-CEEVxHsX.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-D18AHojc.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-jpEDlD0M.js">
+    <link rel="modulepreload" crossorigin href="./assets/katex-AwOI3EvM.js">
+    <link rel="modulepreload" crossorigin href="./assets/marked.esm-CHnOtnr3.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-OGVTOU66-CjNLT2C3.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-C_xfLXiO.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DOFFh6Ii.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-Qt3ng7cb.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-DtnzNVk-.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-BZ_OFvV4.js">
+    <link rel="modulepreload" crossorigin href="./assets/mode-BFwdGSZ7.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-N-2faAGj.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-BzGWfPTJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/table--_20dwBZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/tabs-Ctk4D03n.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-BJJJOr9W.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-CU-WWxnz.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-DU5Qb8a8.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-B9CrBoaO.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-DhMN8sxe.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-DhzaK-Y1.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-CdsE1R40.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-CITws1-y.js">
+    <link rel="modulepreload" crossorigin href="./assets/maps-s2pQkyf5.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-B9D0JO9U.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-lG8j6oqk.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-CV0QXb5P.js">
+    <link rel="modulepreload" crossorigin href="./assets/range-sshwVRcP.js">
+    <link rel="modulepreload" crossorigin href="./assets/capitalize-DQeWKRGx.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-BLx7B_us.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-BLd1jTNA.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-BnFXtaZZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/play-BJDBXApx.js">
+    <link rel="modulepreload" crossorigin href="./assets/chat-components-6dWNbFjV.js">
+    <link rel="modulepreload" crossorigin href="./assets/isEmpty-DIxUV1UR.js">
+    <link rel="modulepreload" crossorigin href="./assets/circle-check-big-OIMTUpe6.js">
+    <link rel="modulepreload" crossorigin href="./assets/chat-display-Cfg38gMM.js">
+    <link rel="modulepreload" crossorigin href="./assets/ai-model-dropdown-DZ7evAGU.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-D0Pei-OA.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeleteCell-GHwc6J4l.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-D4lB4En9.js">
+    <link rel="modulepreload" crossorigin href="./assets/process-output-4w8xDO0j.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-Dg_vNTSs.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-CboCOq4o.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-B3JckBtM.js">
+    <link rel="modulepreload" crossorigin href="./assets/add-cell-with-ai-Dx5UA23s.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-D42sFB6d.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-DxXFdbn8.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-qp_XZeSS.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-9nPwQyJZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-C9iBa4rX.js">
+    <link rel="modulepreload" crossorigin href="./assets/toggle-G1t0cQyf.js">
+    <link rel="modulepreload" crossorigin href="./assets/globals-D3SeIm1j.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-CXQVxivL.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-DN0TMY36.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-CyLJYAfP.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-6FYvpjrm.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-BqxQegSf.js">
+    <link rel="modulepreload" crossorigin href="./assets/utilities.esm-FYD46c3d.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-p0aHdM2W.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAddCell-CVfRv5mq.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-D9zAYqG9.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-CHesBJpY.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-DjP4vjBQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-video-camera-CZUg-nFA.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-VzFAm7Cv.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-qwandMoh.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-D2hGxqGj.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-DbW1_PHb.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-C-lF7BNB.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-DEraWoX5.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-DDKGFzpC.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-5kuXz69O.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-gzLRYatP.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-B42u_5hF.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-C638SUfx.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-FiXEquL2.js">
+    <link rel="modulepreload" crossorigin href="./assets/VisuallyHidden-BodIky8L.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-DydgU7lx.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFlatten-CLPh0yMf.js">
+    <link rel="modulepreload" crossorigin href="./assets/flatten-Buk63LQO.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-DeQioq0G.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-MBUyxNtK.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-DobaYJPt.js">
+    <link rel="modulepreload" crossorigin href="./assets/globe-CY9im410.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-Din9uFKE.js">
+    <link rel="modulepreload" crossorigin href="./assets/settings-MTlHVxz3.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-leQTJTJJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-CbD0f2J6.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-B0Sy2M4C.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-jmgGt1lS.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-B7vuddcd.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-BQNCH-dG.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    <marimo-code hidden="">import%20marimo%0A%0A__generated_with%20%3D%20%220.19.0%22%0Aapp%20%3D%20marimo.App(width%3D%22full%22)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20import%20pandas%20as%20pd%0A%20%20%20%20import%20io%0A%20%20%20%20%23%20%E5%A4%96%E9%83%A8%E9%80%9A%E4%BF%A1(requests%E7%AD%89)%E3%81%AFSOP%E3%81%AB%E3%82%88%E3%82%8A%E7%B5%B6%E5%AF%BE%E7%A6%81%E6%AD%A2%E3%80%82%E6%A8%99%E6%BA%96%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%81%A8pandas%E3%81%AE%E3%81%BF%E3%82%92%E4%BD%BF%E7%94%A8%E3%80%82%0A%20%20%20%20return%20io%2C%20mo%2C%20pd%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20%23%20%E3%80%90SOP%20v3.3%E3%80%91Mobile%20UX%20Composition%20Hack%20%26%20CSS%20Injection%0A%20%20%20%20css_injection%20%3D%20mo.Html(%22%22%22%0A%20%20%20%20%3Cstyle%3E%0A%20%20%20%20%2F*%201.%20%E7%94%BB%E9%9D%A2%E5%85%A8%E4%BD%93%E3%81%AE%E6%A8%AA%E3%82%B9%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%AB%E3%82%92%E7%89%A9%E7%90%86%E7%9A%84%E3%81%AB%E5%B0%81%E5%8D%B0%20*%2F%0A%20%20%20%20body%2C%20html%2C%20marimo-app%2C%20.marimo%20%7B%0A%20%20%20%20%20%20%20%20max-width%3A%20100vw%20!important%3B%0A%20%20%20%20%20%20%20%20overflow-x%3A%20hidden%20!important%3B%0A%20%20%20%20%20%20%20%20box-sizing%3A%20border-box%20!important%3B%0A%20%20%20%20%7D%0A%20%20%20%20.marimo%20%7B%20width%3A%20100%25%20!important%3B%20padding%3A%201rem%3B%20%7D%0A%0A%20%20%20%20%2F*%202.%20UI%E8%A6%81%E7%B4%A0%E3%81%8C%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%82%92%E7%AA%81%E3%81%8D%E7%A0%B4%E3%82%8B%E3%81%AE%E3%82%92%E9%98%B2%E3%81%90%E9%98%B2%E6%B3%A2%E5%A0%A4%20*%2F%0A%20%20%20%20marimo-ui-element%2C%20select%2C%20input%2C%20marimo-multiselect%20%7B%0A%20%20%20%20%20%20%20%20max-width%3A%20100%25%20!important%3B%0A%20%20%20%20%7D%0A%20%20%20%20select%20%7B%0A%20%20%20%20%20%20%20%20text-overflow%3A%20ellipsis%20!important%3B%0A%20%20%20%20%20%20%20%20white-space%3A%20nowrap%20!important%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20%2F*%203.%20%E3%82%B9%E3%83%9E%E3%83%9B%E6%99%82%E3%81%AE%E5%BC%B7%E5%88%B6%E6%8A%98%E3%82%8A%E8%BF%94%E3%81%97%E7%94%A8%E3%83%9E%E3%83%BC%E3%82%AB%E3%83%BC%20*%2F%0A%20%20%20%20.res-layout-marker%20%2B%20marimo-hstack%20%7B%0A%20%20%20%20%20%20%20%20flex-wrap%3A%20wrap%3B%20%0A%20%20%20%20%20%20%20%20justify-content%3A%20center%3B%0A%20%20%20%20%20%20%20%20gap%3A%2015px%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20%2F*%204.%20%E9%95%B7%E3%81%84%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%81%AE%E5%BC%B7%E5%88%B6%E6%8A%98%E3%82%8A%E8%BF%94%E3%81%97%20*%2F%0A%20%20%20%20.force-wrap%20%7B%0A%20%20%20%20%20%20%20%20word-break%3A%20break-all%20!important%3B%0A%20%20%20%20%20%20%20%20overflow-wrap%3A%20break-word%20!important%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20%2F*%205.%20%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E3%81%AE%E6%A8%AA%E3%82%B9%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%AB%E4%BF%9D%E8%AD%B7%20*%2F%0A%20%20%20%20marimo-table%20%7B%0A%20%20%20%20%20%20%20%20display%3A%20block%20!important%3B%0A%20%20%20%20%20%20%20%20max-width%3A%20100%25%20!important%3B%0A%20%20%20%20%20%20%20%20overflow-x%3A%20auto%20!important%3B%0A%20%20%20%20%7D%0A%20%20%20%20%3C%2Fstyle%3E%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%20(css_injection%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20%23%20%E3%80%90SOP%20v3.3%E3%80%91State%20Hook%20Architecture%20(WASM%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E6%B6%88%E5%A4%B1%E5%AF%BE%E7%AD%96)%0A%20%20%20%20get_load_clicks%2C%20set_load_clicks%20%3D%20mo.state(0)%0A%20%20%20%20return%20get_load_clicks%2C%20set_load_clicks%0A%0A%0A%40app.cell%0Adef%20_(mo%2C%20set_load_clicks)%3A%0A%20%20%20%20%23%20Task%201%3A%20%E5%9F%BA%E7%A4%8EUI%E3%83%AC%E3%82%A4%E3%82%A2%E3%82%A6%E3%83%88%E3%81%AE%E6%A7%8B%E7%AF%89%0A%20%20%20%20uploader_label%20%3D%20mo.Html(%22%3Clabel%3E%3Cb%3E%F0%9F%93%81%201.%20%E9%8A%80%E8%A1%8CCSV%E3%82%92%E9%81%B8%E6%8A%9E%20(Shift-JIS%2FUTF-8%E5%AF%BE%E5%BF%9C)%3C%2Fb%3E%3C%2Flabel%3E%22)%0A%0A%20%20%20%20csv_uploader%20%3D%20mo.ui.file(%0A%20%20%20%20%20%20%20%20kind%3D%22button%22%2C%20%0A%20%20%20%20%20%20%20%20filetypes%3D%5B%22.csv%22%5D%2C%20%0A%20%20%20%20%20%20%20%20multiple%3DFalse%0A%20%20%20%20)%0A%0A%20%20%20%20load_btn%20%3D%20mo.ui.button(%0A%20%20%20%20%20%20%20%20label%3D%22%F0%9F%9A%80%20%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%82%80%22%2C%0A%20%20%20%20%20%20%20%20kind%3D%22success%22%2C%0A%20%20%20%20%20%20%20%20on_click%3Dlambda%20_%3A%20set_load_clicks(lambda%20v%3A%20v%20%2B%201)%0A%20%20%20%20)%0A%0A%20%20%20%20ui_input_section%20%3D%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20uploader_label%2C%0A%20%20%20%20%20%20%20%20csv_uploader%2C%0A%20%20%20%20%20%20%20%20load_btn%0A%20%20%20%20%5D%2C%20gap%3D1.0)%0A%0A%20%20%20%20return%20csv_uploader%2C%20ui_input_section%0A%0A%0A%40app.cell%0Adef%20_(csv_uploader%2C%20get_load_clicks%2C%20io%2C%20mo%2C%20pd)%3A%0A%20%20%20%20%23%20Task%202%3A%20%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%E3%81%A8%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AE%E5%A0%85%E7%89%A2%E3%81%AA%E5%87%A6%E7%90%86%0A%20%20%20%20df_loaded%20%3D%20None%0A%20%20%20%20error_msg%20%3D%20%22%22%0A%20%20%20%20columns_dict%20%3D%20%7B%7D%0A%0A%20%20%20%20if%20get_load_clicks()%20%3E%200%20and%20csv_uploader.value%3A%0A%20%20%20%20%20%20%20%20with%20mo.status.spinner(%22%F0%9F%9B%A1%EF%B8%8F%20CSV%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E3%82%AA%E3%83%95%E3%83%A9%E3%82%A4%E3%83%B3%E8%A7%A3%E6%9E%90%E4%B8%AD...%22)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20_file_info%20%3D%20csv_uploader.value%5B0%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20_file_bytes%20%3D%20_file_info.contents%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20len(_file_bytes)%20%3E%205%20*%201024%20*%201024%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20error_msg%20%3D%20%22%E2%9A%A0%EF%B8%8F%20%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%B5%E3%82%A4%E3%82%BA%E5%88%B6%E9%99%90%EF%BC%885MB%EF%BC%89%E3%82%92%E8%B6%85%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%22%0A%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20try%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20df_loaded%20%3D%20pd.read_csv(io.BytesIO(_file_bytes)%2C%20encoding%3D%22utf-8%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20except%20UnicodeDecodeError%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20try%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20df_loaded%20%3D%20pd.read_csv(io.BytesIO(_file_bytes)%2C%20encoding%3D%22shift_jis%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20except%20Exception%20as%20_e%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20error_msg%20%3D%20f%22%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF%E5%A4%B1%E6%95%97%3A%20%7Bstr(_e)%7D%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20except%20Exception%20as%20_e%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20error_msg%20%3D%20f%22%E4%BA%88%E6%9C%9F%E3%81%9B%E3%81%AC%E3%82%A8%E3%83%A9%E3%83%BC%3A%20%7Bstr(_e)%7D%22%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20df_loaded%20is%20not%20None%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20df_loaded.columns%20%3D%20%5Bstr(_c).strip()%20for%20_c%20in%20df_loaded.columns%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20columns_dict%20%3D%20%7Bstr(_c)%3A%20str(_c)%20for%20_c%20in%20df_loaded.columns%7D%0A%20%20%20%20return%20columns_dict%2C%20df_loaded%2C%20error_msg%0A%0A%0A%40app.cell%0Adef%20_(columns_dict%2C%20df_loaded%2C%20error_msg%2C%20mo)%3A%0A%20%20%20%20%23%20CSV%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF%E7%B5%90%E6%9E%9C%E3%81%AE%E3%83%93%E3%83%A5%E3%83%BC%E6%A7%8B%E7%AF%89%0A%20%20%20%20result_view%20%3D%20mo.md(%22%22)%0A%0A%20%20%20%20if%20error_msg%3A%0A%20%20%20%20%20%20%20%20result_view%20%3D%20mo.callout(error_msg%2C%20kind%3D%22danger%22)%0A%20%20%20%20elif%20df_loaded%20is%20not%20None%3A%0A%20%20%20%20%20%20%20%20result_view%20%3D%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.callout(%22%E2%9C%85%20%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF%E6%88%90%E5%8A%9F%22%2C%20kind%3D%22success%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.Html(f%22%3Cdiv%20class%3D'force-wrap'%20style%3D'font-size%3A%200.85rem%3B%20color%3A%20%23666%3B'%3E%3Cb%3E%E7%B7%8F%E8%A1%8C%E6%95%B0%3A%3C%2Fb%3E%20%7Blen(df_loaded)%7D%E8%A1%8C%3Cbr%3E%3Cb%3E%E6%A4%9C%E5%87%BA%E3%82%AB%E3%83%A9%E3%83%A0%3A%3C%2Fb%3E%20%7B'%2C%20'.join(columns_dict.keys())%7D%3C%2Fdiv%3E%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.ui.table(df_loaded.head(5)%2C%20selection%3DNone%2C%20pagination%3DFalse)%0A%20%20%20%20%20%20%20%20%5D%2C%20gap%3D1.0)%0A%0A%20%20%20%20return%20(result_view%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20%23%20%E3%80%90SOP%20v3.3%E3%80%91Task%203%20State%20Hook%20%0A%20%20%20%20get_transform_clicks%2C%20set_transform_clicks%20%3D%20mo.state(0)%0A%20%20%20%20return%20get_transform_clicks%2C%20set_transform_clicks%0A%0A%0A%40app.cell%0Adef%20_(columns_dict%2C%20df_loaded%2C%20mo%2C%20set_transform_clicks)%3A%0A%20%20%20%20%23%20Task%203%20%26%204%3A%20%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0%20UI%20%EF%BC%86%20%E3%83%9E%E3%82%B9%E3%82%AD%E3%83%B3%E3%82%B0%20UI%20%E3%81%AE%E6%A7%8B%E7%AF%89%0A%20%20%20%20mapping_ui_array%20%3D%20None%0A%20%20%20%20std_columns%20%3D%20%5B%22%E6%97%A5%E4%BB%98%22%2C%20%22%E6%91%98%E8%A6%81%22%2C%20%22%E5%85%A5%E9%87%91%E9%A1%8D%22%2C%20%22%E5%87%BA%E9%87%91%E9%A1%8D%22%2C%20%22%E6%AE%8B%E9%AB%98%22%5D%0A%20%20%20%20mask_label%20%3D%20None%0A%20%20%20%20masking_selector%20%3D%20None%0A%20%20%20%20transform_btn%20%3D%20None%0A%20%20%20%20task3_ui%20%3D%20mo.md(%22%22)%0A%0A%20%20%20%20def%20_truncate(col_name%3A%20str%2C%20max_len%3A%20int%20%3D%2015)%20-%3E%20str%3A%0A%20%20%20%20%20%20%20%20return%20col_name%20if%20len(col_name)%20%3C%3D%20max_len%20else%20col_name%5B%3Amax_len%5D%20%2B%20%22%E2%80%A6%22%0A%0A%20%20%20%20if%20df_loaded%20is%20not%20None%20and%20columns_dict%3A%0A%20%20%20%20%20%20%20%20mapping_label%20%3D%20mo.Html(%22%3Clabel%3E%3Cb%3E%F0%9F%94%84%202.%20%E5%88%97%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0%20(%E5%BF%85%E9%A0%88%E9%A0%85%E7%9B%AE)%3C%2Fb%3E%3C%2Flabel%3E%22)%0A%0A%20%20%20%20%20%20%20%20_dropdown_opts%20%3D%20%7B%22(%E6%9C%AA%E9%81%B8%E6%8A%9E)%22%3A%20%22(%E6%9C%AA%E9%81%B8%E6%8A%9E)%22%7D%0A%20%20%20%20%20%20%20%20_dropdown_opts.update(%7B_truncate(_col)%3A%20_col%20for%20_col%20in%20columns_dict.keys()%7D)%0A%0A%20%20%20%20%20%20%20%20_multiselect_opts%20%3D%20%7B_truncate(_col)%3A%20_col%20for%20_col%20in%20columns_dict.keys()%7D%0A%0A%20%20%20%20%20%20%20%20mapping_ui_array%20%3D%20mo.ui.array(%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.ui.dropdown(options%3D_dropdown_opts%2C%20value%3D%22(%E6%9C%AA%E9%81%B8%E6%8A%9E)%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20for%20_%20in%20std_columns%0A%20%20%20%20%20%20%20%20%5D)%0A%0A%20%20%20%20%20%20%20%20_mapping_view_items%20%3D%20%5B%5D%0A%20%20%20%20%20%20%20%20for%20_i%2C%20_std_col%20in%20enumerate(std_columns)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20_mapping_view_items.append(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mo.Html(f%22%3Cdiv%20style%3D'font-size%3A%200.9rem%3B%20font-weight%3A%20bold%3B%20color%3A%20%23444%3B%20margin-bottom%3A%202px%3B'%3E%F0%9F%93%8C%20%7B_std_col%7D%3C%2Fdiv%3E%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mapping_ui_array%5B_i%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5D%2C%20gap%3D0)%0A%20%20%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20_mapping_ui_view%20%3D%20mo.vstack(_mapping_view_items%2C%20gap%3D0.8)%0A%0A%20%20%20%20%20%20%20%20mask_label%20%3D%20mo.Html(%22%3Clabel%3E%3Cb%3E%F0%9F%9B%A1%EF%B8%8F%203.%20%E3%83%9E%E3%82%B9%E3%82%AD%E3%83%B3%E3%82%B0%E5%AF%BE%E8%B1%A1%E3%82%92%E9%81%B8%E6%8A%9E%3C%2Fb%3E%3C%2Flabel%3E%22)%0A%0A%20%20%20%20%20%20%20%20masking_selector%20%3D%20mo.ui.multiselect(%0A%20%20%20%20%20%20%20%20%20%20%20%20options%3D_multiselect_opts%2C%0A%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20%20%20%20%20transform_btn%20%3D%20mo.ui.button(%0A%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22%E2%9A%99%EF%B8%8F%20%E5%A4%89%E6%8F%9B%E3%82%92%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20kind%3D%22warn%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20on_click%3Dlambda%20_%3A%20set_transform_clicks(lambda%20v%3A%20v%20%2B%201)%0A%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20%20%20%20%20task3_ui%20%3D%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mapping_label%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20_mapping_ui_view%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.Html(%22%3Chr%20style%3D'border%3A%201px%20solid%20%23ddd%3B%20margin%3A%2015px%200%3B'%3E%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mask_label%2C%20%0A%20%20%20%20%20%20%20%20%20%20%20%20masking_selector%2C%20%0A%20%20%20%20%20%20%20%20%20%20%20%20transform_btn%0A%20%20%20%20%20%20%20%20%5D%2C%20gap%3D1.0)%0A%20%20%20%20return%20mapping_ui_array%2C%20masking_selector%2C%20std_columns%2C%20task3_ui%0A%0A%0A%40app.cell%0Adef%20_(%0A%20%20%20%20df_loaded%2C%0A%20%20%20%20get_transform_clicks%2C%0A%20%20%20%20mapping_ui_array%2C%0A%20%20%20%20masking_selector%2C%0A%20%20%20%20mo%2C%0A%20%20%20%20std_columns%2C%0A)%3A%0A%20%20%20%20%23%20Task%203%2C%204%20%26%205%3A%20%E3%83%87%E3%83%BC%E3%82%BF%E5%A4%89%E6%8F%9B%E3%83%BB%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0%E3%83%BB%E3%83%9E%E3%82%B9%E3%82%AD%E3%83%B3%E3%82%B0%E5%AE%9F%E8%A1%8C%E3%83%AD%E3%82%B8%E3%83%83%E3%82%AF%0A%20%20%20%20df_transformed%20%3D%20None%0A%20%20%20%20download_btn%20%3D%20None%0A%20%20%20%20transform_msg%20%3D%20%22%22%0A%20%20%20%20csv_bytes%20%3D%20None%0A%20%20%20%20stat_board%20%3D%20mo.md(%22%22)%0A%0A%20%20%20%20if%20get_transform_clicks()%20%3E%200%20and%20df_loaded%20is%20not%20None%20and%20mapping_ui_array%20is%20not%20None%20and%20masking_selector%20is%20not%20None%3A%0A%20%20%20%20%20%20%20%20with%20mo.status.spinner(%22%F0%9F%94%84%20%E5%AE%9F%E8%A1%8C%E4%B8%AD...%22)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20_selected_mapping_list%20%3D%20mapping_ui_array.value%0A%20%20%20%20%20%20%20%20%20%20%20%20_selected_mask_cols%20%3D%20masking_selector.value%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20_valid_mapping%20%3D%20%7B%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20for%20_i%2C%20_orig_col%20in%20enumerate(_selected_mapping_list)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20_orig_col%20!%3D%20%22(%E6%9C%AA%E9%81%B8%E6%8A%9E)%22%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_valid_mapping%5Bstd_columns%5B_i%5D%5D%20%3D%20_orig_col%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20not%20_valid_mapping%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20transform_msg%20%3D%20%22%E2%9A%A0%EF%B8%8F%20%E5%B0%91%E3%81%AA%E3%81%8F%E3%81%A8%E3%82%821%E3%81%A4%E3%81%AE%E5%88%97%E3%82%92%E7%B4%90%E4%BB%98%E3%81%91%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%22%0A%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_cols_to_extract%20%3D%20list(_valid_mapping.values())%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20for%20_m_col%20in%20_selected_mask_cols%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20_m_col%20not%20in%20_cols_to_extract%20and%20_m_col%20in%20df_loaded.columns%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_cols_to_extract.append(_m_col)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20df_transformed%20%3D%20df_loaded%5B_cols_to_extract%5D.copy()%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_mask_count%20%3D%200%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20for%20_m_col%20in%20_selected_mask_cols%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20_m_col%20in%20df_transformed.columns%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20df_transformed%5B_m_col%5D%20%3D%20%22***%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_mask_count%20%2B%3D%201%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_rename_map%20%3D%20%7B_orig_col%3A%20_new_col%20for%20_new_col%2C%20_orig_col%20in%20_valid_mapping.items()%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20df_transformed%20%3D%20df_transformed.rename(columns%3D_rename_map)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_new_cols_order%20%3D%20list(_valid_mapping.keys())%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_extra_mask_cols%20%3D%20%5B_c%20for%20_c%20in%20_selected_mask_cols%20if%20_c%20not%20in%20_valid_mapping.values()%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20df_transformed%20%3D%20df_transformed%5B_new_cols_order%20%2B%20_extra_mask_cols%5D%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20csv_bytes%20%3D%20df_transformed.to_csv(index%3DFalse).encode(%22utf-8-sig%22)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20download_btn%20%3D%20mo.download(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20data%3Dcsv_bytes%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20filename%3D%22transformed_fin_data.csv%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22%F0%9F%93%A5%20CSV%E3%82%92%E4%BF%9D%E5%AD%98%E3%81%99%E3%82%8B%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20transform_msg%20%3D%20%22%E2%9C%85%20%E5%AE%8C%E4%BA%86%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%22%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20stat_board%20%3D%20mo.hstack(%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mo.stat(label%3D%22%E5%87%A6%E7%90%86%E6%B8%88%22%2C%20value%3Df%22%7Blen(df_transformed)%7D%E4%BB%B6%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mo.stat(label%3D%22%E5%A4%89%E6%8F%9B%E5%88%97%22%2C%20value%3Df%22%7Blen(df_transformed.columns)%7D%E5%88%97%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mo.stat(label%3D%22%E5%8C%BF%E5%90%8D%E5%8C%96%22%2C%20value%3Df%22%7B_mask_count%7D%E5%88%97%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5D%2C%20justify%3D%22start%22%2C%20gap%3D2.0%2C%20wrap%3DTrue)%0A%20%20%20%20return%20df_transformed%2C%20download_btn%2C%20stat_board%2C%20transform_msg%0A%0A%0A%40app.cell%0Adef%20_(%0A%20%20%20%20css_injection%2C%0A%20%20%20%20df_loaded%2C%0A%20%20%20%20df_transformed%2C%0A%20%20%20%20download_btn%2C%0A%20%20%20%20mo%2C%0A%20%20%20%20result_view%2C%0A%20%20%20%20stat_board%2C%0A%20%20%20%20task3_ui%2C%0A%20%20%20%20transform_msg%2C%0A%20%20%20%20ui_input_section%2C%0A)%3A%0A%20%20%20%20%23%20%E3%80%90%E7%B5%B1%E5%90%88%E3%82%A2%E3%82%BB%E3%83%B3%E3%83%96%E3%83%AA%E3%80%91%0A%20%20%20%20transform_view%20%3D%20mo.md(%22%22)%0A%0A%20%20%20%20if%20df_transformed%20is%20not%20None%20and%20download_btn%20is%20not%20None%3A%0A%20%20%20%20%20%20%20%20transform_view%20%3D%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.Html(%22%3Chr%20style%3D'border%3A%202px%20dashed%20%234caf50%3B%20margin%3A%2025px%200%3B'%3E%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.callout(transform_msg%2C%20kind%3D%22success%22%20if%20%22%E2%9C%85%22%20in%20transform_msg%20else%20%22danger%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.md(%22%23%23%23%20%F0%9F%93%8A%20%E7%B5%90%E6%9E%9C%E3%82%B5%E3%83%9E%E3%83%AA%E3%83%BC%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20stat_board%2C%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%20%E3%80%90%E4%BF%AE%E6%AD%A3%E3%80%91%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%A8%E6%B3%A8%E9%87%88%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%82%92%E3%80%8C%E7%B8%A6%EF%BC%88vstack%EF%BC%89%E3%80%8D%E3%81%AB%E9%85%8D%E7%BD%AE%E3%81%97%E3%81%A6%E6%BA%A2%E3%82%8C%E3%82%92%E5%AE%8C%E5%85%A8%E3%81%AB%E9%98%B2%E6%AD%A2%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20download_btn%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mo.Html(%22%3Cdiv%20style%3D'font-size%3A%200.8rem%3B%20color%3A%20%23666%3B%20margin-top%3A%204px%3B'%3E%E2%80%BBExcel%E5%AF%BE%E5%BF%9C%E5%BD%A2%E5%BC%8F%20(BOM%E4%BB%98UTF-8)%20%E3%81%A7%E5%87%BA%E5%8A%9B%E3%81%95%E3%82%8C%E3%81%BE%E3%81%99%3C%2Fdiv%3E%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%5D%2C%20gap%3D0.0)%2C%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.md(%22**%E3%80%90%E3%83%87%E3%83%BC%E3%82%BF%E3%83%97%E3%83%AC%E3%83%93%E3%83%A5%E3%83%BC%E3%80%91**%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.ui.table(df_transformed.head(10)%2C%20selection%3DNone%2C%20pagination%3DFalse)%0A%20%20%20%20%20%20%20%20%5D%2C%20gap%3D1.0)%0A%0A%20%20%20%20main_view%20%3D%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20css_injection%2C%0A%20%20%20%20%20%20%20%20mo.md(%22%23%20%F0%9F%8F%A6%20WASM-FinCSV%20Transformer%22)%2C%0A%20%20%20%20%20%20%20%20mo.md(%22%3E%20%E7%B6%AD%E6%8C%81%E8%B2%BB0%E5%86%86%E3%83%BB%E6%83%85%E5%A0%B1%E6%BC%8F%E6%B4%A9%E3%82%BC%E3%83%AD%E3%80%82%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E5%AE%8C%E7%B5%90%E5%9E%8B%E3%81%AE%E9%87%91%E8%9E%8D%E3%83%87%E3%83%BC%E3%82%BF%E5%A4%89%E6%8F%9B%E3%83%BB%E5%8C%BF%E5%90%8D%E5%8C%96%E3%83%84%E3%83%BC%E3%83%AB%22)%2C%0A%20%20%20%20%20%20%20%20mo.md(%22---%22)%2C%0A%20%20%20%20%20%20%20%20ui_input_section%2C%0A%20%20%20%20%20%20%20%20mo.md(%22---%22)%2C%0A%20%20%20%20%20%20%20%20result_view%2C%0A%20%20%20%20%20%20%20%20mo.md(%22---%22)%20if%20df_loaded%20is%20not%20None%20else%20mo.md(%22%22)%2C%0A%20%20%20%20%20%20%20%20task3_ui%2C%0A%20%20%20%20%20%20%20%20transform_view%0A%20%20%20%20%5D%2C%20gap%3D1.5)%0A%0A%20%20%20%20return%20(main_view%2C)%0A%0A%0A%40app.cell%0Adef%20_(main_view)%3A%0A%20%20%20%20%23%20%E3%80%90SOP%20v3.3%E3%80%91The%20Invisible%20Render%20%E3%83%90%E3%82%B0%E5%AF%BE%E7%AD%96%0A%20%20%20%20main_view%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a portal for the data editor to render in -->
+    <div id="portal" data-testid="glide-portal" style="position: fixed; left: 0; top: 0; z-index: 9999"></div>
+    <script data-marimo="true">
+      window.__MARIMO_MOUNT_CONFIG__ = {
+            "filename": "notebook.py",
+            "mode": "read",
+            "version": "0.19.0",
+            "serverToken": "unused",
+            "config": {"ai": {"models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "pip"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "full"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        };
+    </script>
+  </body>
+</html>

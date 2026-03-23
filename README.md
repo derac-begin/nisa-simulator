@@ -20,6 +20,7 @@
 | **[🛡️ Secure QR Batch Maker (QRコード一括生成くん)](https://derac-begin.github.io/nisa-simulator/qr_batch.html)** | `qr_batch.html`<br>CSVファイルを読み込み、複数のQRコードを瞬時に一括生成してZIPファイルとしてダウンロードできるユーティリティアプリ。 | 🟢 Live |
 | **[🔒 Zero-Leak Manuscript Analyzer (絶対秘密保持・ローカル原稿アナライザー)](https://derac-begin.github.io/nisa-simulator/manuscript_analyzer.html)** | `manuscript_analyzer.html`<br>データはブラウザのメモリ上でのみ処理され、機密情報の漏洩リスク0%を保証する完全オフラインの原稿解析アプリ。 | 🟢 Live |
 | **[🧹 Zero-Leak Customer Data Cleanser (絶対秘密保持・顧客データクレンザー)](https://derac-begin.github.io/nisa-simulator/data_cleanser.html)** | `data_cleanser.html`<br>情報漏洩リスク0%。PCから一歩もデータを出さずに、バラバラの顧客リストを一瞬で名寄せ・クレンジングする完全オフラインツール。 | 🟢 Live |
+| **[📊 WASM-FinCSV Transformer (完全オフライン・金融CSVコンバーター)](https://derac-begin.github.io/nisa-simulator/fin_transformer.html)** | `fin_transformer.html`<br>情報漏洩リスク0%。機密性の高い金融系CSVデータを、安全かつ瞬時に変換・フォーマット整形するツール。 | 🟢 Live |
 
 ---
 
@@ -37,11 +38,10 @@
 
 ```text
 .
-├── assets/             # WASM Assets & CSS
-├── src/                # Python Source Codes (v0.19.0)
-├── archive/            # Legacy Codes
-├── tools/              # Utility Scripts
-└── *.html              # Deployed Applications
+├── src/                # Python Source Codes (v0.19.0 のみ)
+├── *.html              # Deployed Applications (WASM Build)
+├── .gitignore          # 開発環境・レガシーファイルの隠蔽
+└── .nojekyll           # GitHub Pages Bypass (必須インフラ)
 ```
 
 ---
