@@ -206,9 +206,9 @@ def logic_and_view(
     main_ui = mo.vstack([
         mo.md("# 🧬 WASM-PFC Simulator (The Body Projection)"),
         mo.ui.tabs({
-            "🎯 1. Simulator": pfc_tab,
-            "🍽️ 2. Partitioning": partition_tab,
-            "📈 3. Projection": projection_tab
+            "🎯 Simulator": pfc_tab,
+            "🍽️ Partition": partition_tab,
+            "📈 Predict": projection_tab
         })
     ])
 
