@@ -49,3 +49,15 @@
 ## ⚠️ Disclaimer
 
 本リポジトリで公開されている計算ツール（金融・健康計算等）の結果は、あくまでシミュレーションであり、実際の数値を保証するものではありません。利用によって生じた損害等について、開発者は一切の責任を負いません。
+
+## 💼 開発のご依頼・作成ツールの提供について
+「情報漏洩0%・完全オフライン」を前提とした WASM (WebAssembly) アプリの開発や、業務効率化ツールの制作はココナラにて承っております。
+過去に開発したツール（金融CSV変換、PFCシミュレータ等）もこちらで公開していますので、ぜひご覧ください。
+**[👉 ココナラ マイページ / ポートフォリオはこちら](https://coconala.com/users/423965)**
+
+## ブログ
+- **技術ブログ（Qiita）**: [https://qiita.com/derac-begin](https://qiita.com/derac-begin)
+
+## SNS(趣味用アカウント)
+- **Threads**: [https://www.threads.com/@mont_belle3](https://www.threads.com/@mont_belle3)
+- **Instagram**: [https://www.instagram.com/mont_belle3/](https://www.instagram.com/mont_belle3/)
