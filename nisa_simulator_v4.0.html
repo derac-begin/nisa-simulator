@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-CZceb_kH.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-Bam3NpBI.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-C_DwAp7Z.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-CEsLFVD9.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-D5MAsWEG.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-C6PDArdf.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((_entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>nisa simulator v4.0</title>
+    <script type="module" crossorigin src="./assets/index-y6osgSWB.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-D2MJg03u.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-Bj1aDYRI.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-B3qBwwSJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-Blw4afVn.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-DGjKht0c.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-JieDVWC_.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-CU2C3Vxx.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-BLne0bXb.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-DXARUlxo.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-BZwMGX81.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-XrBBnd7s.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-DYvqRARy.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-CwbVR_sO.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-COIw2x9i.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-CSu739Rf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fullscreen-k58KVlT-.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-Dtw5N98_.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-sZgjGm4S.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-w-Qo9n0R.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-B-sKate2.js">
+    <link rel="modulepreload" crossorigin href="./assets/x-Bv2rCglF.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-BwwUWhww.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-DmqhBBs6.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-BDYuj3zG.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-D91BmmQi.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-CkiqGLcK.js">
+    <link rel="modulepreload" crossorigin href="./assets/isObject-DvLSfCY5.js">
+    <link rel="modulepreload" crossorigin href="./assets/isArrayLikeObject-ODovYgPQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-BOaDhCTH.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-H_cgTO0M.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-8btzWeZg.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-DxQeE5uh.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-DXdzqzcr.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-BLWK1eKa.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-tOPFFcLZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/session-DdnWW30b.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-DoZCLcOb.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-9-v2bhoi.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-N3bfh_O1.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-CbdaHKzX.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-DCDmxPD0.js">
+    <link rel="modulepreload" crossorigin href="./assets/arrays-DAC2orgH.js">
+    <link rel="modulepreload" crossorigin href="./assets/strings-pfr2N700.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-hq2TLzOp.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-BmGdj50E.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-CYlwteGD.js">
+    <link rel="modulepreload" crossorigin href="./assets/paths-BzSgteR-.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-VwkX7yeV.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BNTOYRCs.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DZJfxwLb.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CxquLoAZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Dnlw22ji.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-4lB-oR9j.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BvlMLwcr.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CgYlATe-.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BPkOpnKv.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-jWatZkll.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-BGIVWsZ9.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-BFDc-_i_.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-D5tzp-Y6.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BT6B8Bon.js">
+    <link rel="modulepreload" crossorigin href="./assets/toNumber-BvwE1TMv.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-DNX1lT2d.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-BbSyBDA8.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-BxfYZ6ML.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-BNL5rxQw.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-BqYYXi6G.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-CxTq44MI.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-BUtlbGdu.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-CeM6oPsT.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-C2mTH3GM.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-H-hXtEOq.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-LVL1r3-M.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers--nDjbAPa.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-D3zWcDme.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-DGqo1TbK.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-wQU1z0W_.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-BXMIcLWP.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-DNCT6U6R.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-hsPVDTG-.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-CRkrHl-y.js">
+    <link rel="modulepreload" crossorigin href="./assets/multi-map-MSuUqmbC.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-DF3HbVtk.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-CgvDWFE3.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-DrHAuMTb.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-DOybeRem.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-DFYAOTWd.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-Bizk-4hH.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-DFMsQ6MJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-Ci08KCdY.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-CM3WMmA8.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-COFRe84u.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-DPomuurt.js">
+    <link rel="modulepreload" crossorigin href="./assets/sparkles-B79Qf6ma.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-Bmp8DLLo.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-C5wIpWgQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/html-to-image-DGqJ93hW.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-DzMo6UAI.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-aCoWDe-l.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-CsrwfW0n.js">
+    <link rel="modulepreload" crossorigin href="./assets/micromark-factory-space-DzSMahmM.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-5FQGJX7Z-Cyc7d5AB.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-DNANigO8.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-DnzBp4l4.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-AtoFZ7i4.js">
+    <link rel="modulepreload" crossorigin href="./assets/errors-CZb6hI2x.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-5XbM3TL_.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-B03CpBmt.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-C8jvQ1Lj.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-frvr6JXK.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-BQHP_yQk.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-JRtp5zfw.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-U-UFA9KI.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-stqTIkXD.js">
+    <link rel="modulepreload" crossorigin href="./assets/maps-B4xARV9R.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-Co37_JfG.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-DYxi7n2b.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-BEz9SEXo.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-icons.esm-BUYTQ32a.js">
+    <link rel="modulepreload" crossorigin href="./assets/toFinite-2vTWYoIX.js">
+    <link rel="modulepreload" crossorigin href="./assets/range-D-0CV4c0.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-qC3alE1r.js">
+    <link rel="modulepreload" crossorigin href="./assets/ellipsis-DidENKDy.js">
+    <link rel="modulepreload" crossorigin href="./assets/message-circle-DiHwtSG8.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-BUNcfKXO.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-CavtrueA.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-CsXoiEZx.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-BecUoMho.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-DqqZbNbU.js">
+    <link rel="modulepreload" crossorigin href="./assets/ellipsis-vertical-DEH0lwkn.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-CiOe0azG.js">
+    <link rel="modulepreload" crossorigin href="./assets/components-DKHyHZBv.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-AfcgbFG_.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-DlzgV4KY.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-XObNWtN8.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAddCell-B6yUY_RG.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-smPWkHxB.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-BqofWdD5.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-DgRJ-xBZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-BYq_Btg-.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-CI_b818F.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-headphone-5_PGMxRL.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-l37OnSN4.js">
+    <link rel="modulepreload" crossorigin href="./assets/image-BgkzrnsX.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-icons-Bj5YoM7H.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-YkPg_CVc.js">
+    <link rel="modulepreload" crossorigin href="./assets/events-Qeh-bHlj.js">
+    <link rel="modulepreload" crossorigin href="./assets/globals-Bu6OEURn.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-0LPgOyiW.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-CTort_or.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-BwAF2XN5.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-D7jeR2wg.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-49dbm-yb.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-D1n-olwf.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-C89F4v17.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-CS2o3y4W.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-CfYqAbmq.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-DunI72kV.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-BJ6VFU8l.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-DrDh2657.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-DaQqUJ5I.js">
+    <link rel="modulepreload" crossorigin href="./assets/RSPContexts-DzigvqmT.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-Dk1Mb_so.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-D0WTlCXt.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-BteCqkNg.js">
+    <link rel="modulepreload" crossorigin href="./assets/fileToBase64-D7Ur9Qxq.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-BFRDxSKF.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-ISEb5HNL.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-DafhTYio.js">
+    <link rel="modulepreload" crossorigin href="./assets/_basePickBy-C0EPK3Lm.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-neNJUP_8.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-DxxzgVgU.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-COtNnHUC.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-DJ8dAd4j.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-BIoPrMH_.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-jmgGt1lS.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-B7vuddcd.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-CKRn_SiB.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    <marimo-code hidden="">import%20marimo%0A%0A__generated_with%20%3D%20%220.23.1%22%0Aapp%20%3D%20marimo.App()%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20%23%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%20%20%20%20%23%20%F0%9F%93%A6%20%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E5%B1%A4%3A%20%E3%80%90The%20Scope%20Isolation%20Trap%E3%80%91%E3%81%AE%E5%AE%8C%E5%85%A8%E6%BA%B6%E6%8E%A5%0A%20%20%20%20%23%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20import%20numpy%20as%20np%0A%20%20%20%20import%20pandas%20as%20pd%0A%20%20%20%20import%20altair%20as%20alt%0A%20%20%20%20from%20decimal%20import%20Decimal%0A%0A%0A%20%20%20%20return%20Decimal%2C%20alt%2C%20mo%2C%20np%2C%20pd%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20%23%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%20%20%20%20%23%20%F0%9F%93%A5%20%E7%8A%B6%E6%85%8B%E7%AE%A1%E7%90%86%E5%B1%A4%3A%20The%20Reactive%20Ghost%20Protocol%20(%E3%83%90%E3%83%83%E3%82%AF%E3%82%A8%E3%83%B3%E3%83%89%E9%80%9A%E4%BF%A1%E6%A0%B8)%0A%20%20%20%20%23%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%20%20%20%20inputs%20%3D%20mo.ui.dictionary(%7B%0A%20%20%20%20%20%20%20%20%22init_taxable%22%3A%20mo.ui.number(start%3D0%2C%20stop%3D100000000%2C%20step%3D500000%2C%20value%3D5000000%2C%20label%3D%22%E5%88%9D%E6%9C%9F%E8%B3%87%E7%94%A3%20%5B%E7%89%B9%E5%AE%9A%E5%8F%A3%E5%BA%A7%5D%20(%E5%86%86)%22)%2C%0A%20%20%20%20%20%20%20%20%22init_nisa%22%3A%20mo.ui.number(start%3D0%2C%20stop%3D18000000%2C%20step%3D500000%2C%20value%3D3000000%2C%20label%3D%22%E5%88%9D%E6%9C%9F%E8%B3%87%E7%94%A3%20%5BNISA%E5%8F%A3%E5%BA%A7%5D%20(%E5%86%86)%22)%2C%0A%20%20%20%20%20%20%20%20%22annual_invest%22%3A%20mo.ui.number(start%3D0%2C%20stop%3D3600000%2C%20step%3D100000%2C%20value%3D1200000%2C%20label%3D%22%E5%B9%B4%E9%96%93NISA%E7%A9%8D%E7%AB%8B%E9%A1%8D%20(%E5%86%86)%22)%2C%0A%20%20%20%20%20%20%20%20%22withdraw_target%22%3A%20mo.ui.number(start%3D0%2C%20stop%3D20000000%2C%20step%3D100000%2C%20value%3D1500000%2C%20label%3D%22%E5%B9%B4%E9%96%93%E7%9B%AE%E6%A8%99%E5%8F%96%E3%82%8A%E5%B4%A9%E3%81%97%E9%A1%8D%20(%E5%86%86)%22)%2C%0A%20%20%20%20%20%20%20%20%22scenario%22%3A%20mo.ui.dropdown(options%3D%7B%22%E9%80%9A%E5%B8%B8%E9%81%8B%E7%94%A8%20(%E5%B9%B4%E5%88%A9%20%2B5%25)%22%3A%20%22normal%22%2C%20%22%E6%AD%B4%E5%8F%B2%E7%9A%84%E6%9A%B4%E8%90%BD%20(%E3%83%AA%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%82%AF%E5%86%8D%E7%8F%BE)%22%3A%20%22stress%22%2C%20%22%E3%83%95%E3%83%A9%E3%83%83%E3%83%88%20(0%25)%22%3A%20%22flat%22%7D%2C%20value%3D%22%E9%80%9A%E5%B8%B8%E9%81%8B%E7%94%A8%20(%E5%B9%B4%E5%88%A9%20%2B5%25)%22%2C%20label%3D%22%E5%B8%82%E5%A0%B4%E3%83%AA%E3%82%BF%E3%83%BC%E3%83%B3%E3%83%BB%E3%82%B7%E3%83%8A%E3%83%AA%E3%82%AA%22)%2C%0A%20%20%20%20%20%20%20%20%22years%22%3A%20mo.ui.number(start%3D1%2C%20stop%3D50%2C%20step%3D1%2C%20value%3D25%2C%20label%3D%22%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E6%9C%9F%E9%96%93%20(%E5%B9%B4)%22)%0A%20%20%20%20%7D)%0A%0A%20%20%20%20return%20(inputs%2C)%0A%0A%0A%40app.cell%0Adef%20_(Decimal%2C%20np)%3A%0A%20%20%20%20%23%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%20%20%20%20%23%20%F0%9F%9B%A1%EF%B8%8F%20%E3%82%B3%E3%82%A2%E3%83%BB%E3%83%AD%E3%82%B8%E3%83%83%E3%82%AF%E3%83%BB%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3%3A%20%E3%80%90The%20Over-Underscore%20Trap%E3%80%91%E3%81%AE%E5%AE%8C%E5%85%A8%E6%8E%92%E9%99%A4%0A%20%20%20%20%23%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%0A%20%20%20%20def%20nisa_quota_revival_engine(%0A%20%20%20%20%20%20%20%20current_book_value_total%3A%20Decimal%2C%0A%20%20%20%20%20%20%20%20annual_investment%3A%20Decimal%2C%0A%20%20%20%20%20%20%20%20sales_book_value_prev_year%3A%20Decimal%2C%0A%20%20%20%20%20%20%20%20lifetime_limit%3A%20Decimal%20%3D%20Decimal(%2218000000%22)%2C%0A%20%20%20%20%20%20%20%20annual_limit%3A%20Decimal%20%3D%20Decimal(%223600000%22)%0A%20%20%20%20)%20-%3E%20dict%3A%0A%20%20%20%20%20%20%20%20_revived_lifetime_total%20%3D%20current_book_value_total%20-%20sales_book_value_prev_year%0A%20%20%20%20%20%20%20%20_remaining_lifetime_quota%20%3D%20lifetime_limit%20-%20_revived_lifetime_total%0A%20%20%20%20%20%20%20%20_investable_amount%20%3D%20min(annual_limit%2C%20_remaining_lifetime_quota)%0A%20%20%20%20%20%20%20%20_actual_investment%20%3D%20min(annual_investment%2C%20_investable_amount)%0A%20%20%20%20%20%20%20%20_new_book_value_total%20%3D%20_revived_lifetime_total%20%2B%20_actual_investment%0A%20%20%20%20%20%20%20%20return%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%22investable_amount%22%3A%20_investable_amount%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22actual_investment%22%3A%20_actual_investment%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22new_book_value_total%22%3A%20_new_book_value_total%0A%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20def%20historical_stress_test(returns%3A%20np.ndarray)%20-%3E%20np.ndarray%3A%0A%20%20%20%20%20%20%20%20if%20returns.size%20%3D%3D%200%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20np.array(%5B1.0%5D)%0A%20%20%20%20%20%20%20%20_clean_returns%20%3D%20np.nan_to_num(returns%2C%20nan%3D0.0)%0A%20%20%20%20%20%20%20%20return%20np.cumprod(1%20%2B%20_clean_returns)%0A%0A%20%20%20%20def%20decumulation_optimizer(%0A%20%20%20%20%20%20%20%20target_amount%3A%20Decimal%2C%0A%20%20%20%20%20%20%20%20taxable_balance%3A%20Decimal%2C%0A%20%20%20%20%20%20%20%20nisa_balance%3A%20Decimal%0A%20%20%20%20)%20-%3E%20dict%3A%0A%20%20%20%20%20%20%20%20_withdrawn_taxable%20%3D%20min(target_amount%2C%20taxable_balance)%0A%20%20%20%20%20%20%20%20_remaining_need%20%3D%20target_amount%20-%20_withdrawn_taxable%0A%20%20%20%20%20%20%20%20_withdrawn_nisa%20%3D%20min(_remaining_need%2C%20nisa_balance)%0A%20%20%20%20%20%20%20%20_total_withdrawn%20%3D%20_withdrawn_taxable%20%2B%20_withdrawn_nisa%0A%20%20%20%20%20%20%20%20return%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%22from_taxable%22%3A%20_withdrawn_taxable%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22from_nisa%22%3A%20_withdrawn_nisa%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22shortfall%22%3A%20target_amount%20-%20_total_withdrawn%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22new_taxable%22%3A%20taxable_balance%20-%20_withdrawn_taxable%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22new_nisa%22%3A%20nisa_balance%20-%20_withdrawn_nisa%0A%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20return%20decumulation_optimizer%2C%20nisa_quota_revival_engine%0A%0A%0A%40app.cell%0Adef%20_(%0A%20%20%20%20Decimal%2C%0A%20%20%20%20decumulation_optimizer%2C%0A%20%20%20%20inputs%2C%0A%20%20%20%20nisa_quota_revival_engine%2C%0A%20%20%20%20np%2C%0A%20%20%20%20pd%2C%0A)%3A%0A%20%20%20%20%23%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%20%20%20%20%23%20%F0%9F%9B%A1%EF%B8%8F%20%E6%99%82%E7%B3%BB%E5%88%97%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%AE%9F%E8%A1%8C%E3%82%BB%E3%83%AB%20(The%20Stealth%20Block%20Trap%20%E5%AF%BE%E7%AD%96%E7%89%88)%0A%20%20%20%20%23%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%20%20%20%20if%20inputs.value%20is%20None%3A%0A%20%20%20%20%20%20%20%20df_results%20%3D%20None%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20_conf%20%3D%20inputs.value%0A%0A%20%20%20%20%20%20%20%20%23%20%E2%9A%A0%EF%B8%8F%E3%80%90CRITICAL%20FIX%E3%80%91mo.stop()%E3%82%92%E5%BB%83%E6%AD%A2%E3%81%97%E3%80%81None%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%88%E3%81%AB%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%0A%20%20%20%20%20%20%20%20%23%20%E5%BF%85%E9%A0%88%E5%85%A5%E5%8A%9B%E9%A0%85%E7%9B%AE%E3%81%AE%E7%B6%B2%E7%BE%85%E7%9A%84%E6%AC%A0%E6%90%8D%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%EF%BC%88%E7%A9%BA%E6%AC%84%E6%A4%9C%E5%87%BA%EF%BC%89%0A%20%20%20%20%20%20%20%20_required_keys%20%3D%20%5B%22init_taxable%22%2C%20%22init_nisa%22%2C%20%22annual_invest%22%2C%20%22withdraw_target%22%2C%20%22scenario%22%2C%20%22years%22%5D%0A%20%20%20%20%20%20%20%20if%20any(_conf.get(_k)%20is%20None%20for%20_k%20in%20_required_keys)%20or%20_conf%5B%22years%22%5D%20%3C%3D%200%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20df_results%20%3D%20None%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20_years%20%3D%20int(_conf%5B%22years%22%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20_init_taxable%20%3D%20Decimal(str(_conf%5B%22init_taxable%22%5D))%0A%20%20%20%20%20%20%20%20%20%20%20%20_init_nisa%20%3D%20Decimal(str(_conf%5B%22init_nisa%22%5D))%0A%20%20%20%20%20%20%20%20%20%20%20%20_annual_invest%20%3D%20Decimal(str(_conf%5B%22annual_invest%22%5D))%0A%20%20%20%20%20%20%20%20%20%20%20%20_withdraw_target%20%3D%20Decimal(str(_conf%5B%22withdraw_target%22%5D))%0A%20%20%20%20%20%20%20%20%20%20%20%20_scenario%20%3D%20_conf%5B%22scenario%22%5D%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20_scenario%20%3D%3D%20%22normal%22%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_raw_returns%20%3D%20np.full(_years%2C%200.05)%0A%20%20%20%20%20%20%20%20%20%20%20%20elif%20_scenario%20%3D%3D%20%22stress%22%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_stress_pattern%20%3D%20%5B-0.15%2C%20-0.25%2C%20-0.10%2C%200.04%2C%200.05%2C%200.06%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_raw_returns%20%3D%20np.array((_stress_pattern%20*%20(_years%20%2F%2F%206%20%2B%201))%5B%3A_years%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_raw_returns%20%3D%20np.zeros(_years)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20_clean_returns%20%3D%20np.nan_to_num(_raw_returns%2C%20nan%3D0.0)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20_current_taxable%20%3D%20_init_taxable%0A%20%20%20%20%20%20%20%20%20%20%20%20_current_nisa%20%3D%20_init_nisa%0A%20%20%20%20%20%20%20%20%20%20%20%20_current_nisa_book%20%3D%20_init_nisa%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20_simulation_records%20%3D%20%5B%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20_sales_book_prev%20%3D%20Decimal(%220%22)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20for%20_i%20in%20range(_years)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_year_idx%20%3D%20_i%20%2B%201%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_rate%20%3D%20Decimal(str(_clean_returns%5B_i%5D))%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_quota_res%20%3D%20nisa_quota_revival_engine(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20current_book_value_total%3D_current_nisa_book%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20annual_investment%3D_annual_invest%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20sales_book_value_prev_year%3D_sales_book_prev%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_actual_invest%20%3D%20min(_quota_res%5B%22actual_investment%22%5D%2C%20_current_taxable)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_current_taxable%20-%3D%20_actual_invest%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_current_nisa%20%2B%3D%20_actual_invest%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_current_nisa_book%20%3D%20_quota_res%5B%22new_book_value_total%22%5D%20-%20_annual_invest%20%2B%20_actual_invest%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_decum_res%20%3D%20decumulation_optimizer(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20target_amount%3D_withdraw_target%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20taxable_balance%3D_current_taxable%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20nisa_balance%3D_current_nisa%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_current_taxable%20%3D%20_decum_res%5B%22new_taxable%22%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_current_nisa%20%3D%20_decum_res%5B%22new_nisa%22%5D%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20_decum_res%5B%22from_nisa%22%5D%20%3E%200%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_old_nisa_total%20%3D%20_current_nisa%20%2B%20_decum_res%5B%22from_nisa%22%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_reduction_ratio%20%3D%20_decum_res%5B%22from_nisa%22%5D%20%2F%20_old_nisa_total%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_sales_book_prev%20%3D%20_current_nisa_book%20*%20_reduction_ratio%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_current_nisa_book%20-%3D%20_sales_book_prev%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_sales_book_prev%20%3D%20Decimal(%220%22)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_current_taxable%20*%3D%20(Decimal(%221%22)%20%2B%20_rate)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_current_nisa%20*%3D%20(Decimal(%221%22)%20%2B%20_rate)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20_current_taxable%20%3C%200%3A%20_current_taxable%20%3D%20Decimal(%220%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20_current_nisa%20%3C%200%3A%20_current_nisa%20%3D%20Decimal(%220%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20_current_nisa_book%20%3C%200%3A%20_current_nisa_book%20%3D%20Decimal(%220%22)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_total_assets%20%3D%20_current_taxable%20%2B%20_current_nisa%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_simulation_records.append(%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22%E7%B5%8C%E9%81%8E%E5%B9%B4%22%3A%20_year_idx%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22%E7%89%B9%E5%AE%9A%E5%8F%A3%E5%BA%A7%E6%AE%8B%E9%AB%98%22%3A%20float(_current_taxable)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22NISA%E5%8F%A3%E5%BA%A7%E6%AE%8B%E9%AB%98%22%3A%20float(_current_nisa)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22%E7%B7%8F%E8%B3%87%E7%94%A3%22%3A%20float(_total_assets)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22%E7%89%B9%E5%AE%9A%E5%8F%96%E3%82%8A%E5%B4%A9%E3%81%97%22%3A%20float(_decum_res%5B%22from_taxable%22%5D)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22NISA%E5%8F%96%E3%82%8A%E5%B4%A9%E3%81%97%22%3A%20float(_decum_res%5B%22from_nisa%22%5D)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22%E8%B3%87%E7%94%A3%E4%B8%8D%E8%B6%B3%E9%A1%8D%22%3A%20float(_decum_res%5B%22shortfall%22%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20df_results%20%3D%20pd.DataFrame(_simulation_records)%0A%0A%20%20%20%20return%20(df_results%2C)%0A%0A%0A%40app.cell%0Adef%20_(alt%2C%20df_results%2C%20mo)%3A%0A%20%20%20%20%23%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%20%20%20%20%23%20%F0%9F%93%88%20%E5%8F%AF%E8%A6%96%E5%8C%96%E6%8F%8F%E7%94%BB%E5%B1%A4%3A%20%E3%80%90UI%20Error%20Binding%E3%80%91%E9%81%A9%E7%94%A8%E3%82%BB%E3%83%AB%0A%20%20%20%20%23%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%20%20%20%20%23%20%E2%9A%A0%EF%B8%8F%E3%80%90CRITICAL%20FIX%E3%80%91%E4%B8%8A%E4%BD%8D%E3%81%A7%E3%82%A8%E3%83%A9%E3%83%BC(None)%E3%82%92%E6%A4%9C%E7%9F%A5%E3%81%97%E3%81%9F%E5%A0%B4%E5%90%88%E3%80%81%E4%B8%8B%E6%B5%81%E3%82%92%E6%AD%A2%E3%82%81%E3%81%9A%E3%81%AB%E3%80%8C%E8%AD%A6%E5%91%8AUI%E3%80%8D%E3%82%92%E6%B5%81%E9%80%9A%E3%81%95%E3%81%9B%E3%82%8B%0A%20%20%20%20if%20df_results%20is%20None%3A%0A%20%20%20%20%20%20%20%20chart_ui%20%3D%20mo.callout(%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.md(%22%E2%9A%A0%EF%B8%8F%20**%E3%82%A8%E3%83%A9%E3%83%BC%3A%20%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E6%9D%A1%E4%BB%B6%E8%A8%AD%E5%AE%9A%E3%81%AE%E3%81%99%E3%81%B9%E3%81%A6%E3%81%AE%E9%A0%85%E7%9B%AE%E3%81%AB%E6%AD%A3%E3%81%97%E3%81%84%E6%95%B0%E5%80%A4%E3%82%92%E5%85%A5%E5%8A%9B%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%88%E6%9C%9F%E9%96%93%E3%81%AF1%E5%B9%B4%E4%BB%A5%E4%B8%8A%EF%BC%89%E3%80%82**%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20kind%3D%22warn%22%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20_df_melted%20%3D%20df_results.melt(%0A%20%20%20%20%20%20%20%20%20%20%20%20id_vars%3D%5B%22%E7%B5%8C%E9%81%8E%E5%B9%B4%22%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20value_vars%3D%5B%22%E7%89%B9%E5%AE%9A%E5%8F%A3%E5%BA%A7%E6%AE%8B%E9%AB%98%22%2C%20%22NISA%E5%8F%A3%E5%BA%A7%E6%AE%8B%E9%AB%98%22%2C%20%22%E7%B7%8F%E8%B3%87%E7%94%A3%22%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20var_name%3D%22%E8%B3%87%E7%94%A3%E5%86%85%E8%A8%B3%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20value_name%3D%22%E6%AE%8B%E9%AB%98%20(%E5%86%86)%22%0A%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20%20%20%20%20_chart%20%3D%20alt.Chart(_df_melted).mark_line(point%3DTrue).encode(%0A%20%20%20%20%20%20%20%20%20%20%20%20x%3Dalt.X(%22%E7%B5%8C%E9%81%8E%E5%B9%B4%3AQ%22%2C%20title%3D%22%E7%B5%8C%E9%81%8E%E5%B9%B4%E6%95%B0%20(%E5%B9%B4)%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20y%3Dalt.Y(%22%E6%AE%8B%E9%AB%98%20(%E5%86%86)%3AQ%22%2C%20title%3D%22%E8%B3%87%E7%94%A3%E6%AE%8B%E9%AB%98%20(%E5%86%86)%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20color%3Dalt.Color(%22%E8%B3%87%E7%94%A3%E5%86%85%E8%A8%B3%3AN%22%2C%20scale%3Dalt.Scale(domain%3D%5B%22%E7%89%B9%E5%AE%9A%E5%8F%A3%E5%BA%A7%E6%AE%8B%E9%AB%98%22%2C%20%22NISA%E5%8F%A3%E5%BA%A7%E6%AE%8B%E9%AB%98%22%2C%20%22%E7%B7%8F%E8%B3%87%E7%94%A3%22%5D%2C%20range%3D%5B%22%23e74c3c%22%2C%20%22%232ecc71%22%2C%20%22%233498db%22%5D))%0A%20%20%20%20%20%20%20%20).properties(%0A%20%20%20%20%20%20%20%20%20%20%20%20title%3D%22%E8%B3%87%E7%94%A3%E6%AE%8B%E9%AB%98%E3%81%AE%E7%B5%8C%E5%B9%B4%E6%8E%A8%E7%A7%BB%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20width%3D%22container%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20height%3D350%0A%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20%20%20%20%20chart_ui%20%3D%20mo.ui.altair_chart(_chart)%0A%20%20%20%20return%20(chart_ui%2C)%0A%0A%0A%40app.cell%0Adef%20_(df_results%2C%20mo)%3A%0A%20%20%20%20%23%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%20%20%20%20%23%20%F0%9F%93%84%20%E3%83%87%E3%83%BC%E3%82%BF%E8%A1%A8%E7%A4%BA%E5%B1%A4%3A%20The%20Zero-Index%20Protocol%20(%E9%9D%99%E7%9A%84HTML%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E5%87%BA%E5%8A%9B)%0A%20%20%20%20%23%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%20%20%20%20%23%20%E2%9A%A0%EF%B8%8F%E3%80%90CRITICAL%20FIX%E3%80%91%E4%B8%8A%E4%BD%8D%E3%81%A7%E3%82%A8%E3%83%A9%E3%83%BC(None)%E3%82%92%E6%A4%9C%E7%9F%A5%E3%81%97%E3%81%9F%E5%A0%B4%E5%90%88%E3%80%81%E3%81%93%E3%81%A1%E3%82%89%E3%81%AF%E9%9D%99%E3%81%8B%E3%81%AB%E9%9D%9E%E8%A1%A8%E7%A4%BA%EF%BC%88%E7%A9%BA%E6%96%87%E5%AD%97%EF%BC%89%E5%8C%96%E3%81%97%E3%81%A6DAG%E3%82%92%E7%B6%AD%E6%8C%81%0A%20%20%20%20if%20df_results%20is%20None%3A%0A%20%20%20%20%20%20%20%20summary_table_ui%20%3D%20mo.md(%22%22)%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20_df_summary%20%3D%20df_results%5B%5B%22%E7%B5%8C%E9%81%8E%E5%B9%B4%22%2C%20%22%E7%89%B9%E5%AE%9A%E5%8F%A3%E5%BA%A7%E6%AE%8B%E9%AB%98%22%2C%20%22NISA%E5%8F%A3%E5%BA%A7%E6%AE%8B%E9%AB%98%22%2C%20%22%E7%B7%8F%E8%B3%87%E7%94%A3%22%5D%5D.copy()%0A%20%20%20%20%20%20%20%20_df_summary%5B%22%E7%89%B9%E5%AE%9A%E5%8F%A3%E5%BA%A7%20(%E4%B8%87)%22%5D%20%3D%20(_df_summary%5B%22%E7%89%B9%E5%AE%9A%E5%8F%A3%E5%BA%A7%E6%AE%8B%E9%AB%98%22%5D%20%2F%2010000).round(1)%0A%20%20%20%20%20%20%20%20_df_summary%5B%22NISA%E5%8F%A3%E5%BA%A7%20(%E4%B8%87)%22%5D%20%3D%20(_df_summary%5B%22NISA%E5%8F%A3%E5%BA%A7%E6%AE%8B%E9%AB%98%22%5D%20%2F%2010000).round(1)%0A%20%20%20%20%20%20%20%20_df_summary%5B%22%E7%B7%8F%E8%B3%87%E7%94%A3%20(%E4%B8%87)%22%5D%20%3D%20(_df_summary%5B%22%E7%B7%8F%E8%B3%87%E7%94%A3%22%5D%20%2F%2010000).round(1)%0A%0A%20%20%20%20%20%20%20%20_df_compressed%20%3D%20_df_summary%5B%5B%22%E7%B5%8C%E9%81%8E%E5%B9%B4%22%2C%20%22%E7%89%B9%E5%AE%9A%E5%8F%A3%E5%BA%A7%20(%E4%B8%87)%22%2C%20%22NISA%E5%8F%A3%E5%BA%A7%20(%E4%B8%87)%22%2C%20%22%E7%B7%8F%E8%B3%87%E7%94%A3%20(%E4%B8%87)%22%5D%5D%0A%20%20%20%20%20%20%20%20_table_html%20%3D%20_df_compressed.to_html(index%3DFalse%2C%20classes%3D'pure-table%20pure-table-horizontal'%2C%20border%3D0)%0A%0A%20%20%20%20%20%20%20%20summary_table_ui%20%3D%20mo.Html(%0A%20%20%20%20%20%20%20%20%20%20%20%20f'%3Cdiv%20style%3D%22width%3A%20100%25%3B%20overflow-x%3A%20auto%3B%20-webkit-overflow-scrolling%3A%20touch%3B%22%3E%7B_table_html%7D%3C%2Fdiv%3E'%0A%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20return%20(summary_table_ui%2C)%0A%0A%0A%40app.cell%0Adef%20_(chart_ui%2C%20inputs%2C%20mo%2C%20summary_table_ui)%3A%0A%20%20%20%20%23%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%20%20%20%20%23%20%F0%9F%93%A6%20%E6%9C%80%E7%B5%82%E3%83%AC%E3%82%A4%E3%82%A2%E3%82%A6%E3%83%88%E7%B5%B1%E5%90%88%3A%20%E3%82%B9%E3%83%86%E3%83%AB%E3%82%B9%E3%82%AF%E3%83%A9%E3%83%83%E3%82%B7%E3%83%A5%E3%82%92%E5%AE%8C%E5%85%A8%E3%81%AB%E5%AE%8C%E5%85%A8%E5%85%8B%E6%9C%8D%E3%81%97%E3%81%9F%E5%9E%82%E7%9B%B4%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%0A%20%20%20%20%23%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%20%20%20%20_title_section%20%3D%20mo.md(%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20%23%20%F0%9F%93%A6%20NISA%20Simulator%20v4.0%20(The%20Decumulation%20Optimizer)%0A%20%20%20%20%20%20%20%20WASM%E3%81%AB%E3%82%88%E3%82%8B%E5%AE%8C%E5%85%A8%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%83%AC%E3%82%B9%E3%83%BB%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%E8%A8%88%E7%AE%97%E7%92%B0%E5%A2%83%E3%80%82%E8%B3%87%E7%94%A3%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AF%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E5%A4%96%E3%81%B8%E4%B8%80%E6%AD%A9%E3%82%82%E6%B5%81%E5%87%BA%E3%81%97%E3%81%BE%E3%81%9B%E3%82%93%E3%80%82%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20)%0A%0A%20%20%20%20_input_panel_vertical%20%3D%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20mo.md(%22%23%23%23%20%F0%9F%9B%A0%EF%B8%8F%20%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E6%9D%A1%E4%BB%B6%E8%A8%AD%E5%AE%9A%22)%2C%0A%20%20%20%20%20%20%20%20inputs%5B%22init_taxable%22%5D%2C%0A%20%20%20%20%20%20%20%20inputs%5B%22init_nisa%22%5D%2C%0A%20%20%20%20%20%20%20%20inputs%5B%22annual_invest%22%5D%2C%0A%20%20%20%20%20%20%20%20inputs%5B%22withdraw_target%22%5D%2C%0A%20%20%20%20%20%20%20%20inputs%5B%22scenario%22%5D%2C%0A%20%20%20%20%20%20%20%20inputs%5B%22years%22%5D%0A%20%20%20%20%5D).style(%7B%22background-color%22%3A%20%22%23f8f9fa%22%2C%20%22padding%22%3A%20%2215px%22%2C%20%22border-radius%22%3A%20%228px%22%2C%20%22margin-bottom%22%3A%20%2220px%22%7D)%0A%0A%20%20%20%20final_assembly_ui%20%3D%20mo.vstack(%5B%0A%20%20%20%20%20%20%20%20_title_section%2C%0A%20%20%20%20%20%20%20%20mo.md(%22---%22)%2C%0A%20%20%20%20%20%20%20%20_input_panel_vertical%2C%0A%20%20%20%20%20%20%20%20mo.md(%22---%22)%2C%0A%20%20%20%20%20%20%20%20mo.md(%22%23%23%23%20%F0%9F%93%8A%20%E8%B3%87%E7%94%A3%E6%AE%8B%E9%AB%98%E3%81%AE%E6%8E%A8%E7%A7%BB%E3%83%81%E3%83%A3%E3%83%BC%E3%83%88%22)%2C%0A%20%20%20%20%20%20%20%20chart_ui%2C%0A%20%20%20%20%20%20%20%20mo.md(%22---%22)%2C%0A%20%20%20%20%20%20%20%20mo.md(%22%23%23%23%20%F0%9F%93%8B%20%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E3%83%95%E3%83%AD%E3%83%BC%E8%A9%B3%E7%B4%B0%E3%82%B5%E3%83%9E%E3%83%AA%E3%83%BC%22)%2C%0A%20%20%20%20%20%20%20%20summary_table_ui%0A%20%20%20%20%5D)%0A%0A%20%20%20%20final_assembly_ui%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a portal for the data editor to render in -->
+    <div id="portal" data-testid="glide-portal" style="position: fixed; left: 0; top: 0; z-index: 9999"></div>
+    <script data-marimo="true">
+      window.__MARIMO_MOUNT_CONFIG__ = {
+            "filename": "notebook.py",
+            "cwd": "",
+            "lspWorkspace": null,
+            "mode": "read",
+            "version": "0.23.1",
+            "serverToken": "unused",
+            "config": {"ai": {"custom_providers": {}, "models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "pip"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_csv_encoding": "utf-8", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "show_tracebacks": false, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "compact"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        };
+    </script>
+  </body>
+</html>
