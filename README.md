@@ -12,7 +12,7 @@
 
 | App Name | Description | Status |
 | :--- | :--- | :--- |
-| **[📈 投資/積立NISAシミュレーター (v4.0 Remastering...)](#)** | `nisa_calc_v0.19.0.html`<br>※現在、新NISA制度対応・モンテカルロシミュレーション搭載の『v4.0』へ大規模リマスター中につき一時稼働停止中。 | 🚧 Remastering |
+| **[📈 投資/積立NISAシミュレーター v4.0](https://derac-begin.github.io/nisa-simulator/nisa_simulator_v4.0.html)** | `nisa_simulator_v4.0.html`<br>新NISA制度対応・モンテカルロシミュレーション搭載の最新リマスター版。 | 🟢 Live |
 | **[🏠 住宅ローン比較シミュレーター v4.0](https://derac-begin.github.io/nisa-simulator/mortgage_simulator_v0.23.1.html)** | `mortgage_simulator_v0.23.1.html`<br>【最新リマスター版】複数シナリオの並列比較を可能にした高精度シミュレーター。（PC推奨） | 🟢 Live |
 | **[💪 PFCバランス計算機](https://derac-begin.github.io/nisa-simulator/pfc_calc_v0.19.0.html)** | `pfc_calc_v0.19.0.html`<br>ダイエット・増量向けの主要栄養素(PFC)計算ツール。 | 🟢 Live |
 | **[📅 AI Shift Scheduler](https://derac-begin.github.io/nisa-simulator/shift_scheduler.html)** | `shift_scheduler.html`<br>スタッフの希望を反映するシフト自動作成ツール。 | 🟢 Live |
