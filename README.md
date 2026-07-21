@@ -22,6 +22,7 @@
 | **[🧹 Zero-Leak Customer Data Cleanser (絶対秘密保持・顧客データクレンザー)](https://derac-begin.github.io/nisa-simulator/data_cleanser.html)** | `data_cleanser.html`<br>情報漏洩リスク0%。PCから一歩もデータを出さずに、バラバラの顧客リストを一瞬で名寄せ・クレンジングする完全オフラインツール。 | 🟢 Live |
 | **[📊 WASM-FinCSV Transformer (完全オフライン・金融CSVコンバーター)](https://derac-begin.github.io/nisa-simulator/fin_transformer.html)** | `fin_transformer.html`<br>情報漏洩リスク0%。機密性の高い金融系CSVデータを、安全かつ瞬時に変換・フォーマット整形するツール。 | 🟢 Live |
 | **[💪 PFC Balance Simulator (完全オフライン・パーソナル栄養管理)](https://derac-begin.github.io/nisa-simulator/pfc_simulator.html)** | `pfc_simulator.html`<br>情報漏洩リスク0%。体重・体脂肪率・活動レベルから基礎代謝を自動計算し、目標達成に向けた最適なタンパク質・脂質・炭水化物の摂取量をリアルタイムで可視化する栄養管理アプリ。 | 🟢 Live |
+| **[🛒 Smart Order (スマートオーダー管理)](https://derac-begin.github.io/nisa-simulator/smart_order.html)** | `smart_order.html`<br>セキュアな環境で動作する、効率的な受発注・オーダー管理シミュレーター。 | 🟢 Live |
 
 ---
 
